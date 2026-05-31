@@ -1,139 +1,55 @@
-# Claude Code Project Template
+# Rhiwbina Squirrels U12 — Team Website
 
-A GitHub template repository that provides a standardized, fully-configured foundation for new projects developed with Claude Code. Includes built-in support for Test-Driven Development (TDD), automated code quality checks, and AI-assisted workflows.
+The official website for the **Rhiwbina Squirrels** — the Under 12s (#1415) age
+group of [Rhiwbina R.F.C.](https://www.rhiwbinarfc.co.uk/) It's a place for
+players and parents to keep up with the season: fixtures, training, news and an
+open calendar you can subscribe to.
 
-## 🚀 Quick Start
+🌐 **Live site:** [squirrels.team](https://squirrels.team)
 
-### 1. Create Your Project
+## Tech stack
 
-Click the **"Use this template"** button above to create a new repository from this template.
+- **[Astro](https://astro.build/)** — static site generator (fast, content-first)
+- Plain CSS with design tokens (no framework)
+- Hosted on **GitHub Pages** via GitHub Actions (see issue #3)
 
-### 2. Clone and Setup
+## Local development
+
+Requires **Node.js 20+**.
 
 ```bash
-# Clone your new repository
-git clone https://github.com/your-username/your-new-project.git
-cd your-new-project
-
-# Open Claude Code
-claude
+npm install        # install dependencies
+npm run dev        # start the dev server at http://localhost:4321
+npm run build      # build the static site into dist/
+npm run preview    # preview the production build locally
+npm run check      # type-check Astro components
 ```
 
-### 3. Run the Setup Wizard
-
-In Claude Code, run:
+## Project structure
 
 ```text
-/setup-repo
+src/
+  components/   Reusable UI (Header, Footer, Card, PageHeader)
+  layouts/      BaseLayout (shared <head>, header, footer)
+  pages/        One file per route (index, fixtures, training, about, fundraising)
+  styles/       global.css — design tokens & base styles
+public/         Static assets served as-is (favicon, CNAME, fixtures.ics)
+examples/       Source material from the team (flyers, pre-season PDF, logo)
 ```
 
-The interactive wizard will:
+## Adding a fixture
 
-- ✅ Gather your project information (name, tech stack, commands)
-- ✅ Customize configuration files for your specific project
-- ✅ Configure pre-commit hooks for your language
-- ✅ Set up automated GitHub PR reviews
-- ✅ Install and verify all configurations
+Fixtures will be stored as data files in the repo and built into a
+subscribe-able `fixtures.ics` calendar feed. See issue #4 for the data model and
+workflow. (Until that lands, the fixtures page is a styled placeholder.)
 
-### 4. Start Building
+## Deployment
 
-```bash
-# Commit the configured files
-git add .
-git commit -m "chore: configure Claude Code for project"
+Pushes to `main` build and deploy to GitHub Pages automatically. The
+`squirrels.team` custom domain and DNS cutover are tracked in issue #3.
 
-# Start developing with TDD!
-```
+## Contributing
 
-## 📦 What's Included
-
-### Core Configuration
-
-- **`CLAUDE.md`** - Project context for Claude Code with TDD guidelines
-- **`docs/setup.md`** - Comprehensive setup checklist and best practices
-- **`.pre-commit-config.yaml`** - Code quality hooks (formatting, linting, security)
-- **`.github/claude-code-review.yml`** - Automated PR review configuration
-
-### Custom Slash Commands
-
-Located in `.claude/commands/`:
-
-- **`/setup-repo`** - Interactive setup wizard (run this first!)
-- **`/review`** - Comprehensive code review (quality, tests, security, performance)
-- **`/tdd-check`** - Verify TDD workflow compliance
-- **`/precommit`** - Run pre-commit hooks on all files
-
-## 🎯 Key Features
-
-### Test-Driven Development (TDD)
-
-This template enforces TDD workflow:
-
-1. **Red** - Write a failing test first
-2. **Green** - Write minimal code to make it pass
-3. **Refactor** - Improve code while keeping tests green
-
-Use `/tdd-check` to verify you're following TDD principles.
-
-### Automated Code Quality
-
-- Pre-commit hooks for consistent formatting and linting
-- Secret detection to prevent credential leaks
-- Language-specific quality checks (Python, Go, JavaScript/TypeScript)
-- Automated PR reviews with Claude Code
-
-### Claude Code Optimized
-
-- Project-specific context in CLAUDE.md
-- Custom slash commands for common workflows
-- Automated PR reviews configured out of the box
-- Best practices built into the template
-
-## 🛠️ Supported Languages
-
-The template is language-agnostic but includes pre-configured hooks for:
-
-- **Python** - Black, Flake8, isort
-- **Go** - gofmt, go vet, go imports
-- **JavaScript/TypeScript** - Prettier, ESLint
-- **Generic** - File formatting, YAML/JSON validation, secret detection
-
-Simply uncomment the relevant hooks in `.pre-commit-config.yaml` during setup.
-
-## 📚 Documentation
-
-- **`CLAUDE.md`** - Main project context for Claude Code
-- **`docs/setup.md`** - Detailed setup instructions and best practices
-- **`.claude/commands/`** - Custom command documentation
-
-## 🔧 Manual Setup (Alternative)
-
-If you prefer not to use the interactive wizard, follow the manual checklist in `docs/setup.md`.
-
-## 🤝 Contributing to the Template
-
-To improve this template:
-
-1. Make your changes
-2. Test with a new project
-3. Update documentation
-4. Submit a PR
-
-## 📝 License
-
-[Add your license here]
-
-## 🙋 Support
-
-For issues with:
-
-- **This template**: Open an issue in this repository
-- **Claude Code**: Visit <https://docs.claude.com/en/docs/claude-code>
-- **Feedback**: <https://github.com/anthropics/claude-code/issues>
-
----
-
-**Template Version:** 1.0
-**Last Updated:** 2025-10-02
-
-Built with ❤️ for Claude Code development
+This is a small volunteer-run project. See [`docs/setup.md`](docs/setup.md) for
+contributor notes. Open an issue or PR — work is tracked against the issues
+listed in the [project epic (#10)](https://github.com/denhamparry/squirrelsteam/issues/10).
