@@ -1,2 +1,14 @@
 # Environment variables
 .env
+.env.production
+
+# Dependencies
+node_modules/
+
+# Astro build output & generated types
+dist/
+.astro/
+
+# Logs & OS files
+*.log
+.DS_Store
