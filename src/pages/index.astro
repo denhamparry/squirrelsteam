@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+
+const donateUrl = "https://shop.squirrels.team";
+---
+
+<BaseLayout title="Rhiwbina Squirrels U12">
+  <section class="hero">
+    <div class="container container-narrow flow">
+      <p class="hero__eyebrow">Rhiwbina R.F.C. · #1415</p>
+      <h1>Rhiwbina Squirrels Under 12s</h1>
+      <p class="hero__lead">
+        Everything players and parents need for the season — fixtures, training
+        and team news, all in one place.
+      </p>
+      <div class="hero__actions">
+        <a class="button" href="/fixtures/">Fixtures &amp; calendar</a>
+        <a class="button button--outline" href="/training/">Training info</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="card-grid">
+        <Card title="📅 Fixtures &amp; calendar" href="/fixtures/">
+          <p>See upcoming games and subscribe so they appear in your phone's calendar automatically.</p>
+        </Card>
+        <Card title="🏉 Training" href="/training/">
+          <p>Where and when we train, plus the key dates for the 26/27 season and tour.</p>
+        </Card>
+        <Card title="👋 About &amp; join us" href="/about/">
+          <p>New players always welcome. Find out who we are and how to get in touch.</p>
+        </Card>
+        <Card title="💛 Fundraising" href="/fundraising/">
+          <p>How we fund great rugby experiences — and how sponsors can support the team.</p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container container-narrow flow">
+      <h2>Support the Squirrels</h2>
+      <p>Help us fund kit, facilities, fixtures and tour.</p>
+      <a class="button button--donate" href={donateUrl}>Donate / Fundraise</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: var(--color-black);
+    color: var(--color-white);
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+  .hero__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: #b9b9b9;
+  }
+  .hero__lead {
+    font-size: var(--step-1);
+    color: #e6e6e6;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-top: var(--space-m);
+  }
+  .hero .button--outline {
+    color: var(--color-white);
+    border-color: var(--color-white);
+  }
+  .hero .button--outline:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+  .card-grid {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+  .cta {
+    background: var(--color-paper);
+    border-top: 1px solid var(--color-line);
+    padding-block: var(--space-xl);
+    text-align: center;
+  }
+  .cta .button {
+    margin-inline: auto;
+  }
+</style>
