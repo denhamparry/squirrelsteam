@@ -1,0 +1,190 @@
+---
+const { pathname } = Astro.url;
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/fixtures/", label: "Fixtures" },
+  { href: "/training/", label: "Training" },
+  { href: "/about/", label: "About" },
+  { href: "/fundraising/", label: "Fundraising" },
+];
+
+const donateUrl = "https://shop.squirrels.team";
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="brand" aria-label="Rhiwbina Squirrels U12 home">
+      <span class="brand__mark" aria-hidden="true">🐿️</span>
+      <span class="brand__text">
+        <strong>Rhiwbina Squirrels</strong>
+        <small>Under 12s · #1415</small>
+      </span>
+    </a>
+
+    <input
+      type="checkbox"
+      id="nav-toggle"
+      class="nav-toggle"
+      aria-hidden="true"
+    />
+    <label for="nav-toggle" class="nav-toggle-label">
+      <span class="visually-hidden">Toggle menu</span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </label>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="site-nav__donate">
+          <a class="button button--donate" href={donateUrl}>Donate</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--color-black);
+    color: var(--color-white);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    min-height: 4.25rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    color: var(--color-white);
+    text-decoration: none;
+  }
+  .brand__mark {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .brand__text strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .brand__text small {
+    color: #b9b9b9;
+    font-size: var(--step--1);
+  }
+
+  .site-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+  }
+  .site-nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 500;
+    padding-block: var(--space-3xs);
+    border-bottom: 2px solid transparent;
+  }
+  .site-nav a:hover {
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+  }
+  .site-nav a[aria-current="page"] {
+    border-bottom-color: var(--color-white);
+  }
+  .site-nav__donate a {
+    border-bottom: none;
+  }
+
+  /* Mobile menu toggle (hidden on desktop) */
+  .nav-toggle,
+  .nav-toggle-label {
+    display: none;
+  }
+
+  @media (max-width: 48rem) {
+    .nav-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      cursor: pointer;
+    }
+    .nav-toggle-bar,
+    .nav-toggle-bar::before,
+    .nav-toggle-bar::after {
+      content: "";
+      display: block;
+      width: 1.4rem;
+      height: 2px;
+      background: var(--color-white);
+      position: relative;
+      transition: transform var(--transition);
+    }
+    .nav-toggle-bar::before {
+      position: absolute;
+      top: -6px;
+    }
+    .nav-toggle-bar::after {
+      position: absolute;
+      top: 6px;
+    }
+    .site-nav {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      background: var(--color-black);
+      padding: var(--space-s);
+      border-top: 1px solid var(--color-line-dark);
+    }
+    .site-nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-xs);
+    }
+    .site-nav a {
+      display: block;
+      padding: var(--space-2xs) 0;
+    }
+    .nav-toggle:checked ~ .site-nav {
+      display: block;
+    }
+    .site-nav__donate {
+      margin-top: var(--space-2xs);
+    }
+    .site-nav__donate a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Card from "../components/Card.astro";
+
+const contactEmail = "contact@squirrels.team";
+---
+
+<BaseLayout
+  title="About"
+  description="Who the Rhiwbina Squirrels U12 are and how to join."
+>
+  <PageHeader
+    eyebrow="Rhiwbina R.F.C. · #1415"
+    title="About & join us"
+    lead="Grass-roots community rugby for under 12s in Rhiwbina, Cardiff."
+  />
+  <section class="section">
+    <div class="container container-narrow flow">
+      <p>
+        The Rhiwbina Squirrels are the Under 12s age group of
+        <a href="https://www.rhiwbinarfc.co.uk/">Rhiwbina R.F.C.</a> We're all
+        about fun, friendship and great rugby experiences.
+      </p>
+      <Card title="New players welcome">
+        <p>
+          Come along to training at Caedelyn Park — see the
+          <a href="/training/">training page</a> for times.
+        </p>
+      </Card>
+      <Card title="Get in touch">
+        <p>Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+      </Card>
+      <p class="muted">
+        Coaching team, socials and more are being added — tracked in issue #7
+        (mailbox setup in #11).
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+const year = new Date().getFullYear();
+const donateUrl = "https://shop.squirrels.team";
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="flow">
+      <p class="site-footer__brand">
+        <strong>Rhiwbina Squirrels U12</strong> · #1415
+      </p>
+      <p class="site-footer__muted">
+        Part of <a href="https://www.rhiwbinarfc.co.uk/">Rhiwbina R.F.C.</a> ·
+        Grass-roots community rugby in Cardiff.
+      </p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="/fixtures/">Fixtures</a>
+      <a href="/training/">Training</a>
+      <a href="/about/">About</a>
+      <a href="/fundraising/">Fundraising</a>
+      <a href={donateUrl}>Donate</a>
+    </nav>
+  </div>
+  <div class="container site-footer__legal">
+    <p class="site-footer__muted">© {year} Rhiwbina Squirrels U12.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    background: var(--color-black);
+    color: var(--color-white);
+    padding-block: var(--space-l) var(--space-m);
+  }
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    justify-content: space-between;
+    align-items: start;
+  }
+  .site-footer__brand strong {
+    font-family: var(--font-display);
+  }
+  .site-footer__muted {
+    color: #b9b9b9;
+    font-size: var(--step--1);
+  }
+  .site-footer__muted a {
+    color: #e6e6e6;
+  }
+  .site-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+  .site-footer__nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .site-footer__nav a:hover {
+    text-decoration: underline;
+  }
+  .site-footer__legal {
+    margin-top: var(--space-m);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-line-dark);
+  }
+</style>
