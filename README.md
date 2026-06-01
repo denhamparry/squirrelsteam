@@ -78,8 +78,13 @@ Notes:
 
 ## Deployment
 
-Pushes to `main` build and deploy to GitHub Pages automatically. The
-`squirrels.team` custom domain and DNS cutover are tracked in issue #3.
+Pushes to `main` build and deploy to GitHub Pages automatically via
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). The
+`squirrels.team` custom domain is claimed by [`public/CNAME`](public/CNAME).
+
+See [`docs/hosting.md`](docs/hosting.md) for the full runbook: enabling Pages,
+the exact Cloudflare DNS records, the SumUp redirect cutover, and enforcing
+HTTPS.
 
 ## Contributing
 
