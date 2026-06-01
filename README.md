@@ -1,7 +1,7 @@
 # Rhiwbina Squirrels U12 — Team Website
 
 The official website for the **Rhiwbina Squirrels** — the Under 12s (#1415) age
-group of [Rhiwbina R.F.C.](https://www.rhiwbinarfc.co.uk/) It's a place for
+group of [Rhiwbina R.F.C.](https://rhiwbina.rfc.wales/) It's a place for
 players and parents to keep up with the season: fixtures, training, news and an
 open calendar you can subscribe to.
 
