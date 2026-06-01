@@ -1,13 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
+import SubscribeButtons from "../components/SubscribeButtons.astro";
+import FixtureItem from "../components/FixtureItem.astro";
+import { getUpcomingFixtures } from "../lib/fixtures";
 
 const donateUrl = "https://shop.squirrels.team";
+
+// The genuine next fixtures, straight from the data files.
+const nextUp = (await getUpcomingFixtures()).slice(0, 3);
 ---
 
 <BaseLayout title="Rhiwbina Squirrels U12">
   <section class="hero">
     <div class="container container-narrow flow">
+      <span class="hero__mark" aria-hidden="true">🐿️</span>
       <p class="hero__eyebrow">Rhiwbina R.F.C. · #1415</p>
       <h1>Rhiwbina Squirrels Under 12s</h1>
       <p class="hero__lead">
@@ -22,11 +29,36 @@ const donateUrl = "https://shop.squirrels.team";
   </section>
 
   <section class="section">
+    <div class="container container-narrow flow">
+      <div class="nextup__head">
+        <h2>Next up</h2>
+        <a class="nextup__all" href="/fixtures/">See all fixtures &rarr;</a>
+      </div>
+      {
+        nextUp.length === 0 ? (
+          <p class="muted">No fixtures scheduled yet — check back soon.</p>
+        ) : (
+          <ul class="fixtures" role="list">
+            {nextUp.map((f) => (
+              <FixtureItem fixture={f} showNotes={false} />
+            ))}
+          </ul>
+        )
+      }
+
+      <Card title="Subscribe to fixtures">
+        <p>
+          Add the Squirrels' fixtures to your phone or computer once — they'll
+          keep updating automatically all season.
+        </p>
+        <SubscribeButtons />
+      </Card>
+    </div>
+  </section>
+
+  <section class="section section--paper">
     <div class="container">
       <div class="card-grid">
-        <Card title="📅 Fixtures &amp; calendar" href="/fixtures/">
-          <p>See upcoming games and subscribe so they appear in your phone's calendar automatically.</p>
-        </Card>
         <Card title="🏉 Training" href="/training/">
           <p>Where and when we train, plus the key dates for the 26/27 season and tour.</p>
         </Card>
@@ -55,6 +87,11 @@ const donateUrl = "https://shop.squirrels.team";
     color: var(--color-white);
     padding-block: var(--space-2xl) var(--space-xl);
   }
+  .hero__mark {
+    display: inline-block;
+    font-size: 3rem;
+    line-height: 1;
+  }
   .hero__eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -80,11 +117,40 @@ const donateUrl = "https://shop.squirrels.team";
     background: var(--color-white);
     color: var(--color-black);
   }
+
+  .nextup__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2xs);
+  }
+  .nextup__all {
+    font-weight: 600;
+    font-size: var(--step--1);
+    white-space: nowrap;
+  }
+  .muted {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+  .fixtures {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .section--paper {
+    background: var(--color-paper);
+    border-top: 1px solid var(--color-line);
+  }
   .card-grid {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   }
+
   .cta {
     background: var(--color-paper);
     border-top: 1px solid var(--color-line);
