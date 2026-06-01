@@ -1,6 +1,6 @@
 # Plan: Add 🎵 DJ link to footer (issue #24)
 
-**Status:** Reviewed (Approved)
+**Status:** Complete
 **Issue:** #24 — Add dj.squirrels.team link and a subscribe-able tour/event playlist
 **Type:** content (fix)
 **Branch:** denhamparry.co.uk/fix/gh-issue-024
