@@ -19,25 +19,95 @@ import Card from "../components/Card.astro";
         <ul>
           <li>Venue: <strong>Caedelyn Park (CF14 6EJ)</strong></li>
           <li>Tuesdays, <strong>7–8pm</strong></li>
+          <li>Pre-season starts <strong>Tuesday 2 June 2026</strong></li>
         </ul>
       </Card>
-      <Card title="Key dates">
+
+      <Card title="Pre-season focus">
+        <dl class="focus">
+          <div>
+            <dt>June</dt>
+            <dd>Strength &amp; conditioning, Rugby Sevens</dd>
+          </div>
+          <div>
+            <dt>July &amp; August</dt>
+            <dd>Skills &amp; structure, understanding the new rules</dd>
+          </div>
+          <div>
+            <dt>September</dt>
+            <dd>Season starts</dd>
+          </div>
+        </dl>
+      </Card>
+
+      <Card title="What else is coming up">
+        <ul>
+          <li>ION fitness session — <strong>Sat 4 July 2026</strong></li>
+          <li>Green Mile team-bonding session <span class="tbc">TBC</span></li>
+          <li>Surprise guest coaches <span class="tbc">TBC</span></li>
+          <li>2× pre-season games arranged <span class="tbc">TBC</span></li>
+          <li>New kit presentation</li>
+          <li>VEO analysis session</li>
+        </ul>
+        <p class="muted">
+          Items marked <span class="tbc">TBC</span> are provisional — dates will
+          be confirmed and added to the calendar nearer the time.
+        </p>
+      </Card>
+
+      <Card title="Key dates: season &amp; tour">
         <ul>
           <li><strong>26/27 season starts</strong> — Sunday 6 September 2026</li>
           <li><strong>Tour</strong> — South of France, 1–4 May 2027 🇫🇷</li>
         </ul>
+        <p>
+          <a class="button button--outline" href="/fixtures/"
+            >Add these to your calendar</a
+          >
+        </p>
       </Card>
-      <p class="muted">
-        Full pre-season schedule, focus areas and extras are being added —
-        tracked in issue #6.
-      </p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
+  .focus {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .focus div {
+    display: grid;
+    grid-template-columns: minmax(7rem, auto) 1fr;
+    gap: var(--space-2xs) var(--space-s);
+  }
+  .focus dt {
+    font-weight: 700;
+  }
+  .focus dd {
+    margin: 0;
+  }
+
+  .tbc {
+    display: inline-block;
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    padding: 0 0.5em;
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    color: var(--color-accent);
+  }
+
   .muted {
     color: var(--color-muted);
     font-size: var(--step--1);
+  }
+
+  @media (max-width: 30rem) {
+    .focus div {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
   }
 </style>
