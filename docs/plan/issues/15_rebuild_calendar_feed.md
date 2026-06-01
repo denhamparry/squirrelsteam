@@ -1,6 +1,6 @@
 # Plan: Rebuild calendar feed (#4) + examples resize — issue #15
 
-- **Status:** Reviewed (Approved) — required changes folded into implementation
+- **Status:** Complete
 - **Issue:** #15 (rebuilds #4 calendar feed, redoes #9 examples resize)
 - **Branch:** `denhamparry.co.uk/feat/gh-issue-015`
 - **Merge style:** `gh pr merge --rebase` (repo only allows rebase merges)
