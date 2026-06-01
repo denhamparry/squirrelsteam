@@ -1,7 +1,7 @@
 # GitHub Issue #3: Host on GitHub Pages with squirrels.team custom domain
 
 **Issue:** [#3](https://github.com/denhamparry/squirrelsteam/issues/3)
-**Status:** Planning
+**Status:** Reviewed (Approved)
 **Date:** 2026-06-01
 **Branch:** `denhamparry.co.uk/fix/gh-issue-003`
 **Merge style:** `gh pr merge --rebase` (repo only allows rebase merges)
@@ -330,3 +330,113 @@ curl -sSI https://squirrels.team | head -n 1   # expect HTTP/2 200
 - Remove or repurpose the placeholder `.github/workflows/ci.yml`.
 - Add a build-only check on pull requests to catch build breakage before merge.
 - Pin GitHub Action versions to commit SHAs for supply-chain hardening.
+
+## Plan Review
+
+**Reviewer:** Claude Code (workflow-research-plan)
+**Review Date:** 2026-06-01
+**Original Plan Date:** 2026-06-01
+
+### Review Summary
+
+- **Overall Assessment:** Approved
+- **Confidence Level:** High
+- **Recommendation:** Proceed to implementation
+
+### Strengths
+
+- **Accurate current-state analysis (independently verified):**
+  `astro.config.mjs` already sets `site: "https://squirrels.team"` with no
+  `base`; `public/` contains only `favicon.svg` (no `CNAME`); `package-lock.json`
+  is present (required by `withastro/action`); default `outDir` is `dist/`.
+- **Correct deploy pattern:** `actions/checkout@v4` → `withastro/action@v3`
+  (install + build + upload-pages-artifact) → `actions/deploy-pages@v4` is
+  Astro's first-party documented GitHub Pages path, with the right
+  `pages: write` / `id-token: write` permissions and a `pages` concurrency
+  group.
+- **Correct DNS facts:** the four GitHub Pages apex `A` IPs
+  (`185.199.108–111.153`) and `2606:50c0:8000–8003::153` `AAAA` records are the
+  documented GitHub Pages anycast addresses; `www` CNAME → `denhamparry.github.io`
+  matches the `denhamparry/squirrelsteam` user page.
+- **Durable CNAME decision:** committing `public/CNAME` (vs. the settings field
+  alone) is the right call for artifact-based deploys, and the Cloudflare
+  DNS-only (grey-cloud) note is essential for certificate issuance.
+- **Tight scope / 1:1 with the issue:** code changes limited to `deploy.yml` +
+  `CNAME`; the genuinely out-of-repo steps (enable Pages, DNS cutover, Enforce
+  HTTPS) are documented rather than faked, and unrelated cleanup is parked as
+  follow-ups.
+
+### Gaps Identified
+
+1. **First-deploy ordering not called out explicitly.**
+   - **Impact:** Medium
+   - **Recommendation:** `actions/deploy-pages` fails if Pages has never been
+     enabled with **Source: GitHub Actions**. After this PR merges, the first
+     `deploy.yml` run will fail until the maintainer flips that setting. Add a
+     one-line ordering note to `docs/hosting.md` ("enable Pages → Source: GitHub
+     Actions *before* (or immediately after) the first push to `main`; re-run
+     the failed workflow if needed"). This is a documentation nuance, not a code
+     change.
+
+### Edge Cases Not Covered
+
+1. **Cloudflare orange-cloud proxy left on.**
+   - **Current Plan:** Notes DNS-only is required and explains why (cert).
+   - **Recommendation:** Already adequately covered — the plan explicitly states
+     proxy must be off. No change required; flagged only for implementer
+     awareness.
+
+2. **`www` apex redirect direction.**
+   - **Current Plan:** `www` CNAME → `denhamparry.github.io`; verification
+     expects `www` to reach the site / redirect to apex.
+   - **Recommendation:** GitHub Pages handles the `www`↔apex redirect once the
+     custom domain is set; no extra config needed. No change required.
+
+### Alternative Approaches Re-evaluated
+
+1. **Third-party Pages action (`peaceiris/actions-gh-pages`).**
+   - **Pros:** Single-step, pushes to a `gh-pages` branch.
+   - **Cons:** Not first-party; branch-based rather than artifact-based; diverges
+     from Astro's documented path.
+   - **Verdict:** Plan's choice (official `withastro/action` + `deploy-pages`) is
+     better. Agree with the plan.
+
+### Risks and Concerns
+
+1. **SumUp redirect cutover is a breaking, maintainer-gated change.**
+   - **Likelihood:** High (it will happen on DNS edit)
+   - **Impact:** Medium (fundraising link path changes)
+   - **Mitigation:** Plan already flags ⚠️ confirm-before-switching and points
+     fundraising to the on-site Donate button (#8). Adequately handled.
+
+2. **DNS propagation / certificate timing.**
+   - **Likelihood:** Medium
+   - **Impact:** Low (transient)
+   - **Mitigation:** Enable Enforce HTTPS only after the cert is issued — already
+     in the plan's manual sequence.
+
+### Required Changes
+
+**None blocking.** All required changes can be folded in during implementation:
+
+- [ ] Add the first-deploy ordering note to `docs/hosting.md` (Gap 1).
+
+### Optional Improvements
+
+- [ ] Mention re-running the first failed `deploy.yml` run after Pages is
+      enabled.
+- [ ] Consider the parked follow-ups (PR-build check, SHA-pinned actions) in a
+      later change.
+
+### Verification Checklist
+
+- [x] Solution addresses root cause identified in GitHub issue
+- [x] All acceptance criteria from issue are covered
+- [x] Implementation steps are specific and actionable
+- [x] File paths and code references are accurate (verified independently)
+- [x] Security implications considered (DNS-only proxy, Pages permissions)
+- [x] Performance impact assessed (static site; N/A beyond build)
+- [x] Test strategy covers critical paths and edge cases
+- [x] Documentation updates planned (`docs/hosting.md`, README)
+- [x] Related issues/dependencies identified (#8, #4/#15)
+- [x] Breaking changes documented (SumUp redirect cutover)
