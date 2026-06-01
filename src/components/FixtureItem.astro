@@ -1,0 +1,108 @@
+---
+// A single fixture rendered as a list item. Shared by the Fixtures page and the
+// Home "Next up" section so both stay visually identical. Renders the fixture's
+// markdown body (notes) when `showNotes` is true.
+import { render } from "astro:content";
+import {
+  typeLabel,
+  formatWhen,
+  recurrenceText,
+  type Fixture,
+} from "../lib/fixtures";
+
+interface Props {
+  fixture: Fixture;
+  showNotes?: boolean;
+  dimmed?: boolean;
+}
+
+const { fixture: f, showNotes = true, dimmed = false } = Astro.props;
+
+const { Content } = await render(f);
+const repeat = f.data.rrule ? recurrenceText(f.data.rrule) : null;
+const homeAway =
+  f.data.home === undefined ? null : f.data.home ? "Home" : "Away";
+---
+
+<li class:list={["fixture", { "fixture--past": dimmed }]}>
+  <div class="fixture__meta">
+    <span class="chip">{typeLabel(f.data.type)}</span>
+    {homeAway && <span class="chip chip--ghost">{homeAway}</span>}
+  </div>
+  <h3 class="fixture__title">
+    {f.data.title}
+    {f.data.opponent && <> vs {f.data.opponent}</>}
+  </h3>
+  <p class="fixture__when">{formatWhen(f)}</p>
+  {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
+  {f.data.location && <p class="fixture__where muted">{f.data.location}</p>}
+  {
+    showNotes && (
+      <div class="fixture__note">
+        <Content />
+      </div>
+    )
+  }
+</li>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+
+  .fixture {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+  }
+  .fixture--past {
+    opacity: 0.75;
+  }
+  .fixture__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+    margin-bottom: var(--space-2xs);
+  }
+  .fixture__title {
+    margin-bottom: var(--space-3xs);
+  }
+  .fixture__when {
+    font-weight: 600;
+  }
+  .fixture__where {
+    margin-top: var(--space-3xs);
+    color: var(--color-muted);
+    font-size: var(--step--1);
+  }
+  .fixture__repeat {
+    margin-top: var(--space-3xs);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+  .fixture__note {
+    margin-top: var(--space-2xs);
+    font-size: var(--step--1);
+  }
+  .fixture__note:empty {
+    display: none;
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: var(--step--1);
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.35em 0.6em;
+    border-radius: 999px;
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+  .chip--ghost {
+    background: transparent;
+    color: var(--color-black);
+    border: 1px solid var(--color-line-dark);
+  }
+</style>
