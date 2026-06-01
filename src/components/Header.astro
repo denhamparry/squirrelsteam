@@ -1,4 +1,7 @@
 ---
+// Inline the squirrel mark so it inherits the header colour via `currentColor`.
+import squirrelMark from "../assets/logo/squirrel-mark.svg?raw";
+
 const { pathname } = Astro.url;
 const isActive = (href: string) =>
   href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -18,7 +21,7 @@ const donateUrl = "https://shop.squirrels.team";
 <header class="site-header">
   <div class="container site-header__inner">
     <a href="/" class="brand" aria-label="Rhiwbina Squirrels U12 home">
-      <span class="brand__mark" aria-hidden="true">🐿️</span>
+      <span class="brand__mark" aria-hidden="true" set:html={squirrelMark} />
       <span class="brand__text">
         <strong>Rhiwbina Squirrels</strong>
         <small>Under 12s · #1415</small>
@@ -81,8 +84,13 @@ const donateUrl = "https://shop.squirrels.team";
     text-decoration: none;
   }
   .brand__mark {
-    font-size: 1.75rem;
-    line-height: 1;
+    display: inline-flex;
+    line-height: 0;
+  }
+  .brand__mark :global(svg) {
+    height: 2.5rem;
+    width: auto;
+    /* Inherits the header's white via `currentColor`. */
   }
   .brand__text {
     display: flex;
