@@ -84,7 +84,8 @@ Pushes to `main` build and deploy to GitHub Pages automatically via
 
 See [`docs/hosting.md`](docs/hosting.md) for the full runbook: enabling Pages,
 the exact Cloudflare DNS records, the SumUp redirect cutover, and enforcing
-HTTPS.
+HTTPS. [`docs/email.md`](docs/email.md) covers the `contact@squirrels.team`
+mailbox (Cloudflare Email Routing).
 
 ## Contributing
 
