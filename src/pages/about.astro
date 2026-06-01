@@ -4,6 +4,8 @@ import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
 
 const contactEmail = "contact@squirrels.team";
+const clubUrl = "https://www.rhiwbinarfc.co.uk/";
+const instagramUrl = "https://www.instagram.com/rhiwbinarfc1415/";
 ---
 
 <BaseLayout
@@ -17,31 +19,63 @@ const contactEmail = "contact@squirrels.team";
   />
   <section class="section">
     <div class="container container-narrow flow">
+      <h2>Who we are</h2>
       <p>
-        The Rhiwbina Squirrels are the Under 12s age group of
-        <a href="https://www.rhiwbinarfc.co.uk/">Rhiwbina R.F.C.</a> We're all
-        about fun, friendship and great rugby experiences.
+        The Rhiwbina Squirrels are the Under 12s (#1415) age group of
+        <a href={clubUrl}>Rhiwbina R.F.C.</a> We're a grass-roots, community team
+        — all about fun, friendship and great rugby experiences for every child,
+        whatever their starting point.
       </p>
-      <Card title="New players welcome">
+      <p>
+        Our volunteer coaching team keeps things friendly, inclusive and
+        focused on enjoying the game. Players develop their skills and confidence
+        season by season, and parents are always part of the journey.
+      </p>
+
+      <Card title="Join us — new players welcome">
         <p>
-          Come along to training at Caedelyn Park — see the
-          <a href="/training/">training page</a> for times.
+          New players are <strong>always welcome</strong>, whether they've played
+          before or are picking up a rugby ball for the first time. Just come
+          along to training — say hello, join in, and see if it's for you.
+        </p>
+        <p>
+          We train at <strong>Caedelyn Park</strong>. Check the
+          <a href="/training/">training page</a> for days, times and key dates.
+        </p>
+        <p>
+          <a class="button" href="/training/">See training info</a>
         </p>
       </Card>
+
       <Card title="Get in touch">
-        <p>Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+        <p>
+          Questions about joining, training or anything else? Email the coaches
+          and team manager:
+        </p>
+        <p>
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+        </p>
       </Card>
-      <p class="muted">
-        Coaching team, socials and more are being added — tracked in issue #7
-        (mailbox setup in #11).
-      </p>
+
+      <Card title="Follow &amp; find us">
+        <p>Keep up with the squad and the wider club:</p>
+        <ul>
+          <li>
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener">Instagram <span class="visually-hidden">(opens in a new tab)</span></a
+            > — team photos, updates and match-day moments
+          </li>
+          <li>
+            <a
+              href={clubUrl}
+              target="_blank"
+              rel="noopener">Rhiwbina R.F.C. <span class="visually-hidden">(opens in a new tab)</span></a
+            > — our parent club
+          </li>
+        </ul>
+      </Card>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .muted {
-    color: var(--color-muted);
-    font-size: var(--step--1);
-  }
-</style>
