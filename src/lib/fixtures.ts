@@ -86,6 +86,66 @@ const timeFmt = new Intl.DateTimeFormat("en-GB", {
   timeZone: TIME_ZONE,
 });
 
+const untilDateFmt = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: TIME_ZONE,
+});
+
+const DAY_NAMES: Record<string, string> = {
+  MO: "Monday",
+  TU: "Tuesday",
+  WE: "Wednesday",
+  TH: "Thursday",
+  FR: "Friday",
+  SA: "Saturday",
+  SU: "Sunday",
+};
+
+function listDays(codes: string[]): string {
+  const plural = codes.map((c) => `${DAY_NAMES[c] ?? c}s`);
+  if (plural.length <= 1) return plural[0] ?? "";
+  return `${plural.slice(0, -1).join(", ")} and ${plural[plural.length - 1]}`;
+}
+
+/**
+ * Human-friendly recurrence summary for an RRULE, e.g.
+ * "Weekly on Tuesdays, until 25 Aug 2026". Returns null if it can't be parsed.
+ */
+export function recurrenceText(rrule: string): string | null {
+  const parts = Object.fromEntries(
+    rrule
+      .split(";")
+      .map((part) => part.split("="))
+      .filter((pair): pair is [string, string] => pair.length === 2),
+  );
+  const freq = parts.FREQ;
+  if (!freq) return null;
+
+  const days = parts.BYDAY ? parts.BYDAY.split(",") : [];
+  let cadence: string;
+  switch (freq) {
+    case "DAILY":
+      cadence = "Daily";
+      break;
+    case "WEEKLY":
+      cadence = days.length ? `Weekly on ${listDays(days)}` : "Weekly";
+      break;
+    case "MONTHLY":
+      cadence = "Monthly";
+      break;
+    case "YEARLY":
+      cadence = "Yearly";
+      break;
+    default:
+      cadence = freq.toLowerCase();
+  }
+
+  const until = parseUntil(rrule);
+  return until ? `${cadence}, until ${untilDateFmt.format(until)}` : cadence;
+}
+
 function sameUtcDay(a: Date, b: Date): boolean {
   return (
     a.getUTCFullYear() === b.getUTCFullYear() &&

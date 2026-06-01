@@ -101,7 +101,12 @@ function eventLines(entry: Fixture, dtstamp: string): string[] {
     lines.push(`LOCATION:${escapeText(data.location)}`);
   }
 
-  if (data.type === "match" && data.opponent) {
+  // Prefer the fixture's own notes (markdown body); otherwise synthesise a
+  // description for matches with a named opponent.
+  const note = entry.body?.trim();
+  if (note) {
+    lines.push(`DESCRIPTION:${escapeText(note)}`);
+  } else if (data.type === "match" && data.opponent) {
     const side = data.home === undefined ? "" : data.home ? "Home" : "Away";
     const desc = [side, `vs ${data.opponent}`].filter(Boolean).join(" match ");
     lines.push(`DESCRIPTION:${escapeText(desc)}`);
