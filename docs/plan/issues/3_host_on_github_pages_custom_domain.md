@@ -1,7 +1,7 @@
 # GitHub Issue #3: Host on GitHub Pages with squirrels.team custom domain
 
 **Issue:** [#3](https://github.com/denhamparry/squirrelsteam/issues/3)
-**Status:** Reviewed (Approved)
+**Status:** Complete
 **Date:** 2026-06-01
 **Branch:** `denhamparry.co.uk/fix/gh-issue-003`
 **Merge style:** `gh pr merge --rebase` (repo only allows rebase merges)
