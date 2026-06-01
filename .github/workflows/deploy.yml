@@ -25,7 +25,11 @@ jobs:
       - name: Build Astro site
         # withastro/action installs deps, runs `astro build`, and uploads the
         # dist/ artifact ready for actions/deploy-pages.
+        # node-version: 22 — the action defaults to Node 20, but Astro 6
+        # requires >=22.12.0 (see issue #19).
         uses: withastro/action@v3
+        with:
+          node-version: 22
 
   deploy:
     name: Deploy

@@ -15,7 +15,7 @@ open calendar you can subscribe to.
 
 ## Local development
 
-Requires **Node.js 20+**.
+Requires **Node.js 22+**.
 
 ```bash
 npm install        # install dependencies
