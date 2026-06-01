@@ -1,0 +1,88 @@
+---
+// One-tap calendar subscribe buttons. URLs are built from Astro.site so they
+// work in any environment; falls back to the production domain when unset
+// (Astro.site is typed URL | undefined under strict TS).
+const site = Astro.site ?? new URL("https://squirrels.team");
+const feedUrl = new URL("fixtures.ics", site).href; // https://squirrels.team/fixtures.ics
+const webcalUrl = feedUrl.replace(/^https?:/, "webcal:");
+const calendarName = "Rhiwbina Squirrels U12 Fixtures";
+
+const googleUrl = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(webcalUrl)}`;
+const outlookUrl = `https://outlook.live.com/calendar/0/addfromweb?url=${encodeURIComponent(feedUrl)}&name=${encodeURIComponent(calendarName)}`;
+---
+
+<div class="subscribe">
+  <ul class="subscribe__list" role="list">
+    <li>
+      <a class="button" href={webcalUrl}>Apple Calendar</a>
+    </li>
+    <li>
+      <a
+        class="button button--outline"
+        href={googleUrl}
+        target="_blank"
+        rel="noopener">Google Calendar</a
+      >
+    </li>
+    <li>
+      <a
+        class="button button--outline"
+        href={outlookUrl}
+        target="_blank"
+        rel="noopener">Outlook</a
+      >
+    </li>
+    <li>
+      <button
+        class="button button--outline"
+        type="button"
+        data-copy-feed
+        data-feed={feedUrl}>Copy feed link</button
+      >
+    </li>
+  </ul>
+  <p class="subscribe__url">
+    <span class="visually-hidden">Calendar feed URL:</span>
+    <code>{feedUrl}</code>
+  </p>
+</div>
+
+<script>
+  const buttons =
+    document.querySelectorAll<HTMLButtonElement>("[data-copy-feed]");
+  buttons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const feed = button.dataset.feed;
+      if (!feed) return;
+      const original = button.textContent;
+      try {
+        await navigator.clipboard.writeText(feed);
+        button.textContent = "Copied!";
+      } catch {
+        button.textContent = "Copy failed — long-press the link";
+      }
+      window.setTimeout(() => {
+        button.textContent = original;
+      }, 2000);
+    });
+  });
+</script>
+
+<style>
+  .subscribe__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+  .subscribe__url {
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+  .subscribe__url code {
+    font-size: inherit;
+  }
+</style>
