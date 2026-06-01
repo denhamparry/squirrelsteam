@@ -6,6 +6,53 @@ import Card from "../components/Card.astro";
 const donateUrl = "https://shop.squirrels.team";
 const contactEmail = "contact@squirrels.team";
 const sponsorMailto = `mailto:${contactEmail}?subject=Sponsorship%20enquiry`;
+
+const playerSponsor =
+  "Season player sponsor — the designated sponsor of your supported child, with a video link of the child thanking their sponsor";
+
+const sponsorshipTiers = [
+  {
+    name: "Platinum",
+    price: "£1,000",
+    benefits: [
+      playerSponsor,
+      "Advertising on our social-media channels",
+      "One Star of the Week (SOTW) headline sponsor for a designated game",
+      "Tax relief for your company (sponsorship / advertising)",
+      "Supporting grass-roots community sport",
+      "5× free entry to our annual Race Night (with sponsored horses)",
+      "Race sponsor at the Race Night, with a VIP table",
+      "Headline / large company logo on the tour kit",
+      "Signed and framed tour kit",
+    ],
+  },
+  {
+    name: "Black",
+    price: "£500",
+    benefits: [
+      playerSponsor,
+      "Advertising on our social-media channels",
+      "One Star of the Week (SOTW) headline sponsor for a designated game",
+      "Tax relief for your company (sponsorship / advertising)",
+      "Supporting grass-roots community sport",
+      "Free entry to our annual Race Night (with sponsored horses)",
+      "Race sponsor at the Race Night, with a VIP table",
+      "Small / secondary company logo on the tour kit",
+    ],
+  },
+  {
+    name: "White",
+    price: "£250",
+    benefits: [
+      playerSponsor,
+      "Advertising on our social-media channels",
+      "One Star of the Week (SOTW) headline sponsor for a designated game",
+      "Tax relief for your company (sponsorship / advertising)",
+      "Supporting grass-roots community sport",
+      "Free entry to our annual Race Night (with sponsored horses)",
+    ],
+  },
+];
 ---
 
 <BaseLayout
@@ -76,53 +123,18 @@ const sponsorMailto = `mailto:${contactEmail}?subject=Sponsorship%20enquiry`;
         available:
       </p>
       <div class="tiers">
-        <Card title="Platinum">
-          <p class="tier__price">£1,000</p>
-          <ul>
-            <li>
-              Season player sponsor — the designated sponsor of your supported
-              child, with a video link of the child thanking their sponsor
-            </li>
-            <li>Advertising on our social-media channels</li>
-            <li>One Star of the Week (SOTW) headline sponsor for a designated game</li>
-            <li>Tax relief for your company (sponsorship / advertising)</li>
-            <li>Supporting grass-roots community sport</li>
-            <li>5× free entry to our annual Race Night (with sponsored horses)</li>
-            <li>Race sponsor at the Race Night, with a VIP table</li>
-            <li>Headline / large company logo on the tour kit</li>
-            <li>Signed and framed tour kit</li>
-          </ul>
-        </Card>
-        <Card title="Black">
-          <p class="tier__price">£500</p>
-          <ul>
-            <li>
-              Season player sponsor — the designated sponsor of your supported
-              child, with a video link of the child thanking their sponsor
-            </li>
-            <li>Advertising on our social-media channels</li>
-            <li>One Star of the Week (SOTW) headline sponsor for a designated game</li>
-            <li>Tax relief for your company (sponsorship / advertising)</li>
-            <li>Supporting grass-roots community sport</li>
-            <li>Free entry to our annual Race Night (with sponsored horses)</li>
-            <li>Race sponsor at the Race Night, with a VIP table</li>
-            <li>Small / secondary company logo on the tour kit</li>
-          </ul>
-        </Card>
-        <Card title="White">
-          <p class="tier__price">£250</p>
-          <ul>
-            <li>
-              Season player sponsor — the designated sponsor of your supported
-              child, with a video link of the child thanking their sponsor
-            </li>
-            <li>Advertising on our social-media channels</li>
-            <li>One Star of the Week (SOTW) headline sponsor for a designated game</li>
-            <li>Tax relief for your company (sponsorship / advertising)</li>
-            <li>Supporting grass-roots community sport</li>
-            <li>Free entry to our annual Race Night (with sponsored horses)</li>
-          </ul>
-        </Card>
+        {
+          sponsorshipTiers.map((tier) => (
+            <Card title={tier.name}>
+              <p class="tier__price">{tier.price}</p>
+              <ul>
+                {tier.benefits.map((benefit) => (
+                  <li>{benefit}</li>
+                ))}
+              </ul>
+            </Card>
+          ))
+        }
       </div>
 
       <Card title="Sponsorship enquiries">
