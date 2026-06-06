@@ -22,6 +22,7 @@ const { Content } = await render(f);
 const repeat = f.data.rrule ? recurrenceText(f.data.rrule) : null;
 const homeAway =
   f.data.home === undefined ? null : f.data.home ? "Home" : "Away";
+const hasNotes = (f.body ?? "").trim().length > 0;
 ---
 
 <li class:list={["fixture", { "fixture--past": dimmed }]}>
@@ -37,7 +38,7 @@ const homeAway =
   {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
   {f.data.location && <p class="fixture__where muted">{f.data.location}</p>}
   {
-    showNotes && (
+    showNotes && hasNotes && (
       <div class="fixture__note">
         <Content />
       </div>
