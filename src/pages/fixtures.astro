@@ -4,10 +4,17 @@ import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
 import SubscribeButtons from "../components/SubscribeButtons.astro";
 import FixtureItem from "../components/FixtureItem.astro";
-import { getUpcomingFixtures, getPastFixtures } from "../lib/fixtures";
+import {
+  getUpcomingFixtures,
+  getPastFixtures,
+  type Fixture,
+} from "../lib/fixtures";
 
-const upcoming = await getUpcomingFixtures();
-const past = await getPastFixtures();
+const showsOnFixturesPage = (fixture: Fixture) =>
+  !(fixture.data.type === "training" && fixture.data.rrule);
+
+const upcoming = (await getUpcomingFixtures()).filter(showsOnFixturesPage);
+const past = (await getPastFixtures()).filter(showsOnFixturesPage);
 ---
 
 <BaseLayout
