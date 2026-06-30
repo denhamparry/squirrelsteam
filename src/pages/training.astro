@@ -24,19 +24,11 @@ import Card from "../components/Card.astro";
       </Card>
 
       <Card title="Pre-season focus">
-        <dl class="focus">
-          <div>
-            <dt>August</dt>
-            <dd>
-              Strength &amp; conditioning, skills &amp; structure, understanding
-              the new rules
-            </dd>
-          </div>
-          <div>
-            <dt>September</dt>
-            <dd>Season starts</dd>
-          </div>
-        </dl>
+        <ul>
+          <li>Strength &amp; conditioning</li>
+          <li>Skills &amp; structure</li>
+          <li>Understanding the new rules</li>
+        </ul>
       </Card>
 
       <Card title="What else is coming up">
@@ -70,22 +62,6 @@ import Card from "../components/Card.astro";
 </BaseLayout>
 
 <style>
-  .focus {
-    display: grid;
-    gap: var(--space-xs);
-  }
-  .focus div {
-    display: grid;
-    grid-template-columns: minmax(7rem, auto) 1fr;
-    gap: var(--space-2xs) var(--space-s);
-  }
-  .focus dt {
-    font-weight: 700;
-  }
-  .focus dd {
-    margin: 0;
-  }
-
   .tbc {
     display: inline-block;
     font-size: var(--step--1);
@@ -101,12 +77,5 @@ import Card from "../components/Card.astro";
   .muted {
     color: var(--color-muted);
     font-size: var(--step--1);
-  }
-
-  @media (max-width: 30rem) {
-    .focus div {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
   }
 </style>
