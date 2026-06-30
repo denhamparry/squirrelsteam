@@ -1,8 +1,8 @@
 ---
 title: Pre-season training
 type: training
-start: 2026-06-02T19:00:00+01:00
-end: 2026-06-02T20:00:00+01:00
+start: 2026-08-04T19:00:00+01:00
+end: 2026-08-04T20:00:00+01:00
 location: Caedelyn Park, CF14 6EJ
 rrule: FREQ=WEEKLY;BYDAY=TU;UNTIL=20260906T180000Z
 ---
