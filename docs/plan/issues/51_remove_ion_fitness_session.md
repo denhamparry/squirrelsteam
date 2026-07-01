@@ -1,7 +1,7 @@
 # GitHub Issue #51: Remove ION fitness session (Sat 4 July 2026) — to be rescheduled
 
 **Issue:** [#51](https://github.com/denhamparry/squirrelsteam/issues/51)
-**Status:** Planning
+**Status:** Reviewed (Approved)
 **Date:** 2026-07-01
 
 ## Problem Statement
@@ -127,8 +127,9 @@ sanctions the TBC approach.
 
 ```bash
 npm run build
-rg -i "ion" dist/fixtures/index.html dist/fixtures.ics
-# expect: no matches
+rg -i "ION fitness|20260704|2026-07-04" dist/fixtures/index.html dist/fixtures.ics
+# expect: no matches (note: bare "ion" would false-positive on
+# "session"/"location", so match the full event name or date)
 ```
 
 ### Step 2: Convert the training-page line to TBC
@@ -200,7 +201,11 @@ No unit test framework in this repo; verification is via `npm run check`
 
 - [ ] `src/content/fixtures/ion-fitness.md` deleted
 - [ ] Training page shows `ION fitness session` with TBC badge, no date
-- [ ] No "ION" / "2026-07-04" / "4 July 2026" match in `dist/` after build
+- [ ] No "2026-07-04" / "20260704" / "4 July 2026" match in `dist/` after
+      build (the undated "ION fitness session" TBC text remains on the
+      training page by design)
+- [ ] No "ION fitness" match in `dist/fixtures/index.html` or
+      `dist/fixtures.ics`
 - [ ] `npm run build` and `npm run check` pass
 - [ ] Other fixtures unaffected in `fixtures.ics`
 
@@ -261,3 +266,89 @@ No unit test framework in this repo; verification is via `npm run check`
 - When the new ION date is confirmed, re-create the fixtures content entry
   and update the training page in the same change so all surfaces stay in
   sync.
+
+## Plan Review
+
+**Reviewer:** Claude Code (workflow-research-plan)
+**Review Date:** 2026-07-01
+**Original Plan Date:** 2026-07-01
+
+### Review Summary
+
+- **Overall Assessment:** Approved
+- **Confidence Level:** High
+- **Recommendation:** Proceed to implementation
+
+### Strengths
+
+- Independently verified: the fixtures collection schema
+  (`src/content.config.ts`) makes `start` required, confirming the plan's
+  rejection of a dateless content entry.
+- Independently verified: `src/pages/fixtures.ics.ts` builds the feed from
+  `getFixtures()` over the content collection, so deleting the file removes
+  the event from both the fixtures page and the `.ics` feed with no code
+  change — the plan's core claim holds.
+- A repo-wide search found exactly two live references
+  (`src/content/fixtures/ion-fitness.md`, `src/pages/training.astro:36`);
+  the plan's Files Modified list is complete.
+- The TBC approach reuses the existing `.tbc` badge and the card's muted
+  footnote, so no new styling or copy is needed.
+
+### Gaps Identified
+
+1. **Gap 1:** The original Step 1 test grepped for bare `ion`, which
+   false-positives on "session", "location" etc., and the success criteria
+   demanded no "ION" match in `dist/` while the solution deliberately keeps
+   "ION fitness session" (TBC) on the training page.
+   - **Impact:** Low (would have caused confusing verification failures)
+   - **Recommendation:** Fixed during review — tests now match
+     "ION fitness" / the date strings, and the criterion scopes the
+     ION-free check to the fixtures page and `.ics` feed only.
+
+### Edge Cases Not Covered
+
+1. **Edge Case 1:** Build caching serving a stale `fixtures.ics`.
+   - **Current Plan:** Plan rebuilds from scratch via `npm run build`.
+   - **Recommendation:** None needed — Astro regenerates `dist/` fully;
+     GitHub Pages deploy replaces the artifact.
+
+### Alternatives Evaluated in Review
+
+1. **Alternative 1:** Mark the content entry `draft: true` instead of
+   deleting it.
+   - **Pros:** Keeps the file as a template for the rescheduled event.
+   - **Cons:** Leaves a stale dated entry in the repo, which the issue
+     explicitly asks to avoid; git history already preserves the file.
+   - **Verdict:** Deletion is better; restoring from history is trivial.
+
+### Risks and Concerns
+
+1. **Risk 1:** None significant — content-only change, no code paths
+   modified.
+   - **Likelihood:** Low
+   - **Impact:** Low
+   - **Mitigation:** Build + type-check verification in Step 3.
+
+### Required Changes
+
+**Changes that must be made before implementation:**
+
+- None — the two verification inconsistencies found were corrected in the
+  plan during this review.
+
+### Optional Improvements
+
+- [ ] None identified; scope is intentionally minimal.
+
+### Verification Checklist
+
+- [x] Solution addresses root cause identified in GitHub issue
+- [x] All acceptance criteria from issue are covered
+- [x] Implementation steps are specific and actionable
+- [x] File paths and code references are accurate
+- [x] Security implications considered and addressed (none — static content)
+- [x] Performance impact assessed (none)
+- [x] Test strategy covers critical paths and edge cases
+- [x] Documentation updates planned (plan doc itself; no site docs affected)
+- [x] Related issues/dependencies identified
+- [x] Breaking changes documented (none)
