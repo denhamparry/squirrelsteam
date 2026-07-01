@@ -1,7 +1,7 @@
 # GitHub Issue #51: Remove ION fitness session (Sat 4 July 2026) — to be rescheduled
 
 **Issue:** [#51](https://github.com/denhamparry/squirrelsteam/issues/51)
-**Status:** Reviewed (Approved)
+**Status:** Complete
 **Date:** 2026-07-01
 
 ## Problem Statement
@@ -199,15 +199,15 @@ No unit test framework in this repo; verification is via `npm run check`
 
 ## Success Criteria
 
-- [ ] `src/content/fixtures/ion-fitness.md` deleted
-- [ ] Training page shows `ION fitness session` with TBC badge, no date
-- [ ] No "2026-07-04" / "20260704" / "4 July 2026" match in `dist/` after
+- [x] `src/content/fixtures/ion-fitness.md` deleted
+- [x] Training page shows `ION fitness session` with TBC badge, no date
+- [x] No "2026-07-04" / "20260704" / "4 July 2026" match in `dist/` after
       build (the undated "ION fitness session" TBC text remains on the
       training page by design)
-- [ ] No "ION fitness" match in `dist/fixtures/index.html` or
+- [x] No "ION fitness" match in `dist/fixtures/index.html` or
       `dist/fixtures.ics`
-- [ ] `npm run build` and `npm run check` pass
-- [ ] Other fixtures unaffected in `fixtures.ics`
+- [x] `npm run build` and `npm run check` pass
+- [x] Other fixtures unaffected in `fixtures.ics` (22 events remain)
 
 ## Files Modified
 
