@@ -75,6 +75,15 @@ function foldLine(line: string): string {
   return segments.join("\r\n ");
 }
 
+function eventSummary(data: Fixture["data"]): string {
+  if (!data.cup) return data.title;
+
+  const gamedayPrefix = "#1415 Gameday:";
+  return data.title.startsWith(gamedayPrefix)
+    ? `#1415 Cup:${data.title.slice(gamedayPrefix.length)}`
+    : `Cup: ${data.title}`;
+}
+
 function eventLines(entry: Fixture, dtstamp: string): string[] {
   const { data, id } = entry;
   const lines = [
@@ -95,7 +104,7 @@ function eventLines(entry: Fixture, dtstamp: string): string[] {
     }
   }
 
-  lines.push(`SUMMARY:${escapeText(data.title)}`);
+  lines.push(`SUMMARY:${escapeText(eventSummary(data))}`);
 
   if (data.location) {
     lines.push(`LOCATION:${escapeText(data.location)}`);

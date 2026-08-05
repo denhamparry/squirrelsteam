@@ -19,6 +19,7 @@ const fixtures = defineCollection({
     location: z.string().optional(),
     opponent: z.string().optional(),
     home: z.boolean().optional(),
+    cup: z.boolean().default(false),
     // Optional RFC 5545 recurrence rule, e.g. "FREQ=WEEKLY;BYDAY=TU;UNTIL=...".
     rrule: z.string().optional(),
     draft: z.boolean().default(false),
