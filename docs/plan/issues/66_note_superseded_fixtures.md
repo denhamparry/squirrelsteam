@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 66
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/66
 branch: denhamparry.co.uk/docs/gh-issue-066
@@ -145,3 +145,27 @@ repository's current fixture state.
 - `git diff --check`: passed.
 - Repository pre-commit hooks: passed against the exact staged two-file set,
   including markdownlint and the configured secret/file-quality checks.
+
+## Post-PR verification
+
+**Implementation head reviewed:** `0b104f1417247a30b2f2e6cd5a1c622b4fc696df`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+| Criterion or issue statement                                | Independent evidence                                                                                                                                                  | Result |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Dated addendum identifies all three superseded fixtures     | Fresh assertions found the 2026-08-05 heading text plus Tournament, Cowbridge, and Caerau names, dates, and paths exactly once in the appended section                | Pass   |
+| Addendum links issue #60 and PR #61                         | Fresh content assertions found both canonical URLs; live GitHub queries confirmed issue #60 is closed and PR #61 merged at `b0d18beb5c8a6677856ed7a6a5f58bd29317f2fc` | Pass   |
+| Original issue #35 plan text is unchanged                   | Recomputed the `origin/main` source size and hash; the first 3,927 PR-head bytes matched SHA-256 `e7b99ff02c83a4e8b21fa08bcf3e2a1265bcba3ca9969a265d0f6db6d25bd896`   | Pass   |
+| Historical references are clarified without being rewritten | GitHub's diff contains one append-only hunk after the original issue #35 plan and no deletion or modification in the historical prefix                                | Pass   |
+| Current fixture state supports the supersession statement   | Fresh checks confirmed the three cancelled paths remain absent and the three same-date Cup / Plate replacements remain present                                        | Pass   |
+| Markdown and formatting gates pass                          | Re-ran `git diff --check`, whole-file Prettier on the issue #66 plan, range-scoped Prettier on the addendum, and all exact-file pre-commit hooks                      | Pass   |
+| Complete changed-file scope stays documentation-only        | GitHub and local diffs contain exactly the issue #35 and issue #66 plan files; complete-file enumeration found zero Bash or shell fences                              | Pass   |
+| Required GitHub checks pass                                 | `Assign PR to denhamparry` and `CI Placeholder` both passed for PR #69                                                                                                | Pass   |
+| Deployment remains out of scope                             | The PR changes no source, fixture, workflow, dependency, runtime, or deployment file                                                                                  | Pass   |
+
+The local commit, fetched remote branch, and GitHub PR head all matched the
+reviewed implementation SHA before the independent checks. The plan-only
+evidence commit created after this review is inspected separately, and the final
+reviewed PR SHA is stored in the mutable PR body to avoid a tracked-file SHA
+loop.
