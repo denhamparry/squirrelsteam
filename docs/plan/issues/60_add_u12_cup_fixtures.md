@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 60
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/60
 branch: denhamparry.co.uk/feat/gh-issue-060
@@ -160,4 +160,26 @@ does not provide.
 
 ## Post-PR verification
 
-Pending Phase 5.5 verification.
+**Implementation head reviewed:**
+`447c0328ac7cac493dee9636bdf3d88b1a42f3f1`
+
+**Outcome:** Passed independently with no blocking finding. The existing
+development-dependency audit item remains the only non-blocking follow-up.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Three cup fixtures have the specified dates | Parsed the three replacement files and asserted one generated DTSTART for 20260913, 20261011, and 20261108 | Pass |
+| Cancelled Tournament, Cowbridge, and Caerau fixtures are removed | Confirmed all three source paths and generated page/feed summaries are absent | Pass |
+| Fixtures page displays Cup designation | Fresh build contains exactly three scoped Cup-chip elements on the Fixtures page | Pass |
+| Calendar titles display Cup designation | Fresh feed contains the three expected `#1415 Cup:` summaries | Pass |
+| Home/away status is home, away, home | Parsed `home: true`, `false`, `true` and checked corresponding generated Home/Away chips | Pass |
+| Other pool games stay out of scope | Asserted all three non-Rhiwbina pairings are absent from the built page and feed | Pass |
+| Existing fixture behavior remains intact | Independently mapped all 22 source titles through cup metadata and matched every generated calendar summary with no duplicates | Pass |
+| Shared rendering remains safe | Confirmed the Fixtures page has three Cup chips and the home-page `Next up` list has the expected one current Cup chip | Pass |
+| Type and production builds succeed | Re-ran `npm run check` and `npm run build` from the PR head | Pass |
+| Required GitHub checks succeed | `Assign PR to denhamparry` and `CI Placeholder` both passed for PR #61 | Pass |
+
+The local, remote branch, and GitHub PR head all matched the reviewed
+implementation SHA. The in-app browser remained unavailable, so the independent
+pass inspected generated markup and CSS rather than claiming a rendered visual
+check.
