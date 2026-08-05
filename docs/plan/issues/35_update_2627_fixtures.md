@@ -93,3 +93,19 @@ not present in the source data.
   match event.
 - Validation covers content schema, Astro rendering, and generated calendar
   output.
+
+## Superseded fixtures
+
+**2026-08-05:** Three fixture records created by this plan were later cancelled
+and removed:
+
+- Tournament on 2026-09-13
+  (`src/content/fixtures/tournament-2026-09-13.md`)
+- Cowbridge on 2026-10-11
+  (`src/content/fixtures/cowbridge-home-2026-10-11.md`)
+- Caerau on 2026-11-08
+  (`src/content/fixtures/caerau-away-2026-11-08.md`)
+
+They were replaced by the U12s Cup / Plate Pool 3 fixtures in
+[issue #60](https://github.com/denhamparry/squirrelsteam/issues/60) and
+[PR #61](https://github.com/denhamparry/squirrelsteam/pull/61).
