@@ -28,6 +28,7 @@ const hasNotes = (f.body ?? "").trim().length > 0;
 <li class:list={["fixture", { "fixture--past": dimmed }]}>
   <div class="fixture__meta">
     <span class="chip">{typeLabel(f.data.type)}</span>
+    {f.data.cup && <span class="chip chip--cup">Cup</span>}
     {homeAway && <span class="chip chip--ghost">{homeAway}</span>}
   </div>
   <h3 class="fixture__title">
@@ -105,5 +106,13 @@ const hasNotes = (f.body ?? "").trim().length > 0;
     background: transparent;
     color: var(--color-black);
     border: 1px solid var(--color-line-dark);
+  }
+  .chip--cup {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: 2px solid var(--color-black);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 </style>
