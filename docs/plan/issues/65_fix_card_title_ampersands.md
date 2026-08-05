@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 65
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/65
 branch: denhamparry.co.uk/fix/gh-issue-065
@@ -141,4 +141,24 @@ entity while parsing the template.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`2b995c18a0ea10beb29e7d702c6d36a5c580c2ff`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. The plan-only evidence commit created after this review is inspected
+separately, and the final reviewed PR SHA is stored in the mutable PR body to
+avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Home title renders `&`, not visible entity text | Fresh production build contains `👋 About &amp; join us` and no `&amp;amp;` | Pass |
+| Training title renders `&`, not visible entity text | Fresh production build contains `Key dates: season &amp; tour` and no `&amp;amp;` | Pass |
+| About title renders `&`, not visible entity text | Fresh production build contains `Follow &amp; find us` and no `&amp;amp;` | Pass |
+| No component prop contains a literal-rendering entity | Fresh multiline component-prop sweep across all supported template extensions returned no match | Pass |
+| Plain-HTML entities remain correct and unchanged | Five source controls remain; their fresh generated output contains one correctly escaped entity each | Pass |
+| Proposed literal-ampersand fix is used | GitHub diff shows only the three intended prop substitutions plus the plan | Pass |
+| Astro syntax and rendering remain valid | Fresh `npm ci`, `npm run check`, and `npm run build` all passed | Pass |
+| Branch quality gates pass | Fresh `git diff --check`; `Assign PR to denhamparry` and `CI Placeholder` checks passed | Pass |
+| Deployment remains out of scope | PR contains no deployment or runtime configuration change | Pass |
