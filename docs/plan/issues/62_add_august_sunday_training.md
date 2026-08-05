@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 62
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/62
 branch: denhamparry.co.uk/feat/gh-issue-062
@@ -181,4 +181,26 @@ fixture-content changes.
 
 ## Post-PR verification
 
-Pending independent verification of the final PR head.
+**Implementation head reviewed:**
+`ca4fd8ba0a8a39fdd970c45472fb3f571c0f4a2c`
+
+**Outcome:** Passed independently with no blocking or new non-blocking finding.
+The existing development-dependency audit item remains the only follow-up.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Sunday training uses the requested type, time, and venue | Parsed the source record and generated VEVENT for `type: training`, 10:30-11:30 Europe/London, and Caedelyn Park, CF14 6EJ | Pass |
+| Weekly recurrence begins 9 August and ends 30 August | Re-enumerated the RRULE as 9, 16, 23, and 30 August 2026 | Pass |
+| Sunday 2 August is excluded | Confirmed DTSTART is 9 August and the enumerated occurrence set has no 2 August entry | Pass |
+| Calendar feed contains the complete Sunday series | Fresh build contains one Sunday VEVENT with the expected DTSTART, DTEND, location, and RRULE | Pass |
+| Fixtures page lists Sunday training with readable recurrence | Fresh generated HTML contains the Sunday title, time, venue, and `Weekly on Sundays, until 30 Aug 2026` | Pass |
+| Training page mentions the August Sunday sessions | Fresh generated Training HTML contains the August Sunday slot and time | Pass |
+| Tuesday sessions are unaffected | Tuesday source matches `origin/main`; its feed title/RRULE remain present while the Fixtures page still hides it | Pass |
+| Explicit display exception is narrowly scoped | Repository sweep found exactly one `showOnFixturesPage: true` record and preserved the fallback filter | Pass |
+| Type, build, and production audit gates pass | Re-ran `npm run check`, `npm run build`, and `npm audit --omit=dev` from the remote PR head | Pass |
+| Required GitHub check passes | `CI Placeholder` passed for PR #63 at the reviewed implementation head | Pass |
+
+The analogous-path sweep rechecked the schema, both recurring training records,
+all recurrence consumers, the page filter, the shared recurrence renderer, and
+calendar generation. The local head, remote branch head, and GitHub PR head all
+matched the reviewed implementation SHA before this evidence was recorded.
