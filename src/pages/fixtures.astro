@@ -11,6 +11,7 @@ import {
 } from "../lib/fixtures";
 
 const showsOnFixturesPage = (fixture: Fixture) =>
+  fixture.data.showOnFixturesPage ??
   !(fixture.data.type === "training" && fixture.data.rrule);
 
 const upcoming = (await getUpcomingFixtures()).filter(showsOnFixturesPage);
