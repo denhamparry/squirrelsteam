@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 73
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/73
 branch: denhamparry.co.uk/fix/gh-issue-073
@@ -155,4 +155,26 @@ alters generated site behavior; the plan is non-executable documentation.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`be89060abc98506237d620e0930ecc0322873af4`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. The plan-only evidence commit created after this review is inspected
+separately, and the final reviewed PR SHA is stored in the mutable PR body to
+avoid a tracked-file SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Training no longer presents the confirmed friendly as unscheduled | Fresh rendered-item extraction found exactly one St Peters entry with the confirmed date and no `tbc` class | Pass |
+| Confirmed details are accurate and useful | The rendered entry states St Peters away, pre-season friendly, and Friday 28 August 2026 without inventing a kick-off time | Pass |
+| Confirmed entry links to fixture details and calendar actions | Fresh HTML assertion found the descriptive `/fixtures/` link, and the linked built page contains the same fixture and date | Pass |
+| The second pre-season game remains unscheduled | Fresh rendered-item extraction found exactly one `1× pre-season game arranged` entry | Pass |
+| Existing TBC treatment remains on the unscheduled game | The remaining entry retains a scoped class containing `tbc` and visible `TBC` text | Pass |
+| Stale combined wording is removed | Neither the built Training page nor live site source contains `2× pre-season games arranged` | Pass |
+| Copy-only ownership is preserved | GitHub PR diff contains only this plan and `training.astro`; fixture content, components, styles, schemas, dependencies, workflows, and calendar code are unchanged | Pass |
+| Type-check, build, and repository hooks pass | Fresh `npm ci`, check, build, diff checks, rendered assertions, and exact-range pre-commit hooks passed | Pass |
+| Required GitHub checks pass | `Assign PR to denhamparry` and `CI Placeholder` both completed successfully | Pass |
+| Closing linkage is configured | GitHub resolves `Closes #73` from the stored PR body to issue #73 | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment file | Pass |
