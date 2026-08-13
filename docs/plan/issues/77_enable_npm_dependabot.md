@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 77
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/77
 branch: denhamparry.co.uk/fix/gh-issue-077
@@ -18,9 +18,9 @@ does not accurately describe the ecosystems this project uses.
 
 ## Acceptance criteria
 
-- [ ] `.github/dependabot.yml` enables the `npm` ecosystem for `/` on a weekly
+- [x] `.github/dependabot.yml` enables the `npm` ecosystem for `/` on a weekly
       schedule.
-- [ ] Unused commented-out ecosystem templates are removed.
+- [x] Unused commented-out ecosystem templates are removed.
 - [ ] After the change lands, Dependabot raises at least one npm pull request
       or reports that the npm ecosystem is up to date.
 
@@ -195,4 +195,31 @@ tracked non-blocking follow-up.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`2a7f68f3c84148baabaf31e16b7c728545143493`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The live activity criterion remains an explicit post-merge operator check
+because GitHub evaluates Dependabot configuration from the default branch.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. The plan-only evidence commit created after this review is inspected
+separately, and the final reviewed PR SHA is stored in the mutable PR body to
+avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Default branch currently automates only GitHub Actions updates | Fresh parsing of `origin/main:.github/dependabot.yml` returned exactly `github-actions` | Pass |
+| Enable npm updates for the root manifest | Fresh strict parsing of the PR head found one `npm` entry with `directory: "/"` | Pass |
+| Run npm updates weekly | The exact-object assertion found `schedule.interval: "weekly"` on the npm entry | Pass |
+| Retain an intentional initial-PR cap | The npm entry has integer `open-pull-requests-limit: 10`, matching the existing Actions policy | Pass |
+| Remove unused ecosystem templates | Complete-file negative search found no uncommenting instruction or `pip`, `gomod`, or `docker` block | Pass |
+| Configuration matches repository ownership | Fresh related-path sweep found one root `package.json`, one root `package-lock.json`, and no Python, Go, or Docker definition | Pass |
+| Existing workflow handles assignment without executing bot content | Static review confirmed the opened-PR assignment trigger, limited issue/PR permissions, and no checkout step; the PR's assignment check passed | Pass |
+| PR contains only intended scope | GitHub reports only `.github/dependabot.yml` and this plan; package, lockfile, workflow, source, and deploy files are unchanged | Pass |
+| Repository behavior remains compatible | Fresh `npm ci`, `npm run check`, `npm run build`, diff checks, and exact-file pre-commit hooks passed | Pass |
+| Required GitHub checks pass | `Assign PR to denhamparry` and `CI Placeholder` both completed successfully | Pass |
+| Closing linkage is configured | GitHub resolves `Closes #77` from the stored PR body to issue #77 | Pass |
+| Dependabot raises an npm PR or reports up to date | Inspect npm Recent update jobs after merge under Insights → Dependency graph → Dependabot; use Check for updates if no run is present | Deferred until post-merge |
+| Meaningful CI for dependency PRs | Existing issue #78 tracks replacing the placeholder with check, build, and audit jobs | Non-blocking follow-up |
+| Deployment remains out of scope | Plan has `deploy: no`; the deploy workflow is unchanged and does not run on pull requests | Pass |
