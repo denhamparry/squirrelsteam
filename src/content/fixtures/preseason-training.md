@@ -7,4 +7,4 @@ location: Caedelyn Park, CF14 6EJ
 rrule: FREQ=WEEKLY;BYDAY=TU;UNTIL=20260906T180000Z
 ---
 
-Weekly pre-season training, Tuesdays 7–8pm at Caedelyn Park.
+Pre-season training focused on fitness, skills, and team preparation.

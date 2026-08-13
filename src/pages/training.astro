@@ -5,12 +5,14 @@ import Card from "../components/Card.astro";
 import {
   formatWhen,
   getPreSeasonFixtures,
+  getTourFixtures,
   getTrainingFixtures,
   recurrenceText,
 } from "../lib/fixtures";
 
 const PRE_SEASON_GAMES_PLANNED = 2;
 const preSeasonFixtures = await getPreSeasonFixtures();
+const tourFixtures = await getTourFixtures();
 const trainingFixtures = await getTrainingFixtures();
 const trainingLocations = [
   ...new Set(
@@ -103,7 +105,13 @@ const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
       <Card title="Key dates: season & tour">
         <ul>
           <li><strong>26/27 season starts</strong> — Sunday 6 September 2026</li>
-          <li><strong>Tour</strong> — South of France, 1–4 May 2027 🇫🇷</li>
+          {
+            tourFixtures.map((fixture) => (
+              <li>
+                <strong>{fixture.data.title}</strong> — {formatWhen(fixture)}
+              </li>
+            ))
+          }
         </ul>
         <p>
           <a class="button button--outline" href="/fixtures/"
