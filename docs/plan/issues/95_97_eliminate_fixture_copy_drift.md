@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issues:
   - 95
   - 96
@@ -232,4 +232,33 @@ non-blocking follow-up idea.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`3dbad0d03309cb9a9ee7512db0c5c6c3699ff3b0`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The grouped audit of non-training fixture descriptions remains the sole
+existing follow-up idea in the PR body.
+
+The local commit, fetched remote branch, and GitHub PR #100 head matched before
+verification. This plan-only evidence update is inspected separately after
+push, and the final reviewed PR SHA is stored in the mutable PR body to avoid a
+tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| #95 venue comes from published training content | Fresh PR diff shows About calling `getTrainingFixtures()` and contains no literal ground | Pass |
+| #95 fixture location edits update About | A fresh post-PR mutation of both training locations rendered `Post-PR Ground` on About | Pass |
+| #95 copy stays compact | Generated About uses the ground-name portion only and retains correct sentence/link spacing | Pass |
+| #96 tour title and dates come from its fixture | Fresh diff shows `getTourFixtures()` plus `formatWhen()` and no Training-page tour literals | Pass |
+| #96 date edits update all three consumers | Alternate 5-9 June dates appeared on Training, Fixtures, and in ICS all-day fields | Pass |
+| #96 season-start ownership is decided | Plan and traceability retain it as intentional editorial prose because no record owns it | Pass |
+| #97 training descriptions cannot contradict schedule fields | Fresh alternate start, end, location, and Wednesday RRULE appeared in ICS beside unchanged neutral description copy | Pass |
+| First-published location behavior is deterministic | Moving the first series after the Sunday series selected Sunday's ground; changing both records then moved About to the new shared ground | Pass |
+| Restored branch contains committed fixture data | All three temporary fixture paths matched `HEAD`; the final build returned original venue, schedules, and tour dates | Pass |
+| Astro validation succeeds | Fresh post-PR `npm run check` returned zero diagnostics and `npm run build` generated six pages plus ICS | Pass |
+| Repository hooks pass | Exact six-file staged content passed every configured pre-commit hook without modification | Pass |
+| Hosted required checks pass | `Assign PR to denhamparry` and `Check, build, and audit` both completed successfully | Pass |
+| PR scope matches the combined plan | GitHub reports exactly the six planned paths and no schema, ICS generator, dependency, workflow, style, or deploy change | Pass |
+| All three issues close from one PR | GitHub resolves PR #100 closing references to open issues #95, #96, and #97 | Pass pre-merge |
+| Analogous non-training duplicates are disposed | Tour destination and Cardiff Arms Park venue/kick-off copy remain one non-blocking PR-body follow-up | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; no live environment was changed | Pass |
