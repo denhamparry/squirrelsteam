@@ -1,5 +1,5 @@
 ---
-status: Reviewed (Approved)
+status: Complete
 issues:
   - 88
   - 89
@@ -254,4 +254,38 @@ supply-chain configuration with a supporting dependency repair.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`fbc37433d948bdaa2bc7388f7e4d2ad7d647cd35`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The automatic deployment result remains an explicit post-merge check because
+the workflow runs on `main` and this workflow does not authorize a manual live
+deployment from the open PR.
+
+The local commit, fetched remote branch, and GitHub PR #92 head matched before
+the independent review. The plan-only evidence update created after this review
+is inspected separately, and the final reviewed PR SHA is stored in the mutable
+PR body to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Pin all three deploy actions | Fresh fetched-head parsing found checkout, Astro, and deploy-pages at 40-character SHAs with release comments | Pass |
+| Pins match the former mutable tags | Fresh upstream API queries matched `v7`, `v6`, and `v5` to the exact committed SHAs | Pass |
+| No workflow retains a mutable action tag | Complete workflow sweep found five external action references, all immutable, and no `uses: ...@vN` match | Pass |
+| Preserve deployment behavior | Complete trigger, permission, input, job, and artifact-chain review found only provenance references changed | Pass pre-merge |
+| Pinned deployment completes | Confirm the automatic Pages run succeeds after merge to `main` | Deferred post-merge |
+| Protect `main` | Fresh REST read returned the full protection object; GraphQL returned one active `main` rule | Pass |
+| Require the real CI check | REST binds `Check, build, and audit` to GitHub Actions app ID 15368; hosted PR CI passed | Pass |
+| Require current branches | REST strict status and GraphQL `requiresStrictStatusChecks` are true | Pass |
+| Block direct pushes, including admin bypass | GraphQL reports `requiresApprovingReviews` and `isAdminEnforced` true with zero required approvals | Pass |
+| Block failed or missing CI from normal merge | The protected rule requires the sole CI context; PR #92 is clean only with that hosted check successful | Pass |
+| Block force pushes and deletion | REST and GraphQL independently report both controls disabled | Pass |
+| Do not require the assignment automation | The required contexts contain only `Check, build, and audit` | Pass |
+| Record restorable settings | Fresh complete-file review found the exact app-bound payload and read-back command in `docs/setup.md` | Pass |
+| Keep the restoration command valid | All three complete Bash fences independently passed `bash -n`; the payload produced the live setting | Pass |
+| Restore a passable dependency graph | The base requests incompatible TypeScript v7.0.2; the PR resolves v6.0.3 within Astro's v5/v6 peer range | Pass |
+| Correct the observed CI failure | Fresh `npm ci`, check, build, and production audit passed; the prior `main` run is recorded failed at install | Pass |
+| Limit repository scope | GitHub reports exactly the workflow, setup guide, manifest, lockfile, and this plan | Pass |
+| Link both issues for automatic closure | GitHub resolves both stored closing keywords to open issues #88 and #89 | Pass |
+| Required hosted checks pass | `Check, build, and audit` and assignment automation both completed successfully | Pass |
+| Manual deployment remains out of scope | Plan has `deploy: no`; no workflow dispatch or Pages write was performed | Pass |
