@@ -2,10 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
+import { getTrainingFixtures } from "../lib/fixtures";
 
 const contactEmail = "contact@squirrels.team";
 const clubUrl = "https://rhiwbina.rfc.wales/";
 const instagramUrl = "https://www.instagram.com/rhiwbinarfc1415/";
+const trainingFixtures = await getTrainingFixtures();
+const trainingVenue = trainingFixtures
+  .map((fixture) => fixture.data.location?.split(",", 1)[0].trim())
+  .find((location) => location);
 ---
 
 <BaseLayout
@@ -39,7 +44,12 @@ const instagramUrl = "https://www.instagram.com/rhiwbinarfc1415/";
           along to training — say hello, join in, and see if it's for you.
         </p>
         <p>
-          We train at <strong>Caedelyn Park</strong>. Check the
+          {
+            trainingVenue && (
+              <>We train at <strong>{trainingVenue}</strong>. </>
+            )
+          }
+          Check the{" "}
           <a href="/training/">training page</a> for days, times and key dates.
         </p>
         <p>
