@@ -2,10 +2,29 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
-import { formatWhen, getPreSeasonFixtures } from "../lib/fixtures";
+import {
+  formatWhen,
+  getPreSeasonFixtures,
+  getTrainingFixtures,
+  recurrenceText,
+} from "../lib/fixtures";
 
 const PRE_SEASON_GAMES_PLANNED = 2;
 const preSeasonFixtures = await getPreSeasonFixtures();
+const trainingFixtures = await getTrainingFixtures();
+const trainingLocations = [
+  ...new Set(
+    trainingFixtures.flatMap((fixture) =>
+      fixture.data.location ? [fixture.data.location] : [],
+    ),
+  ),
+];
+const trainingSchedules = trainingFixtures.map((fixture) => ({
+  fixture,
+  recurrence: fixture.data.rrule
+    ? recurrenceText(fixture.data.rrule)
+    : null,
+}));
 const unscheduledPreSeasonGames = Math.max(
   0,
   PRE_SEASON_GAMES_PLANNED - preSeasonFixtures.length,
@@ -28,10 +47,19 @@ const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
     <div class="container container-narrow flow">
       <Card title="Training">
         <ul>
-          <li>Venue: <strong>Caedelyn Park (CF14 6EJ)</strong></li>
-          <li>Tuesdays, <strong>7–8pm</strong></li>
-          <li>August Sundays, <strong>10:30–11:30am</strong></li>
-          <li>Pre-season starts <strong>Tuesday 4 August 2026</strong></li>
+          {
+            trainingLocations.map((location) => (
+              <li>Venue: <strong>{location}</strong></li>
+            ))
+          }
+          {
+            trainingSchedules.map(({ fixture, recurrence }) => (
+              <li>
+                <strong>{fixture.data.title}</strong> — {formatWhen(fixture)}
+                {recurrence && <>; {recurrence}</>}
+              </li>
+            ))
+          }
         </ul>
       </Card>
 
