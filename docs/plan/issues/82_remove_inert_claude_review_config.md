@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 82
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/82
 branch: denhamparry.co.uk/fix/gh-issue-082
@@ -176,3 +176,32 @@ documentation and removal of inert GitHub metadata.
 - Failure, success, and negative/no-op evidence pass: the baseline has a dead
   file and two instruction owners; the branch has none; shell-bearing docs
   remain syntactically valid; site behavior is unchanged.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`80323bb1f2bb84e54f12fe284d20abfd8eeed3c4`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The known false-green hosted check remains tracked by issue #78 and open PR #85.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. This plan-only evidence update is inspected separately after push, and
+the final reviewed PR SHA is stored in the mutable PR body to avoid a tracked-
+file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Inert config is removed or activated | Fresh fetched-head object lookup confirmed `.github/claude-code-review.yml` is absent | Pass |
+| No GitHub workflow consumer is silently disabled | Complete workflow review found no Claude workflow or config reference on the base or branch | Pass |
+| Visible setup no longer creates the config | Fresh `docs/setup.md` inspection and hidden-inclusive search found no config/app/automation instruction | Pass |
+| Hidden setup wizard no longer creates or verifies it | Fresh `.claude/commands/setup-repo.md` inspection found no review-config or app step | Pass |
+| Wizard remains structurally coherent | Remaining steps are consecutively numbered 1 through 6; completion summary and next steps match them | Pass |
+| Hidden-inclusive repository sweep is complete | `rg -uuu` plus filesystem enumeration found matching text only in this historical issue plan | Pass |
+| Local on-demand review commands remain | `/review` and `/tdd-check` command files and references are unchanged | Pass |
+| Changed shell-bearing documentation stays valid | Fresh complete-file extraction found two Bash fences and both passed `bash -n` | Pass |
+| Repository behavior remains compatible | Fresh `npm ci`, check, build, and diff checks passed | Pass |
+| PR scope matches the issue | GitHub reports exactly the four planned paths, including the deletion and discovered hidden owner | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #82` line to issue #82 | Pass |
+| Hosted checks pass | Assignment and the current default-branch placeholder check passed; issue #78/PR #85 replaces the inadequate check | Pass with tracked limitation |
+| Deployment remains out of scope | Plan has `deploy: no`; no workflow or live environment changed | Pass |
