@@ -2,6 +2,17 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
+import { formatWhen, getPreSeasonFixtures } from "../lib/fixtures";
+
+const PRE_SEASON_GAMES_PLANNED = 2;
+const preSeasonFixtures = await getPreSeasonFixtures();
+const unscheduledPreSeasonGames = Math.max(
+  0,
+  PRE_SEASON_GAMES_PLANNED - preSeasonFixtures.length,
+);
+const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
+  unscheduledPreSeasonGames === 1 ? "game" : "games"
+} arranged`;
 ---
 
 <BaseLayout
@@ -37,11 +48,21 @@ import Card from "../components/Card.astro";
           <li>ION fitness session <span class="tbc">TBC</span></li>
           <li>Green Mile team-bonding session <span class="tbc">TBC</span></li>
           <li>Surprise guest coaches <span class="tbc">TBC</span></li>
-          <li>
-            <strong>St Peters away pre-season friendly</strong> — Friday 28
-            August 2026 (<a href="/fixtures/">fixture details &amp; calendar</a>)
-          </li>
-          <li>1× pre-season game arranged <span class="tbc">TBC</span></li>
+          {
+            preSeasonFixtures.map((fixture) => (
+              <li>
+                <strong>{fixture.data.title}</strong> — {formatWhen(fixture)} (
+                <a href="/fixtures/">fixture details &amp; calendar</a>)
+              </li>
+            ))
+          }
+          {
+            unscheduledPreSeasonGames > 0 && (
+              <li>
+                {unscheduledPreSeasonLabel} <span class="tbc">TBC</span>
+              </li>
+            )
+          }
           <li>New kit presentation</li>
           <li>VEO analysis session</li>
         </ul>

@@ -25,6 +25,12 @@ export async function getFixtures(): Promise<Fixture[]> {
   );
 }
 
+/** Published pre-season games, sorted by start ascending. */
+export async function getPreSeasonFixtures(): Promise<Fixture[]> {
+  const fixtures = await getFixtures();
+  return fixtures.filter((fixture) => fixture.data.preSeason);
+}
+
 /** Parse the UNTIL date out of an RRULE (e.g. "...;UNTIL=20260825T180000Z"). */
 function parseUntil(rrule: string): Date | null {
   const match = /UNTIL=(\d{8})(?:T(\d{6})Z?)?/.exec(rrule);

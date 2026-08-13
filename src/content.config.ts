@@ -20,6 +20,7 @@ const fixtures = defineCollection({
     opponent: z.string().optional(),
     home: z.boolean().optional(),
     cup: z.boolean().default(false),
+    preSeason: z.boolean().default(false),
     // Optional RFC 5545 recurrence rule, e.g. "FREQ=WEEKLY;BYDAY=TU;UNTIL=...".
     rrule: z.string().optional(),
     // Recurring training is hidden from the Fixtures page unless opted in.
