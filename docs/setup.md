@@ -139,17 +139,6 @@ Perform a code review:
 6. Update documentation
 ```
 
-### GitHub Integration
-
-- [ ] Run `/install-github-app` in Claude Code for PR reviews
-- [ ] Create `.github/claude-code-review.yml`:
-
-```yaml
-direct_prompt: |
-  Review this PR for bugs and security issues.
-  Be concise. Focus on actual problems.
-```
-
 ## 🔧 Advanced Configuration (Optional)
 
 ### MCP Servers
@@ -167,7 +156,6 @@ direct_prompt: |
 
 ### CI/CD Integration
 
-- [ ] Add Claude Code to CI pipeline for automated reviews
 - [ ] Set up automated testing on commits
 - [ ] Configure deployment automation
 
@@ -227,7 +215,6 @@ cat data.csv | claude -p "analyze this"
 ```text
 /clear          - Clear conversation context
 /terminal-setup - Configure terminal
-/install-github-app - Set up GitHub integration
 /review         - Run code review (if configured)
 ```
 
