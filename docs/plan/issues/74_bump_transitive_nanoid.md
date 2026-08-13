@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 74
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/74
 branch: denhamparry.co.uk/fix/gh-issue-074
@@ -168,3 +168,30 @@ resolved package is part of the production Astro/Vite/PostCSS build chain.
   script, source change, or build regression was introduced.
 - The changed plan contains no Bash or shell fence, so executable-fence
   validation is not applicable.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`5e01ade6a9229f8f19dadabe6b1113ec58cd0462`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. The plan-only evidence commit created after this review is inspected
+separately, and the final reviewed PR SHA is stored in the mutable PR body to
+avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Original production audit failure is established | `origin/main` independently resolved the vulnerable `nanoid` 3.3.16 baseline recorded by the fresh issue | Pass |
+| Lockfile resolves `nanoid` to 3.3.17 or newer | Fresh lockfile traversal found exactly one `nanoid` resolution at 3.3.18 | Pass |
+| Dependency remains correctly owned | Fresh `npm ls` traced 3.3.18 only through Astro 7.1.0 → Vite 8.1.2 → PostCSS 8.5.25 | Pass |
+| Production audit clears the high advisory | Fresh `npm ci` and `npm audit --omit=dev` reported zero vulnerabilities | Pass |
+| No other audit finding is introduced | Fresh full `npm audit` reported zero vulnerabilities | Pass |
+| Size-zero loop behavior is repaired | Fresh sync and async custom-generator assertions returned safely for zero-size calls | Pass |
+| Project has no direct `nanoid` usage | Repeated repository import/call search found no application call site | Pass |
+| Type-check remains compatible | Fresh `npm run check` inspected 19 files with zero diagnostics | Pass |
+| Production build remains compatible | Fresh `npm run build` generated all six pages plus the calendar feed | Pass |
+| PR contains only intended scope | GitHub PR diff contains only the plan and three-line `package-lock.json` resolution update | Pass |
+| Required GitHub checks pass | `Assign PR to denhamparry` and `CI Placeholder` both completed successfully | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment or application file | Pass |
