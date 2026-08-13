@@ -83,15 +83,7 @@ Based on the primary language/framework, update `.pre-commit-config.yaml`:
 - Enable hooks for all relevant languages
 - Adjust exclude patterns as needed
 
-## Step 4: Update GitHub PR Review Configuration
-
-Update `.github/claude-code-review.yml`:
-
-1. Ask if there are specific file paths to include/exclude from reviews
-2. Add any language-specific review criteria to `file_type_instructions`
-3. Configure any skip conditions if needed (e.g., bot PRs, specific PR titles)
-
-## Step 5: Install Pre-commit Hooks
+## Step 4: Install Pre-commit Hooks
 
 Guide the user through installation:
 
@@ -108,15 +100,7 @@ pre-commit run --all-files
 
 If the test run shows errors, help fix them before proceeding.
 
-## Step 6: GitHub Integration Setup
-
-Guide the user through GitHub integration:
-
-1. Explain they need to run `/install-github-app` to set up automated PR reviews
-2. Verify `.github/claude-code-review.yml` is configured correctly
-3. Explain that Claude will now automatically review PRs based on the configuration
-
-## Step 7: Custom Commands Review
+## Step 5: Custom Commands Review
 
 Ask the user if they want to:
 
@@ -126,7 +110,7 @@ Ask the user if they want to:
 
 If they want changes, guide them through creating/modifying command files in `.claude/commands/`.
 
-## Step 8: Verification & Next Steps
+## Step 6: Verification & Next Steps
 
 Run verification checks:
 
@@ -145,16 +129,14 @@ Your project is now configured for Claude Code development.
 ### What was configured:
 - ✅ CLAUDE.md updated with project details
 - ✅ Pre-commit hooks configured for [language]
-- ✅ GitHub PR review automation configured
 - ✅ Custom slash commands available: /review, /tdd-check, /precommit
 
 ### Next steps:
 1. Review the changes to CLAUDE.md and adjust as needed
 2. Commit the configuration: `git add . && git commit -m "chore: configure Claude Code for project"`
-3. Run `/install-github-app` to enable automated PR reviews
-4. Start developing with TDD: Write tests first, then implementation
-5. Use `/tdd-check` before implementing features
-6. Use `/review` before creating pull requests
+3. Start developing with TDD: Write tests first, then implementation
+4. Use `/tdd-check` before implementing features
+5. Use `/review` before creating pull requests
 
 ### Available Commands:
 - `/review` - Comprehensive code review
