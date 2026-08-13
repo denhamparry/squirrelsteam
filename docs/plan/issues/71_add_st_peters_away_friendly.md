@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 71
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/71
 branch: denhamparry.co.uk/feat/gh-issue-071
@@ -166,3 +166,32 @@ non-executable documentation.
   timestamp and remove `allDay`, following the Cardiff Arms Park fixture.
 - Update the existing transitive `nanoid` 3.3.16 resolution to 3.3.17 or newer
   in a separately reviewed dependency PR to clear GHSA-2v37-7h3g-55p8.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`a604e4186ff8913e16f1ec2b92258c1ebcb24dec`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. The plan-only evidence commit created after this review is inspected
+separately, and the final reviewed PR SHA is stored in the mutable PR body to
+avoid a tracked-file SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Requested fixture source is exact | Fresh byte-for-byte source assertion matched the issue's frontmatter and note | Pass |
+| Feed contains an all-day event on 28 August | Fresh VEVENT parsing found date start `20260828` and exclusive end `20260829` | Pass |
+| Feed carries the requested identity and note | VEVENT has the exact St Peters away-friendly summary and TBC description | Pass |
+| Standard Match and Away presentation | Fresh card extraction found Match and Away chips with no Cup chip | Pass |
+| Fixtures page carries the requested date and note | Built card contains the standard `Fri, 28 Aug 2026` display and exact note | Pass |
+| Friendly sorts after August training and before Llandaff North | Fresh HTML index assertions confirmed the required ordering | Pass |
+| Friendly appears in home-page Next up | Fresh home HTML assertion found it in the third slot ahead of Llandaff North | Pass |
+| No location is introduced | Source and VEVENT contain no location field | Pass |
+| Existing St Peters home fixture stays distinct | Source matches `origin/main`; generated feed contains two St Peters events including 1 November | Pass |
+| Data-only scope is preserved | GitHub PR diff contains only the fixture and this plan; schema and components are untouched | Pass |
+| Type-check, build, and repository hooks pass | Fresh clean install, check, build, generated assertions, diff check, and exact-file hooks passed | Pass |
+| Required GitHub checks pass | `Assign PR to denhamparry` and `CI Placeholder` both completed successfully | Pass |
+| Timed conversion remains a follow-up | The PR body records conversion after coaches confirm kick-off | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment file | Pass |
