@@ -90,10 +90,10 @@ gh api repos/denhamparry/squirrelsteam/branches/main/protection
 
 ## Quick Commands
 
+- Check: `npm run check`
 - Build: `npm run build`
-- Test: `npm test`
-- Lint: `npm run lint`
-- Type Check: `npm run typecheck`
+- Audit: `npm audit --omit=dev`
+- Pre-commit: `pre-commit run --all-files`
 - Dev Server: `npm run dev`
 
 ## Code Style Guidelines
@@ -108,16 +108,15 @@ gh api repos/denhamparry/squirrelsteam/branches/main/protection
 ## Project Structure
 
 - /src - Source code
-- /tests - Test files
 - /docs - Documentation
 - [ Add your structure ]
 
-## Testing Requirements
+## Validation Requirements
 
-- Write tests for all new features
-- Maintain >80% code coverage
-- Run tests before committing
-- Use TDD when possible
+- Run `npm run check` to validate the Astro project
+- Run `npm run build` to verify the production build
+- Run `npm audit --omit=dev` to check production dependencies
+- Run pre-commit hooks before committing
 
 ## Git Workflow
 
@@ -145,12 +144,12 @@ gh api repos/denhamparry/squirrelsteam/branches/main/protection
 [ Any special setup for dependencies ]
 ```
 
-### Testing Infrastructure
+### Project Validation
 
-- [ ] Set up test framework (Jest, Pytest, etc.)
-- [ ] Configure test scripts in package.json/project config
-- [ ] Create initial test file structure
-- [ ] Set up code coverage reporting
+- [ ] Confirm `npm run check` passes
+- [ ] Confirm `npm run build` produces the static site
+- [ ] Confirm `npm audit --omit=dev` reports no production vulnerabilities
+- [ ] Confirm pre-commit hooks pass
 
 ### Code Quality Tools
 
@@ -185,7 +184,7 @@ Perform a code review:
 
 1. Check code follows our style guide in CLAUDE.md
 2. Verify error handling
-3. Check test coverage
+3. Run the configured project validation
 4. Review security implications
 5. Validate performance
 6. Update documentation
@@ -208,7 +207,7 @@ Perform a code review:
 
 ### CI/CD Integration
 
-- [ ] Set up automated testing on commits
+- [ ] Confirm CI runs the project's check, build, and audit commands
 - [ ] Configure deployment automation
 
 ## 💡 Best Practices Checklist
@@ -223,10 +222,9 @@ Perform a code review:
 ### During Development
 
 - [ ] Use the 3-step process: Research → Plan → Implement
-- [ ] Write tests first (TDD approach)
 - [ ] Commit frequently with clear messages
 - [ ] Use @-tagging to include specific files in context
-- [ ] Run linter and tests before committing
+- [ ] Run project validation and pre-commit hooks before committing
 
 ### Model Selection
 
@@ -284,7 +282,7 @@ cat data.csv | claude -p "analyze this"
 
 - [ ] Review Claude's commits for accuracy
 - [ ] Update CLAUDE.md with new patterns discovered
-- [ ] Check test coverage metrics
+- [ ] Check the latest CI result
 
 ### Weekly
 
@@ -296,7 +294,7 @@ cat data.csv | claude -p "analyze this"
 ### Per Feature
 
 - [ ] Document feature in CLAUDE.md
-- [ ] Create comprehensive tests
+- [ ] Run `npm run check`, `npm run build`, and the production audit
 - [ ] Update relevant documentation
 - [ ] Get code review (human + Claude)
 

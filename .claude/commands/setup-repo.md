@@ -104,7 +104,7 @@ If the test run shows errors, help fix them before proceeding.
 
 Ask the user if they want to:
 
-- Modify existing commands (`/review`, `/tdd-check`, `/precommit`)
+- Modify existing commands (`/review`, `/precommit`)
 - Add new project-specific commands
 - Remove any commands they won't use
 
@@ -129,18 +129,17 @@ Your project is now configured for Claude Code development.
 ### What was configured:
 - ✅ CLAUDE.md updated with project details
 - ✅ Pre-commit hooks configured for [language]
-- ✅ Custom slash commands available: /review, /tdd-check, /precommit
+- ✅ Custom slash commands available: /review, /precommit
 
 ### Next steps:
 1. Review the changes to CLAUDE.md and adjust as needed
 2. Commit the configuration: `git add . && git commit -m "chore: configure Claude Code for project"`
-3. Start developing with TDD: Write tests first, then implementation
-4. Use `/tdd-check` before implementing features
+3. Run the project's configured checks and build before committing
+4. Run pre-commit hooks against the changed files
 5. Use `/review` before creating pull requests
 
 ### Available Commands:
 - `/review` - Comprehensive code review
-- `/tdd-check` - Verify TDD compliance
 - `/precommit` - Run quality checks
 - `/setup-repo` - Run this wizard again
 
