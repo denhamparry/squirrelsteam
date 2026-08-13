@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 80
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/80
 branch: denhamparry.co.uk/fix/gh-issue-080
@@ -195,3 +195,33 @@ data, and page rendering.
   workflow, or deploy file changed.
 - The changed fixture Markdown and plan contain no Bash or shell fence, so
   executable-fence validation is not applicable.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`613acc67c4a3bb2abe9784cd0d63a96b5ecdb9f8`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The known false-green hosted check remains tracked by issue #78 and open PR #85.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. This plan-only evidence update is inspected separately after push, and
+the final reviewed PR SHA is stored in the mutable PR body to avoid a tracked-
+file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Confirmed entries come from fixture content | Fresh source/diff inspection found a typed flag, shared selector, and Training collection map with no literal opponent/date | Pass |
+| Pre-season classification is explicit and narrow | Exhaustive fixture scan found exactly the St Peters away record opted in; all other records use default false | Pass |
+| Training uses the shared date formatter | Fresh source inspection and built output found `formatWhen()` and `Fri, 28 Aug 2026` | Pass |
+| The fixture's title is content-owned | Built Training HTML contains the exact source title rather than reconstructed page prose | Pass |
+| One source edit updates Training, Fixtures, and ICS | Independent mutation to 30 August produced `Sun, 30 Aug 2026` in both pages and `20260830` in the feed | Pass |
+| Restored branch reflects the committed 28 August source | Fresh clean build returned 28 August across both pages and the VEVENT | Pass |
+| Remaining unscheduled game is derived | Current one-confirmed/two-planned state renders exactly `1× pre-season game arranged` | Pass |
+| Existing TBC treatment remains | Generated remaining item has visible `TBC` text and a class containing the `tbc` token | Pass |
+| Existing provisional note remains | Generated Training HTML contains the unchanged `are provisional` explanation | Pass |
+| Type-check, build, and repository hooks pass | Fresh clean install, check, build, output assertions, diff checks, and exact-file hooks passed | Pass |
+| PR scope matches the issue | GitHub reports only the five planned files | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #80` line to issue #80 | Pass |
+| Hosted checks pass | Assignment and the current default-branch placeholder check passed; issue #78/PR #85 replaces the inadequate check | Pass with tracked limitation |
+| Deployment remains out of scope | Plan has `deploy: no`; no workflow or live environment changed | Pass |
