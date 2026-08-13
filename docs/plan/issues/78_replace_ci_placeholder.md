@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 78
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/78
 branch: denhamparry.co.uk/fix/gh-issue-078
@@ -191,3 +191,34 @@ follow-up idea.
   uses mutable major-version action tags. Pinning its checkout, Astro, and
   deploy actions to immutable commits would apply the same supply-chain policy
   consistently, but is outside issue #78's pull-request CI scope.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`f4784037506a9407e8fa2cad956225673728302e`
+
+**Outcome:** Passed independently with no blocking finding and no new
+non-blocking finding. The deploy-action pinning idea was already identified by
+the branch review.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. This plan-only evidence update is inspected separately after push, and
+the final reviewed PR SHA is stored in the mutable PR body to avoid a tracked-
+file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Pull requests targeting `main` run real validation | Fresh parsing of the fetched PR head found the `pull_request` target and single `validate` job | Pass |
+| Locked dependencies are installed | The fetched job contains blocking `npm ci`; local and hosted installs passed | Pass |
+| Astro type-checking runs | The fetched job contains `npm run check`; fresh local check inspected 19 files with zero diagnostics | Pass |
+| Production build runs | The fetched job contains `npm run build`; fresh local build generated six pages plus `fixtures.ics` | Pass |
+| A broken build fails the job | The command has no `continue-on-error`; an isolated build script exiting 23 propagated nonzero | Pass |
+| Production audit behavior is deliberate | `npm audit --omit=dev` is blocking and preceded by its policy comment; fresh audit found zero vulnerabilities | Pass |
+| Placeholder and template jobs are removed | Complete fetched-file negative assertions found no placeholder name, message, or commented job block | Pass |
+| Workflow permissions and action supply chain are constrained | The job has only `contents: read`; official checkout/setup actions use verified full release SHAs | Pass |
+| Pull-request code does not gain deployment access | Related-workflow review confirmed deploy runs only on `main` pushes/manual dispatch and is unchanged | Pass |
+| PR scope matches the issue | GitHub reports only `.github/workflows/ci.yml` and this plan | Pass |
+| Hosted CI proves the corrected success path | `Check, build, and audit` passed on the implementation head; `CI Placeholder` is absent | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #78` line to issue #78 | Pass |
+| Required status check is updated | Replace the old required check in branch protection after merge if configured | Deferred post-merge |
+| Deployment remains out of scope | Plan has `deploy: no`; no deploy workflow or live environment changed | Pass |
