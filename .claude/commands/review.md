@@ -14,12 +14,12 @@ Perform a comprehensive code review of recent changes:
 - Ensure functions are small and focused
 - Review code comments for clarity
 
-## 2. Test Coverage (TDD Compliance)
+## 2. Project Validation
 
-- **Critical**: Verify tests were written BEFORE implementation
-- Check that all new features have corresponding tests
-- Ensure test coverage meets project requirements (>80%)
-- Validate tests are meaningful, not just for coverage
+- Run `npm run check` to validate the Astro project
+- Run `npm run build` to verify the production build
+- Run `npm audit --omit=dev` to check production dependencies
+- Run pre-commit hooks against all changed files
 
 ## 3. Error Handling
 
