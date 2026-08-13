@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 90
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/90
 branch: denhamparry.co.uk/fix/gh-issue-090
@@ -18,13 +18,13 @@ formatters instead of maintaining a second copy.
 
 ## Acceptance criteria
 
-- [ ] The Training card's venue, cadence, session times, and start dates are
+- [x] The Training card's venue, cadence, session times, and start dates are
       generated from the fixtures collection.
-- [ ] Fixture `start`, `end`, `location`, and `rrule` edits update every
+- [x] Fixture `start`, `end`, `location`, and `rrule` edits update every
       consumer that is intended to expose the changed training entry.
-- [ ] No literal training date, time, or venue prose remains in
+- [x] No literal training date, time, or venue prose remains in
       `src/pages/training.astro`.
-- [ ] `npm run check`, `npm run build`, and repository pre-commit hooks pass.
+- [x] `npm run check`, `npm run build`, and repository pre-commit hooks pass.
 
 ## Implementation steps
 
@@ -203,3 +203,36 @@ follow-up idea.
 - The changed plan contains no shell fence and the changed Astro/TypeScript
   files are not shell-bearing Markdown, so executable-fence validation is not
   applicable.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`222f7944bb933ed9234bb7e4b26f884df0f06c81`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #94 head matched before
+verification. This plan-only evidence update is inspected separately after push,
+and the final reviewed PR SHA is stored in the mutable PR body to avoid a
+tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Select published training entries through a shared helper | Fresh PR diff and source inspection found `getTrainingFixtures()` filtering typed entries from `getFixtures()` | Pass |
+| Venue comes from fixture content | Generated Training owns no literal venue and renders the de-duplicated fixture `location` values | Pass |
+| Session start and window come from `start`/`end` | Fresh output showed both committed first-session windows; an alternate Tuesday mutation moved both date and time | Pass |
+| Cadence comes from `rrule` | Fresh output used `recurrenceText()` for both series; alternate Tuesday and Sunday rules changed the rendered weekday/end date | Pass |
+| Tuesday source change updates intended visible consumers | Alternate `18 Aug`, `18:45-20:30`, Verification Ground, Tuesday rule appeared on Training and in matching ICS UTC fields | Pass |
+| Tuesday remains absent from Fixtures | Fresh generated Fixtures and alternate mutation both omit `Pre-season training`, preserving closed issue #37 | Pass with explicit compatibility disposition |
+| Opted-in Sunday source updates all three visible outputs | Alternate `23 Aug`, `11:00-12:15`, Review Field, Sunday rule appeared on Training, Fixtures, and ICS | Pass |
+| Restored branch contains committed fixture data | Both temporary fixture paths match `HEAD`; final clean build returned the original Caedelyn, 4 August, and 9 August output | Pass |
+| No literal Training-card facts remain | Fresh source scan found none of the old venue, weekday, date, or time expressions in `training.astro` | Pass |
+| Generated wording remains compact | The card renders one venue bullet and one combined date/time/cadence bullet per series | Pass with unavailable visual-browser limitation |
+| Existing pre-season game and TBC behavior remains | Fresh generated output retains the confirmed game, derived remaining count, TBC class/text, and provisional explanation | Pass |
+| Build and type-check pass | Fresh post-PR `npm run check` reported zero diagnostics and `npm run build` generated six pages plus ICS | Pass |
+| Repository hooks pass | Exact three-file implementation stage passed every configured pre-commit hook without modification | Pass |
+| GitHub required checks pass | `Assign PR to denhamparry` and `Check, build, and audit` both passed on the reviewed implementation head | Pass |
+| PR scope matches the issue | GitHub reports only the plan, shared helper, and Training page | Pass |
+| Closing linkage is configured | GitHub's stored body exactly matches the intended body and contains `Closes #90` | Pass |
+| About-page analogous copy is disposed | Existing `Caedelyn Park` join-us copy is listed once under PR Follow-up ideas | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; no workflow or live environment changed | Pass |
