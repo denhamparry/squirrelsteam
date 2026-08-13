@@ -1,5 +1,57 @@
 # Setup - Claude Code Project Setup Checklist
 
+## Repository protection
+
+The `main` branch requires pull requests and the GitHub Actions check named
+`Check, build, and audit`. Branches must be up to date before merging, and the
+rules apply to repository administrators. Force pushes and branch deletion are
+disabled. Zero approving reviews are required because this is a sole-maintainer
+repository; the pull-request and CI gates still prevent direct pushes and failed
+checks from reaching `main`.
+
+The following command restores the complete protection configuration. GitHub
+Actions app ID `15368` binds the required check to its expected producer rather
+than accepting an identically named check from another app.
+
+```bash
+gh api --method PUT \
+  repos/denhamparry/squirrelsteam/branches/main/protection \
+  --input - <<'JSON'
+{
+  "required_status_checks": {
+    "strict": true,
+    "checks": [
+      {
+        "context": "Check, build, and audit",
+        "app_id": 15368
+      }
+    ]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": {
+    "dismiss_stale_reviews": false,
+    "require_code_owner_reviews": false,
+    "required_approving_review_count": 0,
+    "require_last_push_approval": false
+  },
+  "restrictions": null,
+  "required_linear_history": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "block_creations": false,
+  "required_conversation_resolution": false,
+  "lock_branch": false,
+  "allow_fork_syncing": false
+}
+JSON
+```
+
+Read the live settings back with:
+
+```bash
+gh api repos/denhamparry/squirrelsteam/branches/main/protection
+```
+
 ## 🚀 Initial Setup
 
 ### Prerequisites
