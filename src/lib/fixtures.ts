@@ -25,6 +25,12 @@ export async function getFixtures(): Promise<Fixture[]> {
   );
 }
 
+/** Published training fixtures, sorted by start ascending. */
+export async function getTrainingFixtures(): Promise<Fixture[]> {
+  const fixtures = await getFixtures();
+  return fixtures.filter((fixture) => fixture.data.type === "training");
+}
+
 /** Published pre-season games, sorted by start ascending. */
 export async function getPreSeasonFixtures(): Promise<Fixture[]> {
   const fixtures = await getFixtures();
