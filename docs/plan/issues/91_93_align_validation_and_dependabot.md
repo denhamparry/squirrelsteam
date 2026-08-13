@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issues:
   - 91
   - 93
@@ -218,4 +218,30 @@ behavior-changing contributor/agent instructions.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`1e60aaaed97f06fd17b5c363769d91eb1275d63f`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The fixture-logic test-framework idea remains the single existing follow-up in
+the PR body.
+
+The local commit, fetched remote branch, and GitHub PR #98 head matched before
+the independent review. The plan-only evidence update created after this
+review is inspected separately, and the final reviewed PR SHA is stored in the
+mutable PR body to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Remove unmeasurable thresholds | Fresh hidden-inclusive search of `.claude/` and `docs/setup.md` returned no coverage/TDD match | Pass |
+| Make `/review` describe real checks | Fetched-head diff names Astro check, build, production audit, and changed-file hooks | Pass |
+| Remove unsupported TDD workflow | Fetched diff deletes `tdd-check.md`; live instruction-path search finds no remaining reference | Pass |
+| Keep package and CI scope unchanged | Fetched six-path diff excludes manifest, lockfile, source, CI, and deploy workflows | Pass |
+| Project validation succeeds | Fresh `npm ci`, Astro check/build, production audit, and full pre-commit run passed | Pass |
+| Ignore TypeScript major updates | Fetched-head YAML parse found only `typescript` plus `version-update:semver-major` | Pass |
+| Preserve minor, patch, and security updates | Exact major-only rule and current GitHub options semantics leave other update classes eligible | Pass |
+| Explain constraint and removal condition | Fetched YAML comment names the v5/v6 peer range and removal after TypeScript 7 support | Pass |
+| Constraint remains current | Fresh npm metadata reports `@astrojs/check@0.9.10` requires TypeScript 5 or 6 | Pass |
+| No open TypeScript 7 Dependabot PR | Fresh app-authored open-PR query returned an empty list | Pass |
+| Both issues close from one PR | REST and GraphQL resolve PR #98 closing references to open issues #91 and #93 | Pass pre-merge |
+| Hosted required validation succeeds | `Check, build, and audit` and PR assignment checks both completed successfully | Pass |
+| Future fixture-logic tests | Retained as one non-blocking PR-body follow-up; no test framework added here | Intentionally out of scope |
