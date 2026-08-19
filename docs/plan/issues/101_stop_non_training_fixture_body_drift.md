@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issues:
   - 101
 issue_urls:
@@ -194,4 +194,27 @@ is compiled into user-visible cards and an executable calendar feed.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`36a91698266c5c6503db9b135ff9d7ce0111b7a9`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #111 head matched before
+review. A fresh detached worktree was created from that exact commit, validated
+from a clean dependency install, and removed cleanly afterward. This plan-only
+evidence update is inspected separately after push, and the final reviewed PR
+SHA is stored in the mutable PR body to avoid a tracked-file SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Tour body no longer duplicates destination | Exact source and PR diff contain frontmatter only; fresh VEVENT has no body-derived `DESCRIPTION` | Pass |
+| Tour `start`, `end`, and `location` can change without stale description prose | Independent 10-14 July / Independent Coast mutation moved all structured fields and still emitted no `DESCRIPTION` | Pass |
+| Cardiff body no longer duplicates venue or kick-off | Fresh exact source inspection confirms the body remains absent from current `main` and the PR head | Pass |
+| Cardiff `start`, `end`, and `location` can change without stale description prose | Independent 13:30-14:45 / Independent Ground mutation moved all structured fields while retaining only `DESCRIPTION:vs Guildfordians RFC` | Pass |
+| Tour retains useful calendar fields | Fresh build retains exact summary, inclusive all-day range, and location | Pass |
+| Cardiff retains a useful calendar description | Fresh build retains exact summary, times, escaped location, and opponent fallback | Pass |
+| Current fixture bodies are swept for the same pattern | Exhaustive inventory found only cup-round context, neutral training context, unknown-time context, and a team query; none duplicates a current structured fact | Pass |
+| Scope remains focused | GitHub PR diff contains exactly the plan and tour fixture; Cardiff is validated without churn and no shared implementation file changed | Pass |
+| Required local validation succeeds | Fresh `npm ci`, Astro check/build, production audit, generated assertions, diff check, and all-file pre-commit passed | Pass |
+| One PR closes issue #101 | GitHub resolves PR #111's `Closes #101` reference to the open issue | Pass pre-merge |
+| Deployment remains out of scope | Plan has `deploy: no` and the PR changes no deployment file | Pass |
