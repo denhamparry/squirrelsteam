@@ -2,10 +2,6 @@
 
 Thank you for considering contributing to this project! This document outlines the process and guidelines for contributing.
 
-## Code of Conduct
-
-This project adheres to a Code of Conduct. By participating, you are expected to uphold this code. Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before contributing.
-
 ## How Can I Contribute?
 
 ### Reporting Bugs
@@ -118,7 +114,8 @@ npm run dev
 
 ## Questions?
 
-- Open a discussion in GitHub Discussions
+- Open a GitHub issue with your question
+- Email `contact@squirrels.team`
 - Check existing documentation
 - Review closed issues for similar questions
 
