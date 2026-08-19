@@ -22,6 +22,11 @@ const { Content } = await render(f);
 const repeat = f.data.rrule ? recurrenceText(f.data.rrule) : null;
 const homeAway =
   f.data.home === undefined ? null : f.data.home ? "Home" : "Away";
+const titleIncludesOpponent =
+  f.data.opponent &&
+  f.data.title
+    .toLocaleLowerCase("en-GB")
+    .includes(f.data.opponent.toLocaleLowerCase("en-GB"));
 const hasNotes = (f.body ?? "").trim().length > 0;
 ---
 
@@ -33,7 +38,7 @@ const hasNotes = (f.body ?? "").trim().length > 0;
   </div>
   <h3 class="fixture__title">
     {f.data.title}
-    {f.data.opponent && <> vs {f.data.opponent}</>}
+    {f.data.opponent && !titleIncludesOpponent && <> vs {f.data.opponent}</>}
   </h3>
   <p class="fixture__when">{formatWhen(f)}</p>
   {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
