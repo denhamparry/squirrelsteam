@@ -1,5 +1,5 @@
 ---
-title: "#1415 Gameday: Rhiwbina vs Old Illtydians (Home)"
+title: "#1415 Gameday: Old Illtydians (Home)"
 type: match
 start: 2026-11-08
 allDay: true
