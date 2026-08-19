@@ -1,5 +1,5 @@
 ---
-title: "#1415 Gameday: Rhiwbina vs Ynysowen (Home)"
+title: "#1415 Gameday: Ynysowen (Home)"
 type: match
 start: 2026-09-13
 allDay: true

@@ -1,5 +1,5 @@
 ---
-title: "#1415 Gameday: Abercwmboi vs Rhiwbina (Away)"
+title: "#1415 Gameday: Abercwmboi (Away)"
 type: match
 start: 2026-10-11
 allDay: true
