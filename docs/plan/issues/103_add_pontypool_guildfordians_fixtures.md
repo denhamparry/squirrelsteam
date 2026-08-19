@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 103
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/103
 branch: denhamparry.co.uk/fix/gh-issue-103
@@ -212,4 +212,30 @@ non-blocking follow-up ideas.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`805dc42445d0585954fb016cc14a770366507c80`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR head matched before the
+review. The plan-only evidence commit created after this review is inspected
+separately, and the final reviewed PR SHA is stored in the mutable PR body to
+avoid a tracked-file SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Pontypool source exists at the requested path | Fresh byte-for-byte source assertion matched the approved frontmatter | Pass |
+| Pontypool is a semantic away match against Pontypool Utd | Source has `type: match`, `home: false`, and the exact opponent; card has Match/Away chips | Pass |
+| Pontypool remains all-day while kick-off is TBC | VEVENT has date start `20260920`, exclusive end `20260921`, and no timed start | Pass |
+| Pontypool has no invented venue | Source and VEVENT contain no location | Pass |
+| Cardiff names the verified current opponent | Source, card, and SUMMARY contain Guildfordians RFC; incorrect and historical variants are absent from published output | Pass |
+| Cardiff keeps its 12:30pm start and adds 1:30pm end | Source and VEVENT have exact timestamps; card renders the one-hour range | Pass |
+| Cardiff keeps its venue and existing note | Source, VEVENT, and card retain Cardiff Arms Park; byte-level suffix assertion retained the note | Pass |
+| Opponents render correctly without duplication | Each generated fixture card contains its opponent exactly once; shared guard and generic-title fallback were inspected | Pass |
+| Both events appear in chronological position | Fresh HTML indices place Pontypool between Ynysowen and Clwb Rygbi Caerdydd and Cardiff after Old Illtydians | Pass |
+| Schema supports all requested fields | Fresh Astro check passes; schema is unchanged and the collection builds both records | Pass |
+| Scope remains focused | GitHub PR lists exactly the two fixture records, shared card, and plan; core selectors/ICS/schema/dependencies are unchanged | Pass |
+| Build, check, audit, and hooks pass | Fresh clean install, check, build, generated assertions, audit, diff check, and exact-file hooks passed | Pass |
+| Required GitHub checks pass | `Assign PR to denhamparry` and `Check, build, and audit` both completed successfully | Pass |
+| Timed Pontypool conversion remains deferred | PR body records the update after coaches confirm kick-off | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment file | Pass |
