@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 99
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/99
 branch: denhamparry.co.uk/docs/gh-issue-099
@@ -192,4 +192,33 @@ instructions containing executable project commands.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`493fd7eeeeceae497af28829f03992ffdb4cc1e2`
+
+**Outcome:** Passed independently with no new blocking or non-blocking finding.
+The contributor-navigation cleanup remains the single existing follow-up idea
+in the PR body.
+
+The local commit, fetched remote branch, and GitHub PR #109 head matched before
+the independent review. The plan-only evidence update created after this review
+is inspected separately, and the final reviewed PR SHA is stored in the mutable
+PR body to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| No untrue TDD or coverage instruction remains | Fresh issue-command search returned only opaque lockfile integrity metadata | Pass |
+| Contributor guide names real validation | Fetched-head content names check, build, production audit, and pre-commit | Pass |
+| Development Setup has no generic placeholder | Focused full-file search found no named or analogous setup placeholder | Pass |
+| Installation and local commands are real | Fetched-head fences contain `npm install`, hook installation, validation, and `npm run dev` | Pass |
+| PR template does not certify TDD | Fresh fetched diff and full-file search found no TDD or unavailable test-suite item | Pass |
+| Other test-focused PR items match reality | Template checklist and evidence section use the four project validation commands | Pass |
+| Original failure remains understood | Fresh `npm test` run failed only because the manifest has no `test` script | Pass |
+| Corrected project behavior succeeds | Fresh npm install, Astro check/build, and production audit all passed | Pass |
+| Changed executable fences remain safe | All three Bash fences passed fresh `bash -n` and ShellCheck runs | Pass |
+| Pre-commit acceptance criterion passes | All repository hooks passed against the three changed paths | Pass |
+| Scope matches the issue | GitHub reports exactly the two contributor files and the plan; code, packages, CI, and deploy are unchanged | Pass |
+| Related precedent is valid | PR #98 is merged and issues #91, #93, and #82 are closed | Pass |
+| Future test framework remains conditional | No test dependency, script, framework, source, or CI change was introduced | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #99` line to issue #99 | Pass |
+| Hosted repository checks pass | Assignment and `Check, build, and audit` both passed on the reviewed head | Pass |
+| Non-blocking complete-file finding is routed | Missing conduct file and disabled/placeholder Discussions references appear only in Follow-up ideas | Pass |
