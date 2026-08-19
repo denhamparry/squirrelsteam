@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issues:
   - 106
   - 107
@@ -210,3 +210,35 @@ compiled into user-visible cards and an executable calendar feed.
   complete-file executable-fence validation is not applicable.
 - No unrelated refactor or scope expansion is present. No follow-up idea was
   found.
+
+## Post-PR verification
+
+**Implementation head reviewed:**
+`c5ca5a48c17cb1b68e0636695e5405036a97c9da`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #108 head matched before
+review. A fresh detached worktree was created from that exact commit, validated
+from a clean dependency install, and removed cleanly afterward. This plan-only
+evidence update is inspected separately after push, and the final reviewed PR
+SHA is stored in the mutable PR body to avoid a tracked-file SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Cardiff note no longer duplicates venue or kick-off | Exact source assertion found frontmatter only; complete source/page/feed search found none of the removed sentence | Pass |
+| Cardiff card remains coherent | Fresh build retains title, full 12:30pm-1:30pm range, and venue, with no empty note wrapper | Pass |
+| Cardiff VEVENT remains coherent | Fresh event extraction retains exact UTC start/end, summary, escaped location, and synthesized opponent description | Pass |
+| Ynysowen title follows league pattern | Exact source, generated card, and `#1415 Cup:` summary assertions passed | Pass |
+| Abercwmboi title follows league pattern | Exact source, generated card, and `#1415 Cup:` summary assertions passed | Pass |
+| Old Illtydians title follows league pattern | Exact source, generated card, and `#1415 Cup:` summary assertions passed | Pass |
+| No cup title contains self-versus copy | Exhaustive fixture-source plus page/feed search found no `Rhiwbina vs` or `vs Rhiwbina` | Pass |
+| Cup context and side remain visible | All three fresh cards retain Cup plus Home/Away chips | Pass |
+| Round notes remain visible | All three exact round notes remain in source and fresh generated cards | Pass |
+| Cup records remain title-only | Each exact source has no `opponent`; the analogous sweep found exactly the three intended cup records | Pass |
+| Fixture order remains correct | Fresh card indices preserve Ynysowen, Abercwmboi, then Old Illtydians chronology | Pass |
+| Scope remains focused | GitHub PR lists exactly the four fixture records and combined plan; no component, generator, schema, dependency, workflow, style, or deploy file changed | Pass |
+| Local validation and hooks pass | Fresh `npm ci`, Astro check/build, production audit, generated assertions, and exact-file pre-commit all passed | Pass |
+| Required GitHub checks pass | `Assign PR to denhamparry` and `Check, build, and audit` completed successfully on the implementation head | Pass |
+| One PR closes both issues | GitHub resolves PR #108 closing references to open issues #106 and #107 | Pass pre-merge |
+| Deployment remains out of scope | Plan has `deploy: no` and the PR changes no deployment file | Pass |
