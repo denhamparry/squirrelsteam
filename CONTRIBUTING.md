@@ -35,18 +35,19 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 ### Pull Requests
 
 1. **Fork the repository** and create your branch from `main`
-2. **Follow TDD workflow**: Write tests before implementation
-3. **Make your changes**:
+2. **Make your changes**:
    - Follow the project's code style
-   - Add tests for new functionality
    - Update documentation as needed
-   - Ensure all tests pass
+3. **Run project validation**:
+   - `npm run check`
+   - `npm run build`
+   - `npm audit --omit=dev`
 4. **Run pre-commit hooks**: `pre-commit run --all-files`
 5. **Commit your changes** using conventional commit format:
    - `feat: add new feature`
    - `fix: resolve bug in component`
    - `docs: update README`
-   - `test: add tests for feature`
+   - `chore: update dependencies`
    - `refactor: improve code structure`
 6. **Push to your fork** and submit a pull request
 7. **Fill out the PR template** completely
@@ -56,56 +57,42 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 ### Prerequisites
 
-```bash
-# List prerequisites here
-# Example:
-# - Node.js 18+
-# - Python 3.9+
-# - Go 1.21+
-```
+- Node.js 22 or newer (including npm)
+- Git
+- [pre-commit](https://pre-commit.com/) installed
 
 ### Installation
 
+After cloning your fork, install the project dependencies and hooks from the
+repository directory:
+
 ```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
-cd REPO_NAME
-
-# Install dependencies
-# Add your installation commands here
-
-# Install pre-commit hooks
-pip install pre-commit
+npm install
 pre-commit install
 ```
 
-### Running Tests
+### Validation
 
 ```bash
-# Add your test commands here
-# Examples:
-# npm test
-# go test ./...
-# pytest
+npm run check
+npm run build
+npm audit --omit=dev
+pre-commit run --all-files
 ```
 
 ### Running Locally
 
 ```bash
-# Add your local development commands here
-# Examples:
-# npm run dev
-# go run main.go
-# python app.py
+npm run dev
 ```
 
-## Testing Requirements
+## Validation Requirements
 
-- **TDD is mandatory**: Write tests before implementation
-- All new features must include tests
-- All tests must pass before submitting PR
-- Aim for >80% code coverage
-- Include both unit and integration tests where appropriate
+- `npm run check` must validate the Astro project without errors
+- `npm run build` must produce the static site successfully
+- `npm audit --omit=dev` must report no production vulnerabilities
+- `pre-commit run --all-files` must pass before committing
+- Include additional validation appropriate to the behavior you changed
 
 ## Code Style Guidelines
 

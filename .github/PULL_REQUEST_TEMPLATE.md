@@ -14,26 +14,28 @@ Please delete options that are not relevant.
 - [ ] Documentation update
 - [ ] Refactoring (no functional changes)
 - [ ] Performance improvement
-- [ ] Test updates
+- [ ] Build or tooling update
 
 ## Checklist
 
-- [ ] I have followed the TDD workflow (tests written before implementation)
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
+- [ ] `npm run check` passes locally with my changes
+- [ ] `npm run build` passes locally with my changes
+- [ ] `npm audit --omit=dev` reports no production vulnerabilities
+- [ ] `pre-commit run --all-files` passes locally with my changes
 - [ ] Any dependent changes have been merged and published
 
-## Testing
+## Validation
 
-Please describe the tests that you ran to verify your changes. Provide instructions so reviewers can reproduce.
+Please describe the checks that you ran and their outcomes. Include any
+additional steps reviewers need to reproduce your validation.
 
-- [ ] Test A
-- [ ] Test B
+- Commands run:
+- Results:
 
 ## Screenshots (if applicable)
 
