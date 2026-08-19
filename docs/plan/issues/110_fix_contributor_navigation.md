@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 110
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/110
 branch: denhamparry.co.uk/docs/gh-issue-110
@@ -195,4 +195,29 @@ and issue-template configuration.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`a60882cad091ed85d3e70a4d1fa4b0cd3cb754e6`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #112 head matched before
+the independent review. The plan-only evidence update created after this review
+is inspected separately, and the final PR head is stored in the mutable PR body
+to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Contributor guide has no missing-file link | Fresh complete-file extraction found one Markdown link, the valid absolute pre-commit HTTPS URL | Pass |
+| Missing Code of Conduct reference is removed | Fetched diff deletes the unsupported section; fresh hidden-inclusive search has no live match | Pass |
+| Questions no longer point to disabled Discussions | Fetched diff routes questions to GitHub issues and `contact@squirrels.team`; repository still reports Discussions disabled | Pass |
+| Issue-template placeholder is removed | Fetched configuration contains only `blank_issues_enabled: true`; no placeholder or Discussions URL remains | Pass |
+| Blank issue navigation remains available | Configuration and current GitHub template-chooser documentation agree that `true` preserves blank issue creation | Pass |
+| No analogous live instruction points to GitHub Discussions | Fresh hidden-inclusive full-repository search outside historical plans returned no match | Pass |
+| Generic community checklist remains intentionally different | `docs/setup.md` names no GitHub Discussions feature, URL, or contributor destination | Pass |
+| Executable contributor instructions remain valid | All three complete Bash fences passed fresh `bash -n` and ShellCheck runs | Pass |
+| Project behavior remains valid | Fresh Astro check/build and production dependency audit passed | Pass |
+| Pre-commit acceptance criterion passes | Every repository hook passed freshly against the exact three changed paths | Pass |
+| Scope matches the issue | GitHub reports exactly the two affected files and the plan; no source, dependency, workflow, deploy, or setting change exists | Pass |
+| Referenced predecessor is valid | PR #109 is merged and issue #99 is closed; referenced issues #82 and #91 are also closed | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #110` line to issue #110 | Pass |
+| Hosted repository checks pass | Assignment and `Check, build, and audit` both passed on the reviewed implementation head | Pass |
