@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 75
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/75
 branch: denhamparry.co.uk/fix/gh-issue-075
@@ -167,4 +167,30 @@ documentation.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`323f92e6a17711930a081c0326fb5f6a571a5d71`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #113 head matched before
+the independent review. The plan-only evidence update created after this review
+is inspected separately, and the final PR head is stored in the mutable PR body
+to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Confirmed kick-off is 5:00 pm on 28 August 2026 | Exact fixture source uses `2026-08-28T17:00:00+01:00`; fresh rendered card shows `5:00 pm` | Pass |
+| Fixture uses an offset timestamp | Fresh exact-source assertion matched the approved `+01:00` content byte-for-byte | Pass |
+| `allDay: true` is removed | Source has no `allDay` field; fresh VEVENT has no `VALUE=DATE` property | Pass |
+| Body no longer says kick-off is TBC | Source, complete VEVENT, card, and live `src/` sweep contain no kick-off-TBC text | Pass |
+| VEVENT uses a timed start | Fresh complete-event parsing found `DTSTART:20260828T160000Z` exactly once | Pass |
+| No finish time is invented | Source and VEVENT contain no `end` or `DTEND` field | Pass |
+| Fixtures page shows the kick-off time | Fresh card extraction found Match/Away chips and `Fri, 28 Aug 2026, 5:00 pm` | Pass |
+| Fixture identity and note remain accurate | Fresh source and VEVENT retain the St Peters away-friendly title and `Pre-season friendly.` description | Pass |
+| Ordering remains stable | Fresh HTML indices place August Sunday training before St Peters and Llandaff North after it | Pass |
+| Existing St Peters home fixture remains distinct | Source matches `origin/main`; fresh feed contains exactly two St Peters summaries | Pass |
+| Scope matches issue #75 | GitHub reports only the fixture and this plan; no shared code, other fixture, dependency, workflow, or deploy file changed | Pass |
+| Check, build, audit, and hooks pass | Fresh clean install, Astro check/build, production audit, generated assertions, diff check, and exact-range hooks passed | Pass |
+| Hosted repository checks pass | `Assign PR to denhamparry` and `Check, build, and audit` completed successfully on the implementation head | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #75` line to issue #75 | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment file | Pass |
