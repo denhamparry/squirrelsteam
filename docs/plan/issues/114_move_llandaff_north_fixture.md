@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 114
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/114
 branch: denhamparry.co.uk/fix/gh-issue-075
@@ -28,7 +28,7 @@ added to the already-open issue #75 PR #113 rather than creating another PR.
       `DTEND;VALUE=DATE:20260907` under the renamed UID, with no old UID/event.
 - [x] `npm run check`, `npm run build`, generated-output assertions, and
       repository pre-commit hooks pass.
-- [ ] PR #113 closes both issues #75 and #114 and independently re-verifies
+- [x] PR #113 closes both issues #75 and #114 and independently re-verifies
       both fixes at its expanded final head.
 
 ## Implementation steps
@@ -215,4 +215,31 @@ documentation.
 
 ## Post-PR verification
 
-Pending expanded PR verification.
+**Expanded implementation head reviewed:**
+`a8c6a9386262e21f54c5e497cac14de62db82d98`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #113 head matched before
+the combined review. This plan and issue #75's plan receive only evidence
+updates afterward; that evidence-only delta is inspected separately, and the
+final PR head is stored in the mutable PR body to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Llandaff North moves to Sunday 6 September 2026 | Exact source uses `2026-09-06`; a fresh calendar-day assertion identifies it as Sunday | Pass |
+| Old filename is renamed to the corrected date | GitHub reports an 83% rename to `llandaff-north-away-2026-09-06.md`; the old path is absent | Pass |
+| All-day away-match semantics remain | Exact source retains `type: match`, `allDay: true`, and `home: false`; fresh card retains Match/Away chips | Pass |
+| Fixtures page shows Sunday 6 September | Fresh card extraction found `Sun, 6 Sept 2026` and no Saturday 5 September value | Pass |
+| Calendar start is 6 September | Fresh complete-event parsing found `DTSTART;VALUE=DATE:20260906` exactly once | Pass |
+| Calendar end is the exclusive next date | The same event has `DTEND;VALUE=DATE:20260907` | Pass |
+| Filename-derived UID is corrected | Feed has exactly one new `...2026-09-06` UID and no old `...2026-09-05` UID | Pass |
+| Identity and ordering remain correct | Summary is unchanged; fresh card indices place St Peters before Llandaff North and Ynysowen after it | Pass |
+| No stale live source reference remains | Hidden-inclusive `src/` sweep found no old filename, date, or UID | Pass |
+| Historical plan #35 remains unchanged | Fresh byte-for-byte comparison with `origin/main` passed | Pass |
+| Issue #75 remains correct on the expanded head | Exact 5:00 pm source, timed event, no-end/all-day/TBC paths, card, uniqueness, and ordering assertions passed | Pass |
+| Check, build, audit, and hooks pass | Fresh clean install, Astro check/build, production audit, combined generated assertions, diff check, and exact-range hooks passed | Pass |
+| Expanded GitHub scope is exact | PR reports the two issue plans, St Peters edit, and Llandaff North rename only | Pass |
+| Closing linkage covers both issues | GitHub resolves stored `Closes #75` and `Closes #114` lines to both live issues | Pass |
+| Hosted repository check passes | Final implementation-head `Check, build, and audit` completed successfully | Pass |
+| Deployment remains out of scope | Both plans use `deploy: no`; PR changes no deployment file | Pass |
