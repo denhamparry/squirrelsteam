@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 116
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/116
 branch: denhamparry.co.uk/feat/gh-issue-116
@@ -18,20 +18,20 @@ them through the subscribed calendar feed.
 
 ## Acceptance criteria
 
-- [ ] Add one fixture record for each of 25 October, 29 November, 13 December
+- [x] Add one fixture record for each of 25 October, 29 November, 13 December
       2026 and 7 and 21 February 2027.
-- [ ] Every record is a timed home match at Eastern Community Campus from
+- [x] Every record is a timed home match at Eastern Community Campus from
       10:00 to 12:00, with explicit `+00:00` offsets.
-- [ ] Every record uses the exact TBC title, omits `opponent` and `allDay`, and
+- [x] Every record uses the exact TBC title, omits `opponent` and `allDay`, and
       has an empty body.
-- [ ] Each fixture appears exactly once on the generated Fixtures page with the
+- [x] Each fixture appears exactly once on the generated Fixtures page with the
       correct time and venue, and exactly once in `fixtures.ics` with the
       correct UTC start/end, summary, and location.
-- [ ] The existing 6 December 2026 Guildfordians fixture remains unchanged and
+- [x] The existing 6 December 2026 Guildfordians fixture remains unchanged and
       no second event is added on that date.
-- [ ] Create one follow-up issue per fixture so its opponent can be filled in
+- [x] Create one follow-up issue per fixture so its opponent can be filled in
       when confirmed.
-- [ ] `npm run check`, `npm run build`, generated-output assertions, production
+- [x] `npm run check`, `npm run build`, generated-output assertions, production
       dependency audit, and repository pre-commit hooks pass.
 
 ## Implementation steps
@@ -240,4 +240,33 @@ finding.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`8039fe8d1144343bc14c7e27b881192ddd1a7fc3`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #122 head matched before
+verification. A fresh detached worktree from that exact published commit was
+installed, validated, and removed cleanly. This plan-only evidence update is
+inspected separately after push, and the final reviewed PR head is stored in
+the mutable PR body to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Five named fixture records exist | GitHub diff and fresh detached source assertions show exactly the five requested date-bearing paths | Pass |
+| Exact timed home-match frontmatter | Every fresh source matches the requested type, home flag, 10:00/12:00 values, and `+00:00` offsets byte-for-byte | Pass |
+| Opponents remain TBC without invented semantics | Every source has the exact placeholder title, no `opponent`, no `allDay`, and an empty body | Pass |
+| All five dates are Sunday and GMT | Fresh Europe/London checks identify every date as Sunday/GMT and confirm the 25 October offset transition before kick-off | Pass |
+| Eastern Community Campus 4G venue reaches parents | Every generated card and VEVENT has the full Rumney address; ICS commas are escaped correctly | Pass |
+| Fixtures page includes each game once | Fresh complete-card parsing finds one Match/Home card per date with the TBC title and 10:00 am-12:00 pm range | Pass |
+| Calendar feed includes each game once | Fresh unfolded-event parsing finds one UID per date with exact UTC start/end, summary, and location | Pass |
+| No all-day or description drift is introduced | New VEVENTs contain no date-only fields, descriptions, or recurrence rules; cards contain no note wrapper | Pass |
+| Existing fixture cadence remains ordered | Fresh card indices place all five games between the issue-named surrounding fixtures in chronological order | Pass |
+| 6 December Guildfordians remains unchanged and unique | Source matches `origin/main` byte-for-byte and exactly one 6 December VEVENT remains | Pass |
+| Opponent-confirmation issues exist | Issues #117-#121 are open, link #116 and the exact source path, and carry `enhancement`, `calendar`, and `content` labels | Pass |
+| Schema supports the content-only change | Fresh review confirms optional defaults and empty-opponent behavior through the existing schema, card, and ICS paths | Pass |
+| Scope remains exact | GitHub reports only the five fixture additions and this plan; no shared code, existing fixture, dependency, workflow, style, or deploy file changed | Pass |
+| Local validation and hooks pass | Fresh detached `npm ci`, Astro check/build, production audit, exact behavior assertions, and changed-range pre-commit all passed | Pass |
+| Hosted repository checks pass | `Assign PR to denhamparry` and `Check, build, and audit` completed successfully on the implementation head | Pass |
+| PR closes the implementation issue | GitHub resolves the stored `Closes #116` line to the open issue | Pass pre-merge |
+| Deployment remains out of scope | Plan has `deploy: no`; no deployment or live-site mutation occurred | Pass |
