@@ -194,3 +194,21 @@ to avoid a tracked-file/SHA loop.
 | Hosted repository checks pass | `Assign PR to denhamparry` and `Check, build, and audit` completed successfully on the implementation head | Pass |
 | Closing linkage is configured | GitHub resolves the stored `Closes #75` line to issue #75 | Pass |
 | Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment file | Pass |
+
+## Combined PR re-verification
+
+**Expanded implementation head reviewed:**
+`a8c6a9386262e21f54c5e497cac14de62db82d98`
+
+**Outcome:** Issue #75 passed again after issue #114 was added to PR #113.
+
+- The St Peters source still exactly encodes the confirmed 5:00 pm BST start,
+  contains no `allDay`, `end`, or TBC value, and retains its identity and note.
+- Fresh generated output still has timed UTC `DTSTART:20260828T160000Z`, no
+  `DTEND` or `VALUE=DATE`, and the card still shows `Fri, 28 Aug 2026, 5:00 pm`.
+- The feed still contains exactly two distinct St Peters summaries, the home
+  fixture remains unchanged, and combined ordering places St Peters before the
+  newly corrected Llandaff North fixture.
+- Fresh install, Astro check/build, production audit, expanded exact-range
+  pre-commit, PR scope, both closing references, and hosted CI pass. Issue #114
+  introduced no blocking or non-blocking regression for issue #75.
