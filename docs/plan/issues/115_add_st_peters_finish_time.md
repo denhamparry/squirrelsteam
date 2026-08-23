@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 115
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/115
 branch: denhamparry.co.uk/fix/gh-issue-115
@@ -169,4 +169,29 @@ documentation.
 
 ## Post-PR verification
 
-Pending.
+**Implementation head reviewed:**
+`80fc621abfca20e0089364c45cf5160361fb3a65`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #125 head matched before
+the independent review. This evidence update is inspected separately after it
+is committed, and the final PR head is stored in the mutable PR body to avoid a
+tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Confirmed finish is 7:00 pm on 28 August 2026 | Exact source uses `2026-08-28T19:00:00+01:00` | Pass |
+| Existing 5:00 pm start remains | Exact source and fresh VEVENT retain `17:00:00+01:00` / `DTSTART:20260828T160000Z` | Pass |
+| Calendar emits a timed end | Fresh complete-event parsing found `DTEND:20260828T180000Z` exactly once | Pass |
+| Event has the confirmed two-hour duration | Independent date arithmetic found exactly 7,200,000 milliseconds between source start and end | Pass |
+| Fixtures page shows the full range | Fresh card extraction found `Fri, 28 Aug 2026, 5:00 pm–7:00 pm` | Pass |
+| Identity and pre-season presentation remain | Fresh VEVENT/card assertions retain UID, summary, description, Match/Away chips, and note | Pass |
+| Timed output is not accidentally all-day | Complete VEVENT contains no `VALUE=DATE` property | Pass |
+| Ordering remains stable | Fresh HTML indices place August Sunday training before St Peters and Llandaff North after it | Pass |
+| Existing St Peters home fixture stays distinct | Source matches `origin/main`; fresh feed contains exactly two St Peters events | Pass |
+| Scope matches issue #115 | GitHub reports only the fixture and this plan; no shared code, other fixture, dependency, workflow, or deploy file changed | Pass |
+| Check, build, audit, and hooks pass | Fresh clean install, Astro check/build, production audit, generated assertions, diff check, and exact-range hooks passed | Pass |
+| Hosted repository checks pass | `Assign PR to denhamparry` and `Check, build, and audit` completed successfully | Pass |
+| Closing linkage is configured | GitHub resolves the stored `Closes #115` line to issue #115 | Pass |
+| Deployment remains out of scope | Plan has `deploy: no`; PR changes no deployment file | Pass |
