@@ -1,5 +1,5 @@
 ---
-status: In Progress
+status: Complete
 issue: 123
 issue_url: https://github.com/denhamparry/squirrelsteam/issues/123
 branch: denhamparry.co.uk/fix/gh-issue-123
@@ -185,4 +185,33 @@ non-executable documentation.
 
 ## Post-PR verification
 
-Pending PR creation.
+**Implementation head reviewed:**
+`4843b4d9d7bb6ad72f19946508dcf37da39d3194`
+
+**Outcome:** Passed independently with no blocking or non-blocking finding.
+
+The local commit, fetched remote branch, and GitHub PR #126 head matched before
+verification. A fresh detached worktree from the exact published implementation
+commit was installed, validated, and removed cleanly. The first independent
+card parser assumed the weekday lacked punctuation and that the `li` tag had no
+Astro data attribute; inspection of the real built HTML corrected both parser
+assumptions, after which the complete-card assertions passed. This plan-only
+evidence update is inspected separately after push, and the final reviewed PR
+head is stored in the mutable PR body to avoid a tracked-file/SHA loop.
+
+| Criterion or issue statement | Independent evidence | Result |
+| --- | --- | --- |
+| Five affected source paths | GitHub PR metadata and detached diff show exactly the five issue-named fixtures plus this plan | Pass |
+| 4G visible on all five Fixtures page entries | Fresh complete-card parsing finds one exact 4G venue for each requested Sunday and five total | Pass |
+| 4G visible in all five calendar events | Fresh unfolded-event parsing finds one exact escaped 4G `LOCATION` for every filename-derived UID | Pass |
+| All five express the detail identically | Source comparison and generated counts show one byte-identical location value in every record and output | Pass |
+| Confirmed dates remain unchanged | Every source differs from `origin/main` only on the location line; each complete card retains its requested date | Pass |
+| 10:00-12:00 GMT and `+00:00` remain unchanged | Sources retain exact offset timestamps and VEVENTs retain exact 10:00/12:00 UTC fields | Pass |
+| Opponent-confirmation compatibility | Titles and absent opponent fields are unchanged; live issues #117-#121 explicitly retain the location field | Pass |
+| No body, all-day, recurrence, or description drift | Fresh sources stay frontmatter-only and the five VEVENTs have no description, RRULE, or date-only start | Pass |
+| Suggested option 1 used without schema work | Complete diff changes only the five `location` lines; no shared source file changed | Pass |
+| Prose-removal precedent retained | Empty fixture bodies remain unchanged, so #97/#101 ownership does not regress | Pass |
+| Required project validation | Fresh detached `npm ci`, Astro check/build, production audit, diff check, and changed-range pre-commit all passed | Pass |
+| Hosted repository checks | `Assign PR to denhamparry` and required `Check, build, and audit` completed successfully on the implementation head | Pass |
+| PR closes issue #123 | GitHub resolves the stored `Closes #123` line to the open issue | Pass pre-merge |
+| Deployment remains out of scope | Plan has `deploy: no`; no deployment or live-site mutation occurred | Pass |
