@@ -4,5 +4,5 @@ type: match
 start: 2026-12-13T10:00:00+00:00
 end: 2026-12-13T12:00:00+00:00
 home: true
-location: Eastern Community Campus, Trowbridge Rd, Rumney, Cardiff CF3 1XZ
+location: Eastern Community Campus (4G), Trowbridge Rd, Rumney, Cardiff CF3 1XZ
 ---
