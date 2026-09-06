@@ -57,6 +57,11 @@ start: 2026-09-13T10:30:00+01:00 # ISO date-time (with offset) or date-only
 end: 2026-09-13T12:00:00+01:00 # optional
 opponent: Llandaff North # optional
 home: true # optional (true = home, false = away)
+# result: # optional, match fixtures only; scores are non-negative integers
+#   us: 28
+#   them: 7
+#   tries: { us: 4, them: 1 } # optional; both sides required
+#   conversions: { us: 4, them: 1 } # optional; both sides required
 location: Caedelyn Park, CF14 6EJ # optional
 # allDay: true # set for whole-day events (use date-only, omit times)
 # rrule: FREQ=WEEKLY;BYDAY=TU;UNTIL=20260825T180000Z # optional recurrence
@@ -73,6 +78,12 @@ Notes:
 - **All-day events:** set `allDay: true` and use date-only `start`/`end`. The
   `end` is the **last day (inclusive)** — the feed emits the calendar-correct
   exclusive end automatically (a 1–4 May tour ends `2027-05-04`).
+- **Results:** `result` is valid only when `type: match`. The `us` and `them`
+  scores are required non-negative integers; `tries` and `conversions` are
+  optional, but both sides are required when either breakdown is included. The
+  score appears on the Fixtures page (including Past events) and is appended to
+  the calendar description. With named teams, `home: true` lists the Squirrels
+  first and `home: false` lists the opponent first.
 - Set `draft: true` to keep an entry out of the site and the feed while you work
   on it.
 
