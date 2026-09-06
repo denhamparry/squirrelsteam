@@ -4,6 +4,7 @@ export type Fixture = CollectionEntry<"fixtures">;
 export type FixtureType = Fixture["data"]["type"];
 
 const TIME_ZONE = "Europe/London";
+const TEAM_NAME = "Rhiwbina Squirrels";
 
 const TYPE_LABELS: Record<FixtureType, string> = {
   match: "Match",
@@ -79,6 +80,21 @@ export async function getPastFixtures(
   return fixtures
     .filter((f) => effectiveEnd(f).getTime() < now.getTime())
     .reverse();
+}
+
+/** Match result with team order matching the fixture's home/away perspective. */
+export function formatResult(data: Fixture["data"]): string | null {
+  if (data.type !== "match" || !data.result) return null;
+
+  const { us, them } = data.result;
+  if (data.opponent) {
+    return data.home === false
+      ? `${data.opponent} ${them} – ${us} ${TEAM_NAME}`
+      : `${TEAM_NAME} ${us} – ${them} ${data.opponent}`;
+  }
+
+  const outcome = us === them ? "D" : us > them ? "W" : "L";
+  return `${outcome} ${us}–${them}`;
 }
 
 // All-day dates are stored as UTC midnight, so format them in UTC to avoid a

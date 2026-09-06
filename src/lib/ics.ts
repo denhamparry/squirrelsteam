@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import { formatResult } from "./fixtures";
 
 // Dependency-free RFC 5545 (iCalendar) generator for the fixtures feed.
 // Output uses CRLF line endings, 75-octet line folding, UTC timestamps, and
@@ -110,15 +111,24 @@ function eventLines(entry: Fixture, dtstamp: string): string[] {
     lines.push(`LOCATION:${escapeText(data.location)}`);
   }
 
-  // Prefer the fixture's own notes (markdown body); otherwise synthesise a
-  // description for matches with a named opponent.
+  // Prefer the fixture's own notes; otherwise synthesise a match description.
+  // A structured result is appended independently so calendars retain notes.
   const note = entry.body?.trim();
+  const description: string[] = [];
   if (note) {
-    lines.push(`DESCRIPTION:${escapeText(note)}`);
+    description.push(note);
   } else if (data.type === "match" && data.opponent) {
     const side = data.home === undefined ? "" : data.home ? "Home" : "Away";
     const desc = [side, `vs ${data.opponent}`].filter(Boolean).join(" match ");
-    lines.push(`DESCRIPTION:${escapeText(desc)}`);
+    description.push(desc);
+  }
+
+  const result = formatResult(data);
+  if (result) {
+    description.push(`Result: ${result}`);
+  }
+  if (description.length > 0) {
+    lines.push(`DESCRIPTION:${escapeText(description.join("\n"))}`);
   }
 
   if (data.rrule) {

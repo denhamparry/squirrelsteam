@@ -6,6 +6,7 @@ import { render } from "astro:content";
 import {
   typeLabel,
   formatWhen,
+  formatResult,
   recurrenceText,
   type Fixture,
 } from "../lib/fixtures";
@@ -20,6 +21,7 @@ const { fixture: f, showNotes = true, dimmed = false } = Astro.props;
 
 const { Content } = await render(f);
 const repeat = f.data.rrule ? recurrenceText(f.data.rrule) : null;
+const result = formatResult(f.data);
 const homeAway =
   f.data.home === undefined ? null : f.data.home ? "Home" : "Away";
 const titleIncludesOpponent =
@@ -41,6 +43,7 @@ const hasNotes = (f.body ?? "").trim().length > 0;
     {f.data.opponent && !titleIncludesOpponent && <> vs {f.data.opponent}</>}
   </h3>
   <p class="fixture__when">{formatWhen(f)}</p>
+  {result && <p class="fixture__result">{result}</p>}
   {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
   {f.data.location && <p class="fixture__where muted">{f.data.location}</p>}
   {
@@ -78,6 +81,10 @@ const hasNotes = (f.body ?? "").trim().length > 0;
   }
   .fixture__when {
     font-weight: 600;
+  }
+  .fixture__result {
+    margin-top: var(--space-3xs);
+    font-weight: 700;
   }
   .fixture__where {
     margin-top: var(--space-3xs);
