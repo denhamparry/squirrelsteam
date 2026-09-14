@@ -84,7 +84,9 @@ Notes:
   score appears in the Fixtures page's Results tab and the newest score also
   appears as Latest result on the home page. It is appended to the calendar
   description too. Set `opponent` to produce a named score line; `home: true`
-  lists the Squirrels first and `home: false` lists the opponent first.
+  lists the Squirrels first and `home: false` lists the opponent first. Recorded
+  tries and conversions appear in brackets beside each team's score, with
+  unrecorded breakdown categories omitted.
 - Set `draft: true` to keep an entry out of the site and the feed while you work
   on it.
 

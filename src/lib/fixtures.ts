@@ -3,11 +3,9 @@ import { getCollection, type CollectionEntry } from "astro:content";
 export {
   calculateSeasonRecord,
   formatResult,
-  formatResultBreakdown,
   resultOutcome,
 } from "./results";
 export type {
-  ResultBreakdownLine,
   ResultOutcome,
   ResultOutcomeCode,
   SeasonRecord,
