@@ -64,8 +64,14 @@ const record = calculateSeasonRecord(results);
         </details>
       </Card>
 
-      <div class="fixture-tabs" data-fixtures-tabs>
-        <div class="fixture-tabs__list" role="tablist" aria-label="Fixtures">
+      <div id="results" class="fixture-tabs" data-fixtures-tabs>
+        <div
+          class="fixture-tabs__list"
+          role="tablist"
+          aria-label="Fixtures"
+          data-tab-list
+          hidden
+        >
           <button
             id="fixtures-tab-upcoming"
             class="fixture-tabs__tab"
@@ -84,7 +90,7 @@ const record = calculateSeasonRecord(results);
             type="button"
             role="tab"
             aria-selected="false"
-            aria-controls="results"
+            aria-controls="results-panel"
             tabindex="-1"
             data-tab="results"
           >
@@ -97,7 +103,6 @@ const record = calculateSeasonRecord(results);
           class="fixture-tabs__panel flow"
           role="tabpanel"
           aria-labelledby="fixtures-tab-upcoming"
-          tabindex="0"
           data-tab-panel="upcoming"
         >
           <h2>Upcoming</h2>
@@ -115,11 +120,10 @@ const record = calculateSeasonRecord(results);
         </section>
 
         <section
-          id="results"
+          id="results-panel"
           class="fixture-tabs__panel flow"
           role="tabpanel"
           aria-labelledby="fixtures-tab-results"
-          tabindex="0"
           data-tab-panel="results"
         >
           <h2>Results</h2>
@@ -207,6 +211,7 @@ const record = calculateSeasonRecord(results);
   .fixture-tabs {
     display: grid;
     gap: var(--space-l);
+    scroll-margin-top: calc(4.25rem + var(--space-s));
   }
   .fixture-tabs__list {
     display: grid;
@@ -214,6 +219,9 @@ const record = calculateSeasonRecord(results);
     border: 1px solid var(--color-line-dark);
     border-radius: var(--radius);
     overflow: hidden;
+  }
+  .fixture-tabs__list[hidden] {
+    display: none;
   }
   .fixture-tabs__tab {
     min-width: 0;
@@ -232,6 +240,9 @@ const record = calculateSeasonRecord(results);
   .fixture-tabs__tab[aria-selected="true"] {
     background: var(--color-black);
     color: var(--color-white);
+  }
+  .fixture-tabs__tab:focus-visible {
+    outline-offset: -4px;
   }
   .fixture-tabs__panel {
     min-width: 0;
@@ -261,10 +272,16 @@ const record = calculateSeasonRecord(results);
     font-size: var(--step-1);
     font-weight: 800;
   }
+  .season-record div:last-child {
+    grid-column: 1 / -1;
+  }
 
   @media (min-width: 38rem) {
     .season-record {
       grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .season-record div:last-child {
+      grid-column: auto;
     }
   }
 
@@ -280,6 +297,7 @@ const record = calculateSeasonRecord(results);
   const fixtureTabs = document.querySelector<HTMLElement>("[data-fixtures-tabs]");
 
   if (fixtureTabs) {
+    const tabList = fixtureTabs.querySelector<HTMLElement>("[data-tab-list]");
     const tabs = Array.from(
       fixtureTabs.querySelectorAll<HTMLButtonElement>("[role='tab']"),
     );
@@ -299,37 +317,49 @@ const record = calculateSeasonRecord(results);
       for (const panel of panels) {
         panel.hidden = panel.dataset.tabPanel !== selected.dataset.tab;
       }
-      if (moveFocus) selected.focus();
+      if (moveFocus) selected.focus({ preventScroll: true });
     };
 
     const tabFromHash = () =>
       window.location.hash.toLowerCase() === "#results" ? "results" : "upcoming";
 
-    selectTab(tabFromHash());
+    if (tabList && tabs.length > 0 && panels.length > 0) {
+      tabList.hidden = false;
+      const initialTab = tabFromHash();
+      selectTab(initialTab);
+      if (initialTab === "results") {
+        const focusSelectedTab = () => selectTab(tabFromHash(), true);
+        if (document.readyState === "complete") {
+          requestAnimationFrame(focusSelectedTab);
+        } else {
+          window.addEventListener("load", focusSelectedTab, { once: true });
+        }
+      }
 
-    for (const [index, tab] of tabs.entries()) {
-      tab.addEventListener("click", () => {
-        const tabName = tab.dataset.tab ?? "upcoming";
-        selectTab(tabName);
-        const url = new URL(window.location.href);
-        url.hash = tabName === "results" ? "results" : "";
-        history.replaceState(null, "", url);
-      });
+      for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener("click", () => {
+          const tabName = tab.dataset.tab ?? "upcoming";
+          selectTab(tabName);
+          const url = new URL(window.location.href);
+          url.hash = tabName === "results" ? "results" : "";
+          history.replaceState(null, "", url);
+        });
 
-      tab.addEventListener("keydown", (event) => {
-        let nextIndex: number | null = null;
-        if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
-        if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
-        if (event.key === "Home") nextIndex = 0;
-        if (event.key === "End") nextIndex = tabs.length - 1;
-        if (nextIndex === null) return;
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex: number | null = null;
+          if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+          if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === "Home") nextIndex = 0;
+          if (event.key === "End") nextIndex = tabs.length - 1;
+          if (nextIndex === null) return;
 
-        event.preventDefault();
-        const nextTab = tabs[nextIndex];
-        if (nextTab) selectTab(nextTab.dataset.tab ?? "upcoming", true);
-      });
+          event.preventDefault();
+          const nextTab = tabs[nextIndex];
+          if (nextTab) selectTab(nextTab.dataset.tab ?? "upcoming", true);
+        });
+      }
+
+      window.addEventListener("hashchange", () => selectTab(tabFromHash(), true));
     }
-
-    window.addEventListener("hashchange", () => selectTab(tabFromHash()));
   }
 </script>
