@@ -4,5 +4,6 @@ type: match
 start: 2026-11-22
 allDay: true
 home: true
+opponent: Old Penarthians
 location: Caedelyn Park, CF14 6EJ
 ---

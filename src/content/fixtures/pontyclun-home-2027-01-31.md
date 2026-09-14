@@ -4,5 +4,6 @@ type: match
 start: 2027-01-31
 allDay: true
 home: true
+opponent: Pontyclun
 location: Caedelyn Park, CF14 6EJ
 ---

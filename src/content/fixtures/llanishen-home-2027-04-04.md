@@ -4,5 +4,6 @@ type: match
 start: 2027-04-04
 allDay: true
 home: true
+opponent: Llanishen
 location: Caedelyn Park, CF14 6EJ
 ---

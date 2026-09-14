@@ -4,4 +4,5 @@ type: match
 start: 2027-02-28
 allDay: true
 home: false
+opponent: Llanharan
 ---

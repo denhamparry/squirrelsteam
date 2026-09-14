@@ -4,4 +4,5 @@ type: match
 start: 2026-09-27
 allDay: true
 home: false
+opponent: Clwb Rygbi Caerdydd
 ---

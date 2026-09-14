@@ -4,5 +4,6 @@ type: match
 start: 2027-03-14
 allDay: true
 home: true
+opponent: Penarth
 location: Caedelyn Park, CF14 6EJ
 ---

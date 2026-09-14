@@ -4,4 +4,5 @@ type: match
 start: 2027-04-18
 allDay: true
 home: false
+opponent: Fairwater
 ---
