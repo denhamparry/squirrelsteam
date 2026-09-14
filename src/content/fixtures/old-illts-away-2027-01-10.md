@@ -4,4 +4,5 @@ type: match
 start: 2027-01-10
 allDay: true
 home: false
+opponent: Old Illts
 ---

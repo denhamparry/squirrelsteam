@@ -4,4 +4,5 @@ type: match
 start: 2027-01-24
 allDay: true
 home: false
+opponent: St Albans
 ---

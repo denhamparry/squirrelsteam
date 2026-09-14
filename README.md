@@ -83,8 +83,8 @@ Notes:
   optional, but both sides are required when either breakdown is included. The
   score appears in the Fixtures page's Results tab and the newest score also
   appears as Latest result on the home page. It is appended to the calendar
-  description too. With named teams, `home: true` lists the Squirrels first and
-  `home: false` lists the opponent first.
+  description too. Set `opponent` to produce a named score line; `home: true`
+  lists the Squirrels first and `home: false` lists the opponent first.
 - Set `draft: true` to keep an entry out of the site and the feed while you work
   on it.
 

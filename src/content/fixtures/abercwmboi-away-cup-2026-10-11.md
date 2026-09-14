@@ -4,6 +4,7 @@ type: match
 start: 2026-10-11
 allDay: true
 home: false
+opponent: Abercwmboi
 cup: true
 ---
 

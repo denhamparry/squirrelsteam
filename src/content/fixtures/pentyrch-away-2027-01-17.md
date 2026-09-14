@@ -4,4 +4,5 @@ type: match
 start: 2027-01-17
 allDay: true
 home: false
+opponent: Pentyrch
 ---
