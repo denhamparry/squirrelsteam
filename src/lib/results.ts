@@ -23,11 +23,6 @@ export interface ResultOutcome {
   label: "Win" | "Draw" | "Loss";
 }
 
-export interface ResultBreakdownLine {
-  label: "Tries" | "Conversions";
-  value: string;
-}
-
 export interface SeasonRecord {
   played: number;
   won: number;
@@ -37,12 +32,44 @@ export interface SeasonRecord {
   pointsAgainst: number;
 }
 
-function orderedScore(data: ResultData, score: ScorePair): string {
-  if (!data.opponent) return `${score.us}–${score.them}`;
+type ScoreSide = keyof ScorePair;
+
+function countLabel(value: number, singular: string, plural: string): string {
+  return `${value} ${value === 1 ? singular : plural}`;
+}
+
+function scoreBreakdown(
+  result: NonNullable<ResultData["result"]>,
+  side: ScoreSide,
+): string {
+  const details: string[] = [];
+  if (result.tries) {
+    details.push(countLabel(result.tries[side], "try", "tries"));
+  }
+  if (result.conversions) {
+    details.push(
+      countLabel(result.conversions[side], "conversion", "conversions"),
+    );
+  }
+  return details.length > 0 ? ` (${details.join(", ")})` : "";
+}
+
+function orderedScore(
+  data: ResultData,
+  result: NonNullable<ResultData["result"]>,
+): string {
+  const usBreakdown = scoreBreakdown(result, "us");
+  const themBreakdown = scoreBreakdown(result, "them");
+
+  if (!data.opponent) {
+    return usBreakdown || themBreakdown
+      ? `${result.us}${usBreakdown} – ${result.them}${themBreakdown}`
+      : `${result.us}–${result.them}`;
+  }
 
   return data.home === false
-    ? `${data.opponent} ${score.them} – ${score.us} ${TEAM_NAME}`
-    : `${TEAM_NAME} ${score.us} – ${score.them} ${data.opponent}`;
+    ? `${data.opponent} ${result.them}${themBreakdown} – ${result.us} ${TEAM_NAME}${usBreakdown}`
+    : `${TEAM_NAME} ${result.us}${usBreakdown} – ${result.them} ${data.opponent}${themBreakdown}`;
 }
 
 /** Match result with team order matching the fixture's home/away perspective. */
@@ -64,28 +91,6 @@ export function resultOutcome(data: ResultData): ResultOutcome | null {
   return us > them
     ? { code: "W", label: "Win" }
     : { code: "L", label: "Loss" };
-}
-
-/** Optional scoring breakdowns in the same team order as the score line. */
-export function formatResultBreakdown(
-  data: ResultData,
-): ResultBreakdownLine[] {
-  if (data.type !== "match" || !data.result) return [];
-
-  const lines: ResultBreakdownLine[] = [];
-  if (data.result.tries) {
-    lines.push({
-      label: "Tries",
-      value: orderedScore(data, data.result.tries),
-    });
-  }
-  if (data.result.conversions) {
-    lines.push({
-      label: "Conversions",
-      value: orderedScore(data, data.result.conversions),
-    });
-  }
-  return lines;
 }
 
 /** Competitive record for scored matches; pre-season fixtures are excluded. */
