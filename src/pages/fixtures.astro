@@ -64,7 +64,7 @@ const record = calculateSeasonRecord(results);
         </details>
       </Card>
 
-      <div id="results" class="fixture-tabs" data-fixtures-tabs>
+      <div class="fixture-tabs" data-fixtures-tabs>
         <div
           class="fixture-tabs__list"
           role="tablist"
@@ -90,7 +90,7 @@ const record = calculateSeasonRecord(results);
             type="button"
             role="tab"
             aria-selected="false"
-            aria-controls="results-panel"
+            aria-controls="results"
             tabindex="-1"
             data-tab="results"
           >
@@ -120,7 +120,7 @@ const record = calculateSeasonRecord(results);
         </section>
 
         <section
-          id="results-panel"
+          id="results"
           class="fixture-tabs__panel flow"
           role="tabpanel"
           aria-labelledby="fixtures-tab-results"
@@ -246,6 +246,7 @@ const record = calculateSeasonRecord(results);
   }
   .fixture-tabs__panel {
     min-width: 0;
+    scroll-margin-top: calc(4.25rem + var(--space-s));
   }
 
   .season-record {
@@ -320,15 +321,29 @@ const record = calculateSeasonRecord(results);
       if (moveFocus) selected.focus({ preventScroll: true });
     };
 
-    const tabFromHash = () =>
-      window.location.hash.toLowerCase() === "#results" ? "results" : "upcoming";
+    type TabName = "upcoming" | "results";
+
+    const tabFromHash = (): TabName | null => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === "#results") return "results";
+      if (hash === "#upcoming") return "upcoming";
+      return null;
+    };
+
+    const selectHashTab = (moveFocus = false) => {
+      const tabName = tabFromHash();
+      if (!tabName) return;
+
+      selectTab(tabName, moveFocus);
+      fixtureTabs.scrollIntoView();
+    };
 
     if (tabList && tabs.length > 0 && panels.length > 0) {
       tabList.hidden = false;
       const initialTab = tabFromHash();
-      selectTab(initialTab);
-      if (initialTab === "results") {
-        const focusSelectedTab = () => selectTab(tabFromHash(), true);
+      selectTab(initialTab ?? "upcoming");
+      if (initialTab) {
+        const focusSelectedTab = () => selectHashTab(true);
         if (document.readyState === "complete") {
           requestAnimationFrame(focusSelectedTab);
         } else {
@@ -359,7 +374,7 @@ const record = calculateSeasonRecord(results);
         });
       }
 
-      window.addEventListener("hashchange", () => selectTab(tabFromHash(), true));
+      window.addEventListener("hashchange", () => selectHashTab(true));
     }
   }
 </script>
