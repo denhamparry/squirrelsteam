@@ -7,21 +7,31 @@ import {
   typeLabel,
   formatWhen,
   formatResult,
+  formatResultBreakdown,
   recurrenceText,
+  resultOutcome,
   type Fixture,
 } from "../lib/fixtures";
 
 interface Props {
   fixture: Fixture;
   showNotes?: boolean;
+  showResultDetails?: boolean;
   dimmed?: boolean;
 }
 
-const { fixture: f, showNotes = true, dimmed = false } = Astro.props;
+const {
+  fixture: f,
+  showNotes = true,
+  showResultDetails = false,
+  dimmed = false,
+} = Astro.props;
 
 const { Content } = await render(f);
 const repeat = f.data.rrule ? recurrenceText(f.data.rrule) : null;
 const result = formatResult(f.data);
+const outcome = showResultDetails ? resultOutcome(f.data) : null;
+const breakdown = showResultDetails ? formatResultBreakdown(f.data) : [];
 const homeAway =
   f.data.home === undefined ? null : f.data.home ? "Home" : "Away";
 const titleIncludesOpponent =
@@ -35,6 +45,13 @@ const hasNotes = (f.body ?? "").trim().length > 0;
 <li class:list={["fixture", { "fixture--past": dimmed }]}>
   <div class="fixture__meta">
     <span class="chip">{typeLabel(f.data.type)}</span>
+    {
+      outcome && (
+        <span class="chip chip--result" aria-label={`Result: ${outcome.label}`}>
+          {outcome.code} · {outcome.label}
+        </span>
+      )
+    }
     {f.data.cup && <span class="chip chip--cup">Cup</span>}
     {homeAway && <span class="chip chip--ghost">{homeAway}</span>}
   </div>
@@ -44,6 +61,18 @@ const hasNotes = (f.body ?? "").trim().length > 0;
   </h3>
   <p class="fixture__when">{formatWhen(f)}</p>
   {result && <p class="fixture__result">{result}</p>}
+  {
+    breakdown.length > 0 && (
+      <dl class="fixture__breakdown">
+        {breakdown.map((line) => (
+          <div>
+            <dt>{line.label}</dt>
+            <dd>{line.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
   {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
   {f.data.location && <p class="fixture__where muted">{f.data.location}</p>}
   {
@@ -86,6 +115,23 @@ const hasNotes = (f.body ?? "").trim().length > 0;
     margin-top: var(--space-3xs);
     font-weight: 700;
   }
+  .fixture__breakdown {
+    display: grid;
+    gap: var(--space-3xs);
+    margin-top: var(--space-2xs);
+    font-size: var(--step--1);
+  }
+  .fixture__breakdown div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs) var(--space-2xs);
+  }
+  .fixture__breakdown dt {
+    font-weight: 700;
+  }
+  .fixture__breakdown dd {
+    margin: 0;
+  }
   .fixture__where {
     margin-top: var(--space-3xs);
     color: var(--color-muted);
@@ -118,6 +164,9 @@ const hasNotes = (f.body ?? "").trim().length > 0;
     background: transparent;
     color: var(--color-black);
     border: 1px solid var(--color-line-dark);
+  }
+  .chip--result {
+    letter-spacing: 0.02em;
   }
   .chip--cup {
     background: var(--color-white);
