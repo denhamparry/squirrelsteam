@@ -4,4 +4,5 @@ type: match
 start: 2026-11-15
 allDay: true
 home: true
+location: Caedelyn Park, CF14 6EJ
 ---
