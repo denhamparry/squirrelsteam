@@ -4,12 +4,13 @@ import squirrelMark from "../assets/logo/squirrel-mark.svg?raw";
 import Card from "../components/Card.astro";
 import SubscribeButtons from "../components/SubscribeButtons.astro";
 import FixtureItem from "../components/FixtureItem.astro";
-import { getUpcomingFixtures } from "../lib/fixtures";
+import { getResults, getUpcomingFixtures } from "../lib/fixtures";
 
 const donateUrl = "https://shop.squirrels.team";
 
 // The genuine next fixtures, straight from the data files.
 const nextUp = (await getUpcomingFixtures()).slice(0, 3);
+const latestResult = (await getResults())[0];
 ---
 
 <BaseLayout title="Rhiwbina Squirrels U12">
@@ -44,6 +45,26 @@ const nextUp = (await getUpcomingFixtures()).slice(0, 3);
               <FixtureItem fixture={f} showNotes={false} />
             ))}
           </ul>
+        )
+      }
+
+      {
+        latestResult && (
+          <section class="latest-result" aria-labelledby="latest-result-heading">
+            <div class="nextup__head">
+              <h2 id="latest-result-heading">Latest result</h2>
+              <a class="nextup__all" href="/fixtures/#results">
+                See all results &rarr;
+              </a>
+            </div>
+            <ul class="fixtures" role="list">
+              <FixtureItem
+                fixture={latestResult}
+                showNotes={false}
+                showResultDetails
+              />
+            </ul>
+          </section>
         )
       }
 
@@ -139,6 +160,10 @@ const nextUp = (await getUpcomingFixtures()).slice(0, 3);
   .fixtures {
     list-style: none;
     padding: 0;
+    display: grid;
+    gap: var(--space-s);
+  }
+  .latest-result {
     display: grid;
     gap: var(--space-s);
   }

@@ -5,8 +5,10 @@ import Card from "../components/Card.astro";
 import SubscribeButtons from "../components/SubscribeButtons.astro";
 import FixtureItem from "../components/FixtureItem.astro";
 import {
+  calculateSeasonRecord,
   getUpcomingFixtures,
   getPastFixtures,
+  getResults,
   type Fixture,
 } from "../lib/fixtures";
 
@@ -14,18 +16,24 @@ const showsOnFixturesPage = (fixture: Fixture) =>
   fixture.data.showOnFixturesPage ??
   !(fixture.data.type === "training" && fixture.data.rrule);
 
-const upcoming = (await getUpcomingFixtures()).filter(showsOnFixturesPage);
-const past = (await getPastFixtures()).filter(showsOnFixturesPage);
+const now = new Date();
+const upcoming = (await getUpcomingFixtures(now)).filter(showsOnFixturesPage);
+const results = (await getResults(now)).filter(showsOnFixturesPage);
+const resultIds = new Set(results.map((fixture) => fixture.id));
+const past = (await getPastFixtures(now)).filter(
+  (fixture) => showsOnFixturesPage(fixture) && !resultIds.has(fixture.id),
+);
+const record = calculateSeasonRecord(results);
 ---
 
 <BaseLayout
   title="Fixtures"
-  description="Upcoming Rhiwbina Squirrels U12 fixtures — subscribe to add them to your calendar."
+  description="Upcoming Rhiwbina Squirrels U12 fixtures and latest results — subscribe to add fixtures to your calendar."
 >
   <PageHeader
     eyebrow="Season 26/27"
     title="Fixtures & calendar"
-    lead="Upcoming games and events. Subscribe once and they'll keep updating in your calendar."
+    lead="Upcoming games and events, plus the latest results. Subscribe once and fixtures will keep updating in your calendar."
   />
 
   <section class="section">
@@ -56,33 +64,115 @@ const past = (await getPastFixtures()).filter(showsOnFixturesPage);
         </details>
       </Card>
 
-      <section class="flow" aria-labelledby="upcoming-heading">
-        <h2 id="upcoming-heading">Upcoming</h2>
-        {
-          upcoming.length === 0 ? (
-            <p class="muted">No upcoming fixtures yet — check back soon.</p>
-          ) : (
-            <ul class="fixtures" role="list">
-              {upcoming.map((f) => (
-                <FixtureItem fixture={f} />
-              ))}
-            </ul>
-          )
-        }
-      </section>
+      <div class="fixture-tabs" data-fixtures-tabs>
+        <div class="fixture-tabs__list" role="tablist" aria-label="Fixtures">
+          <button
+            id="fixtures-tab-upcoming"
+            class="fixture-tabs__tab"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="upcoming"
+            tabindex="0"
+            data-tab="upcoming"
+          >
+            Upcoming
+          </button>
+          <button
+            id="fixtures-tab-results"
+            class="fixture-tabs__tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="results"
+            tabindex="-1"
+            data-tab="results"
+          >
+            Results
+          </button>
+        </div>
 
-      {
-        past.length > 0 && (
-          <details class="past">
-            <summary>Past events ({past.length})</summary>
-            <ul class="fixtures" role="list">
-              {past.map((f) => (
-                <FixtureItem fixture={f} showNotes={false} dimmed />
-              ))}
-            </ul>
-          </details>
-        )
-      }
+        <section
+          id="upcoming"
+          class="fixture-tabs__panel flow"
+          role="tabpanel"
+          aria-labelledby="fixtures-tab-upcoming"
+          tabindex="0"
+          data-tab-panel="upcoming"
+        >
+          <h2>Upcoming</h2>
+          {
+            upcoming.length === 0 ? (
+              <p class="muted">No upcoming fixtures yet — check back soon.</p>
+            ) : (
+              <ul class="fixtures" role="list">
+                {upcoming.map((f) => (
+                  <FixtureItem fixture={f} />
+                ))}
+              </ul>
+            )
+          }
+        </section>
+
+        <section
+          id="results"
+          class="fixture-tabs__panel flow"
+          role="tabpanel"
+          aria-labelledby="fixtures-tab-results"
+          tabindex="0"
+          data-tab-panel="results"
+        >
+          <h2>Results</h2>
+          {
+            results.length === 0 ? (
+              <p class="muted">No results recorded yet — check back soon.</p>
+            ) : (
+              <>
+                <dl class="season-record" aria-label="Season record">
+                  <div>
+                    <dt>Played</dt>
+                    <dd>{record.played}</dd>
+                  </div>
+                  <div>
+                    <dt>Won</dt>
+                    <dd>{record.won}</dd>
+                  </div>
+                  <div>
+                    <dt>Drawn</dt>
+                    <dd>{record.drawn}</dd>
+                  </div>
+                  <div>
+                    <dt>Lost</dt>
+                    <dd>{record.lost}</dd>
+                  </div>
+                  <div>
+                    <dt>Points for–against</dt>
+                    <dd>{record.pointsFor}–{record.pointsAgainst}</dd>
+                  </div>
+                </dl>
+                <ul class="fixtures" role="list">
+                  {results.map((f) => (
+                    <FixtureItem fixture={f} showResultDetails />
+                  ))}
+                </ul>
+              </>
+            )
+          }
+
+          {
+            past.length > 0 && (
+              <details class="past">
+                <summary>Past events ({past.length})</summary>
+                <ul class="fixtures" role="list">
+                  {past.map((f) => (
+                    <FixtureItem fixture={f} showNotes={false} dimmed />
+                  ))}
+                </ul>
+              </details>
+            )
+          }
+        </section>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -114,6 +204,70 @@ const past = (await getPastFixtures()).filter(showsOnFixturesPage);
     gap: var(--space-s);
   }
 
+  .fixture-tabs {
+    display: grid;
+    gap: var(--space-l);
+  }
+  .fixture-tabs__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid var(--color-line-dark);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .fixture-tabs__tab {
+    min-width: 0;
+    border: 0;
+    border-radius: 0;
+    padding: var(--space-s);
+    background: var(--color-white);
+    color: var(--color-black);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .fixture-tabs__tab + .fixture-tabs__tab {
+    border-left: 1px solid var(--color-line-dark);
+  }
+  .fixture-tabs__tab[aria-selected="true"] {
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+  .fixture-tabs__panel {
+    min-width: 0;
+  }
+
+  .season-record {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--color-line-dark);
+    border-radius: var(--radius);
+    background: var(--color-line-dark);
+  }
+  .season-record div {
+    min-width: 0;
+    padding: var(--space-s);
+    background: var(--color-white);
+  }
+  .season-record dt {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+    overflow-wrap: anywhere;
+  }
+  .season-record dd {
+    margin: var(--space-3xs) 0 0;
+    font-size: var(--step-1);
+    font-weight: 800;
+  }
+
+  @media (min-width: 38rem) {
+    .season-record {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
   .past {
     margin-top: var(--space-l);
   }
@@ -121,3 +275,61 @@ const past = (await getPastFixtures()).filter(showsOnFixturesPage);
     margin-bottom: var(--space-s);
   }
 </style>
+
+<script>
+  const fixtureTabs = document.querySelector<HTMLElement>("[data-fixtures-tabs]");
+
+  if (fixtureTabs) {
+    const tabs = Array.from(
+      fixtureTabs.querySelectorAll<HTMLButtonElement>("[role='tab']"),
+    );
+    const panels = Array.from(
+      fixtureTabs.querySelectorAll<HTMLElement>("[role='tabpanel']"),
+    );
+
+    const selectTab = (tabName: string, moveFocus = false) => {
+      const selected = tabs.find((tab) => tab.dataset.tab === tabName) ?? tabs[0];
+      if (!selected) return;
+
+      for (const tab of tabs) {
+        const active = tab === selected;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+      }
+      for (const panel of panels) {
+        panel.hidden = panel.dataset.tabPanel !== selected.dataset.tab;
+      }
+      if (moveFocus) selected.focus();
+    };
+
+    const tabFromHash = () =>
+      window.location.hash.toLowerCase() === "#results" ? "results" : "upcoming";
+
+    selectTab(tabFromHash());
+
+    for (const [index, tab] of tabs.entries()) {
+      tab.addEventListener("click", () => {
+        const tabName = tab.dataset.tab ?? "upcoming";
+        selectTab(tabName);
+        const url = new URL(window.location.href);
+        url.hash = tabName === "results" ? "results" : "";
+        history.replaceState(null, "", url);
+      });
+
+      tab.addEventListener("keydown", (event) => {
+        let nextIndex: number | null = null;
+        if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+        if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = tabs.length - 1;
+        if (nextIndex === null) return;
+
+        event.preventDefault();
+        const nextTab = tabs[nextIndex];
+        if (nextTab) selectTab(nextTab.dataset.tab ?? "upcoming", true);
+      });
+    }
+
+    window.addEventListener("hashchange", () => selectTab(tabFromHash()));
+  }
+</script>
