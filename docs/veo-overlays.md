@@ -9,8 +9,13 @@ sponsor has a named group, an equal 456x252 tile, and a linked source image that
 can be replaced without rebuilding the layout.
 
 This is a candidate, not an upload-ready production asset. Do not upload or
-activate it until issue #170 settles the sponsor artwork and the operator checks
-below are complete. Issue #178 owns the separate 1:1 Upper Right Image.
+activate it until the operator checks below are complete; issue #177 owns that
+gate. Issue #178 owns the separate 1:1 Upper Right Image.
+
+The sponsor artwork itself is settled: #170 is closed, and the maintainer
+accepted the current variants as an interim set. #181 tracks replacing the
+On the River and Hollybush Properties variants with sponsor-approved artwork,
+at which point this banner should be regenerated from the recipe below.
 
 ### Artwork decision
 
@@ -86,7 +91,7 @@ results on issue #177 so issue #178 can reuse them:
    available to the intended Admin/Editor.
 2. Ask Veo Support or inspect authenticated product guidance for recommended
    Lower Banner pixels; confirm 2400x300 or regenerate at the advised 8:1 size.
-3. Upload the candidate to a test package only after #170 resolves the artwork.
+3. Upload the candidate to a test package.
    Activate it on an authorized test livestream and confirm footage is visible
    through the outer margin and every 12px gutter rather than flattened.
 4. Capture the actual location and rendered size in the viewer, then check all
