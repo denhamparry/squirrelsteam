@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+import { sponsors } from "../data/sponsors";
+---
+
+<section class="sponsor-band" aria-labelledby="sponsor-band-heading">
+  <div class="container">
+    <h2 id="sponsor-band-heading" class="sponsor-band__heading">
+      Our sponsors
+    </h2>
+    <ul class="sponsor-band__list" role="list">
+      {
+        sponsors.map((sponsor) => (
+          <li class="sponsor-band__item">
+            {sponsor.url ? (
+              <a
+                class="sponsor-band__link"
+                href={sponsor.url}
+                rel="noopener sponsored"
+              >
+                <Image
+                  class="sponsor-band__logo"
+                  src={sponsor.logoLight}
+                  alt={sponsor.name}
+                  width={sponsor.logoLight.width}
+                  height={sponsor.logoLight.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            ) : (
+              <Image
+                class="sponsor-band__logo"
+                src={sponsor.logoLight}
+                alt={sponsor.name}
+                width={sponsor.logoLight.width}
+                height={sponsor.logoLight.height}
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sponsor-band {
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid var(--color-line-dark);
+  }
+  .sponsor-band__heading {
+    margin-bottom: var(--space-m);
+    color: var(--color-white);
+    font-size: var(--step-1);
+    text-align: center;
+  }
+  .sponsor-band__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+    padding: 0;
+    list-style: none;
+  }
+  .sponsor-band__item {
+    display: flex;
+    min-width: 0;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .sponsor-band__link {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .sponsor-band__logo {
+    width: 100%;
+    height: 4rem;
+    object-fit: contain;
+  }
+
+  @media (min-width: 36rem) {
+    .sponsor-band__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-m);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .sponsor-band__list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+</style>
