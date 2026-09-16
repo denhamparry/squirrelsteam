@@ -18,6 +18,7 @@ export interface Sponsor {
   url: string | null;
 }
 
+// Display sponsors alphabetically so array insertion order cannot imply rank.
 export const sponsors: readonly Sponsor[] = [
   {
     name: "Cornerstone Finance Group",
@@ -54,4 +55,4 @@ export const sponsors: readonly Sponsor[] = [
     description: null,
     url: "https://www.ontheriver.wales",
   },
-];
+].sort((a, b) => a.name.localeCompare(b.name, "en-GB"));
