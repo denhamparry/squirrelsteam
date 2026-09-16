@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Rhiwbina Squirrels U12 crest</title>
+  <desc id="desc">White squirrel club mark centred on a solid dark background for the Veo Clubhouse crest slot.</desc>
+  <metadata>Veo Clubhouse crest: 1024x1024. Source mark: veo-upper-right-mark.svg.</metadata>
+  <rect id="background" width="1024" height="1024" fill="#1a1a1a"/>
+  <g id="club-mark">
+    <image href="veo-upper-right-mark.svg" x="0" y="0" width="1024" height="1024" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>

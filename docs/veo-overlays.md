@@ -1,5 +1,86 @@
 # Veo overlay assets
 
+## Clubhouse profile images
+
+`src/assets/logo/veo-crest.png` and `src/assets/logo/veo-cover.png` target the
+Veo Clubhouse **Crest** and **Cover image** slots. The crest is an opaque
+1024x1024 PNG; the cover is an opaque 1440x360 PNG. Both are below Veo's 2.5 MB
+limit and use the site's `#1a1a1a` dark background.
+
+| Slot | Required? | Accepted upload formats | Maximum | Veo size guidance |
+| --- | --- | --- | --- | --- |
+| Crest | Yes | JPG, GIF, or PNG | 2.5 MB | No pixel size given; upload box is square |
+| Cover | No | JPG, GIF, or PNG | 2.5 MB | Recommended 1440x360 (4:1) |
+
+Veo does not accept SVG uploads; the SVG files here remain editable sources
+and the PNG files are the upload artifacts.
+
+The adjacent SVGs are the editable sources. Keep each SVG beside its PNG so
+the relative image links continue to resolve. The cover's useful content stays
+inside the central 1200x300 working safe zone (x=120..1320, y=30..330), which
+protects the identity and sponsor row from likely edge crops. The crest retains
+the approved squirrel mark's approximately 70% square footprint so it remains
+recognizable at 64px.
+
+### Clubhouse artwork sources
+
+The club identity links `veo-upper-right-mark.svg`, an existing white-on-dark
+derivative of `squirrel-mark.svg`. The cover links these existing dark-surface
+variants in alphabetical, non-ranking order:
+
+1. `../sponsors/cornerstone-finance-group-light.svg`
+2. `../sponsors/dc-plastering-light.png`
+3. `../sponsors/hollybush-properties-light.png`
+4. `../sponsors/imperial-light.png`
+5. `../sponsors/on-the-river-light.png`
+
+Each sponsor has the same 220x112 slot. The linked artwork is fitted optically
+inside that fixed area because its aspect ratios range from a wide wordmark to
+a near-square badge. Equal slots, one row, and alphabetical order deliberately
+avoid suggesting tiers. Do not add prices, kit placements, private contact
+details, or other fundraising copy to these profile images.
+
+### Clubhouse export recipe
+
+The PNGs were exported with ImageMagick 7.1.2-31. For the crest, create an
+opaque 1024x1024 `#1a1a1a` canvas and composite
+`veo-upper-right-mark.png` over it at its native 1024x1024 size.
+
+For the cover, create an opaque 1440x360 `#1a1a1a` canvas. Composite the club
+mark into a 144x144 box at +120+30, then draw `RHIWBINA SQUIRRELS U12` in
+Arial Bold at 44px from +280+113 and `OUR SPONSORS` in Arial Bold at 17px from
++120+195. Draw identical rounded `#232323` sponsor slots at y=205, width=220,
+height=112, radius=12, with x positions 120, 360, 600, 840, and 1080.
+
+Trim transparent margins from each unchanged `-light` input, resize it to fit
+inside the stated box without changing its aspect ratio, and centre it there:
+
+| Sponsor | Fit box | Box position |
+| --- | --- | --- |
+| Cornerstone Finance Group | 204x78 | +128+222 |
+| D&C Plastering | 204x68 | +368+227 |
+| Hollybush Properties Ltd | 180x96 | +620+213 |
+| Imperial | 190x74 | +855+224 |
+| On the River | 100x104 | +1140+209 |
+
+Render the Cornerstone SVG on a transparent canvas at 384 DPI before trimming.
+Read the other four raster inputs at their native resolution.
+
+The local ImageMagick SVG delegate omits linked images, so compose the PNG
+directly from the linked inputs rather than rasterizing `veo-cover.svg`. Use
+`/System/Library/Fonts/Supplemental/Arial Bold.ttf` for a pixel-identical local
+export. Finish both PNGs with alpha disabled and metadata stripped. Check the
+crest at 64px on light and dark surfaces and the complete cover at 390px wide
+before committing regenerated outputs.
+
+The cover is a snapshot of the current sponsor list in
+`src/data/sponsors.ts`. Whenever that list changes because a sponsor is added,
+removed, renamed, reordered, or receives replacement artwork, update the five
+linked groups and equal-slot layout, regenerate both cover formats, repeat the
+small-size check, and re-upload the new PNG to Veo Clubhouse. That later upload
+requires an authorized operator and is not performed by this repository
+workflow.
+
 ## Lower Banner sponsor candidate
 
 `src/assets/sponsors/veo-lower-banner.png` targets Veo Live's **Lower Banner**
