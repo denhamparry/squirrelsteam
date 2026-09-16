@@ -66,8 +66,15 @@ sponsor and avoids duplicating the team identity.
 
 ### Clubhouse export recipe
 
-The PNGs were exported with ImageMagick 7.1.2-31. For the crest, create an
-opaque 1024x1024 `#1a1a1a` canvas and composite
+The PNGs were exported with ImageMagick 7.1.2-31 and librsvg 2.62.3.
+ImageMagick can silently select a different SVG renderer, so run this pre-flight
+before either recipe. It must find one matching row and exit zero:
+
+```text
+magick -list format | rg -q '^\s*RSVG\*\s+rw\+\s+Librsvg SVG renderer \(RSVG 2\.62\.3\)$'
+```
+
+For the crest, create an opaque 1024x1024 `#1a1a1a` canvas and composite
 `veo-upper-right-mark.png` over it at its native 1024x1024 size.
 
 For the cover, create an opaque 1440x360 `#1a1a1a` canvas. Do not add a club
@@ -92,11 +99,12 @@ transparent canvas of that box size, and composite it at the box position:
 | Secondary | D&C Plastering | 164x50 | +840+211 |
 | Secondary | EST Group | 96x50 | +1066+211 |
 
-Render the Cornerstone SVG on a transparent canvas at 384 DPI before trimming.
-Read the other five raster inputs at their native resolution. Explicitly set a
-transparent background before each `-extent`; ImageMagick otherwise creates a
-white fit canvas that hides white artwork. Finish the cover with alpha disabled
-and metadata stripped.
+Render the Cornerstone SVG explicitly as
+`rsvg:../sponsors/cornerstone-finance-group-light.svg` on a transparent canvas
+at 384 DPI before trimming. Read the other five raster inputs at their native
+resolution. Explicitly set a transparent background before each `-extent`;
+ImageMagick otherwise creates a white fit canvas that hides white artwork.
+Finish the cover with alpha disabled and metadata stripped.
 
 The local ImageMagick SVG delegate omits linked images, so compose the PNG
 directly from the linked inputs rather than rasterizing `veo-cover.svg`. Neither
@@ -175,6 +183,14 @@ The banner links the trimmed `est-group-dark.png` derivative documented beside
 the source; it preserves the published charcoal and green colours.
 
 ### Export recipe
+
+Use the same ImageMagick 7.1.2-31 and librsvg 2.62.3 pre-flight documented in
+the Clubhouse recipe above. When reproducing the SVG-source crop measurements,
+pass the inputs as `rsvg:source/cornerstone-finance-group.svg` and
+`rsvg:source/imperial.svg`. For direct PNG composition from the normalized
+variants below, pass Cornerstone as
+`rsvg:cornerstone-finance-group-dark.svg`. These explicit prefixes make a
+missing librsvg delegate fail rather than silently selecting another renderer.
 
 Start with a transparent 2400x300 canvas and draw the following rounded tiles
 with a 16px radius:

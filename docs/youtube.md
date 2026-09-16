@@ -367,21 +367,30 @@ secondary mark while respecting each logo's aspect ratio.
 
 #### Deterministic banner export
 
-The committed PNG was exported with ImageMagick 7.1.2-31. Its SVG delegate
-does not reliably place relative image links, so the recipe removes only the
-seven `<image>` elements from the piped text/background rendering pass, then
-composites those same linked files explicitly at their recorded geometry.
+The committed PNG was exported with ImageMagick 7.1.2-31 and librsvg 2.62.3.
+ImageMagick can silently select a different SVG renderer, so confirm the exact
+delegate before exporting. The command must find one matching row and exit zero:
+
+```text
+magick -list format | rg -q '^\s*RSVG\*\s+rw\+\s+Librsvg SVG renderer \(RSVG 2\.62\.3\)$'
+```
+
+The delegate does not reliably place relative image links, so the recipe
+removes only the seven `<image>` elements from the piped text/background
+rendering pass, then composites those same linked files explicitly at their
+recorded geometry. The explicit `rsvg:` prefixes make a missing librsvg
+delegate fail instead of falling back to another renderer.
 
 Run this from the repository root:
 
 ```text
 cd src/assets/logo
 sed '/<image /d' youtube-banner.svg | magick \
-  -background '#1a1a1a' svg:- -alpha off \
+  -background '#1a1a1a' rsvg:- -alpha off \
   \( veo-upper-right-mark.png -filter Lanczos -resize 250x250 \
     -background none -gravity center -extent 250x250 \) \
     -gravity northwest -geometry +559+525 -composite \
-  \( ../sponsors/cornerstone-finance-group-light.svg -background none \
+  \( rsvg:../sponsors/cornerstone-finance-group-light.svg -background none \
     -filter Lanczos -resize 246x63 -gravity center -extent 246x63 \) \
     -gravity northwest -geometry +892+625 -composite \
   \( ../sponsors/hollybush-properties-light.png -filter Lanczos \
