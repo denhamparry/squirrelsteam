@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Rhiwbina Squirrels 1415 YouTube profile picture</title>
+  <desc id="desc">White squirrel club mark centred on a solid dark background and kept within the circular profile crop.</desc>
+  <metadata>YouTube channel profile picture: 800x800. Source composition: veo-crest.svg. Linked club mark: veo-upper-right-mark.svg.</metadata>
+  <rect id="background" width="800" height="800" fill="#1a1a1a"/>
+  <g id="club-mark">
+    <image href="veo-upper-right-mark.svg" x="0" y="0" width="800" height="800" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>

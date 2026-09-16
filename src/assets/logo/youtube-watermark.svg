@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" role="img" aria-labelledby="title desc">
+  <title id="title">Rhiwbina Squirrels 1415 YouTube video watermark</title>
+  <desc id="desc">White squirrel club mark with a subtle dark keyline and transparent clear space for display over video.</desc>
+  <metadata>YouTube video watermark: 150x150 with transparency. Linked club mark: veo-upper-right-mark.svg.</metadata>
+  <g id="club-mark">
+    <image href="veo-upper-right-mark.svg" x="0" y="0" width="150" height="150" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>
