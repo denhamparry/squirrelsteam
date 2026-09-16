@@ -3,36 +3,36 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   width="2400" height="300" viewBox="0 0 2400 300">
   <title>Rhiwbina Squirrels tiered sponsor banner for Veo Lower Banner</title>
-  <desc>Four larger primary sponsor tiles followed by two smaller secondary sponsor tiles. Text labels are omitted because they are unreadable at normal playback size.</desc>
+  <desc>Four larger primary sponsor tiles followed by two smaller secondary sponsor tiles. Secondary artwork is constrained below every primary mark by visible height and pixel area, while the wide D and C wordmark retains at least 40 pixels of native height. Text labels are omitted because they are unreadable at normal playback size.</desc>
 
   <g id="primary-sponsors" aria-label="Primary sponsors">
     <g id="cornerstone-finance-group" aria-label="Cornerstone Finance Group">
-      <rect x="36" y="24" width="456" height="252" rx="16" fill="#fff"/>
-      <svg x="54" y="96" width="420" height="108" viewBox="124 228 2878 738">
+      <rect x="36" y="24" width="411" height="252" rx="16" fill="#fff"/>
+      <svg x="54" y="102" width="375" height="96" viewBox="124 228 2878 738">
         <image x="0" y="0" width="3113" height="1195"
           xlink:href="source/cornerstone-finance-group.svg"/>
       </svg>
     </g>
 
     <g id="hollybush-properties" aria-label="Hollybush Properties">
-      <rect x="504" y="24" width="456" height="252" rx="16" fill="#fff"/>
-      <svg x="522" y="44" width="420" height="213" viewBox="130 80 1331 675">
+      <rect x="459" y="24" width="411" height="252" rx="16" fill="#fff"/>
+      <svg x="477" y="55" width="375" height="190" viewBox="130 80 1331 675">
         <image x="0" y="0" width="1628" height="832"
           xlink:href="source/hollybush-properties.png"/>
       </svg>
     </g>
 
     <g id="imperial" aria-label="Imperial">
-      <rect x="972" y="24" width="456" height="252" rx="16" fill="#fff"/>
-      <svg x="990" y="77" width="420" height="145" viewBox="24 3 240 83">
+      <rect x="882" y="24" width="411" height="252" rx="16" fill="#fff"/>
+      <svg x="900" y="86" width="375" height="129" viewBox="24 3 240 83">
         <image x="0" y="0" width="280" height="92"
           xlink:href="source/imperial.svg"/>
       </svg>
     </g>
 
     <g id="on-the-river" aria-label="On the River">
-      <rect x="1440" y="24" width="456" height="252" rx="16" fill="#1a191a"/>
-      <svg x="1573" y="43" width="190" height="214" viewBox="217 126 839 942">
+      <rect x="1305" y="24" width="411" height="252" rx="16" fill="#1a191a"/>
+      <svg x="1416" y="43" width="190" height="214" viewBox="217 126 839 942">
         <image x="0" y="0" width="1254" height="1254"
           xlink:href="source/on-the-river.jpeg"/>
       </svg>
@@ -41,16 +41,16 @@
 
   <g id="secondary-sponsors" aria-label="Secondary sponsors">
     <g id="dc-plastering" aria-label="D and C Plastering">
-      <rect x="1932" y="60" width="210" height="180" rx="16" fill="#1a1a1a"/>
-      <svg x="1944" y="135" width="186" height="30" viewBox="233 402 1092 176">
+      <rect x="1752" y="60" width="300" height="180" rx="16" fill="#1a1a1a"/>
+      <svg x="1767" y="128" width="270" height="44" viewBox="233 402 1092 176">
         <image x="0" y="0" width="1536" height="1024"
           xlink:href="source/dc-plastering.png"/>
       </svg>
     </g>
 
     <g id="est-group" aria-label="EST Group">
-      <rect x="2154" y="60" width="210" height="180" rx="16" fill="#fff"/>
-      <image x="2172" y="105" width="174" height="90"
+      <rect x="2064" y="60" width="300" height="180" rx="16" fill="#fff"/>
+      <image x="2154" y="119" width="120" height="62"
         xlink:href="est-group-dark.png"/>
     </g>
   </g>
