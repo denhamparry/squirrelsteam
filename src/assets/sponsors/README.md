@@ -31,13 +31,23 @@ source file matches its recorded source hash byte for byte.
 
 ## Local derivation
 
-The variants were produced deterministically with ImageMagick 7.1.2-31 and
-simple SVG fill/viewBox edits. No generative image tool was used.
+The raster derivations used ImageMagick 7.1.2-31. SVG inputs were rendered with
+librsvg 2.62.3; before rerendering one, run the exact delegate pre-flight in the
+[Veo Clubhouse export recipe](../../../docs/veo-overlays.md#clubhouse-export-recipe).
+Simple SVG fill/viewBox edits supplied the remaining vector changes. No
+generative image tool was used.
 
-- Imperial was rendered at 384 DPI (4x its supplied dimensions), trimmed, and
-  stored as PNG to remove the supplied SVG's live Avenir font dependency. Its
-  purple marks and gold crest remain unchanged; only the neutral wordmark and
-  live-text fill become white in the light variant.
+- Imperial was rendered from `rsvg:source/imperial.svg` at 384 DPI (4x its
+  supplied dimensions), trimmed, and stored as PNG. The source retains live text
+  declared as `Avenir-Medium`/`Avenir`, which librsvg resolves through the
+  installed font environment; the exact font file used for the committed
+  variants was not recorded. Regeneration therefore requires matching font
+  availability and a pixel comparison of both regenerated Imperial PNGs against
+  `imperial-dark.png` and `imperial-light.png`. Any non-zero difference blocks
+  replacement until the font and render provenance is resolved. The committed
+  PNGs remove that live-font dependency for downstream consumers. Their purple
+  marks and gold crest remain unchanged; only the neutral wordmark and live-text
+  fill become white in the light variant.
 - Hollybush's white matte was converted to a smooth alpha channel using colour
   distance from white, then trimmed. The light variant uses the same alpha
   silhouette filled white.
