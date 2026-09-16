@@ -28,6 +28,10 @@ The club identity links `veo-upper-right-mark.svg`, an existing white-on-dark
 derivative of `squirrel-mark.svg`. The cover links these existing dark-surface
 variants in alphabetical, non-ranking order:
 
+The identity uses `RHIWBINA SQUIRRELS #1415`: `#1415` identifies the
+2014/2015 birth-year cohort and remains stable as the players move from U12 to
+U13, U14, and later age grades.
+
 1. `../sponsors/cornerstone-finance-group-light.svg`
 2. `../sponsors/dc-plastering-light.png`
 3. `../sponsors/hollybush-properties-light.png`
@@ -47,7 +51,7 @@ opaque 1024x1024 `#1a1a1a` canvas and composite
 `veo-upper-right-mark.png` over it at its native 1024x1024 size.
 
 For the cover, create an opaque 1440x360 `#1a1a1a` canvas. Composite the club
-mark into a 144x144 box at +120+30, then draw `RHIWBINA SQUIRRELS U12` in
+mark into a 144x144 box at +120+30, then draw `RHIWBINA SQUIRRELS #1415` in
 Arial Bold at 44px from +280+113 and `OUR SPONSORS` in Arial Bold at 17px from
 +120+195. Draw identical rounded `#232323` sponsor slots at y=205, width=220,
 height=112, radius=12, with x positions 120, 360, 600, 840, and 1080.

@@ -92,7 +92,7 @@ and validates the two actual small display sizes called out by the issue.
 - Direct regeneration from the documented ImageMagick composition produced
   zero changed pixels for both committed PNGs.
 - The crest is 1024x1024, 73,073 bytes, opaque sRGB, with non-background bounds
-  of 672x707 at +207+125. The cover is 1440x360, 66,501 bytes, and opaque sRGB.
+  of 672x707 at +207+125. The cover is 1440x360, 67,306 bytes, and opaque sRGB.
 - Manual inspection passed for the full-resolution files, the crest at 64px on
   light and dark surfaces, and the complete cover at 390px wide. The club mark
   and five distinct sponsor identities remain recognizable.
@@ -103,6 +103,9 @@ and validates the two actual small display sizes called out by the issue.
   large-file, secret, and Markdown checks.
 - The issue was fetched again after implementation. Its title, body, labels,
   open state, and empty discussion remain unchanged from the planning snapshot.
+- After the PR opened, the maintainer replaced the age-grade identity with
+  `RHIWBINA SQUIRRELS #1415`. The SVG metadata, visible cover, export recipe,
+  and regenerated PNG now use the stable 2014/2015 birth-year cohort name.
 
 ## Branch review
 
