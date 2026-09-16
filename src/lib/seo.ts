@@ -6,6 +6,16 @@
  */
 export const NOINDEX_PATHS: readonly string[] = [];
 
+function assertValidNoindexPath(pathname: string): void {
+  if (!pathname.startsWith("/") || pathname.startsWith("//")) {
+    throw new Error(
+      `Invalid NOINDEX_PATHS entry ${JSON.stringify(pathname)}: expected a non-empty route starting with exactly one "/".`,
+    );
+  }
+}
+
+NOINDEX_PATHS.forEach(assertValidNoindexPath);
+
 const NON_PAGE_PATHS = ["/fixtures.ics"];
 
 function normalizePagePath(pathname: string): string {
