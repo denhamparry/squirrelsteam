@@ -8,8 +8,16 @@ export const NOINDEX_PATHS: readonly string[] = [];
 
 const NON_PAGE_PATHS = ["/fixtures.ics"];
 
+function normalizePagePath(pathname: string): string {
+  return pathname === "/" ? pathname : `${pathname.replace(/\/+$/, "")}/`;
+}
+
 export function isNoindexPath(pathname: string): boolean {
-  return NOINDEX_PATHS.includes(pathname);
+  const normalizedPathname = normalizePagePath(pathname);
+
+  return NOINDEX_PATHS.some(
+    (noindexPath) => normalizePagePath(noindexPath) === normalizedPathname,
+  );
 }
 
 export function shouldIncludeInSitemap(page: string): boolean {
