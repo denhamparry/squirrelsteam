@@ -2,13 +2,15 @@
 interface Props {
   title?: string;
   href?: string;
+  headingLevel?: "h2" | "h3" | "h4";
 }
-const { title, href } = Astro.props;
+const { title, href, headingLevel = "h3" } = Astro.props;
 const Tag = href ? "a" : "div";
+const Heading = headingLevel;
 ---
 
 <Tag class:list={["card", { "card--link": href }]} href={href}>
-  {title && <h3 class="card__title">{title}</h3>}
+  {title && <Heading class="card__title">{title}</Heading>}
   <div class="card__body flow">
     <slot />
   </div>

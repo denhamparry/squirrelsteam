@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { sponsors } from "../data/sponsors";
+import { sponsorTiers } from "../data/sponsors";
 ---
 
 <section class="sponsor-band" aria-labelledby="sponsor-band-heading">
@@ -8,41 +8,63 @@ import { sponsors } from "../data/sponsors";
     <h2 id="sponsor-band-heading" class="sponsor-band__heading">
       Our sponsors
     </h2>
-    <ul class="sponsor-band__list" role="list">
-      {
-        sponsors.map((sponsor) => (
-          <li class="sponsor-band__item">
-            {sponsor.url ? (
-              <a
-                class="sponsor-band__link"
-                href={sponsor.url}
-                rel="noopener sponsored"
-              >
-                <Image
-                  class="sponsor-band__logo"
-                  src={sponsor.logoLight}
-                  alt={sponsor.name}
-                  width={sponsor.logoLight.width}
-                  height={sponsor.logoLight.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-            ) : (
-              <Image
-                class="sponsor-band__logo"
-                src={sponsor.logoLight}
-                alt={sponsor.name}
-                width={sponsor.logoLight.width}
-                height={sponsor.logoLight.height}
-                loading="lazy"
-                decoding="async"
-              />
-            )}
-          </li>
-        ))
-      }
-    </ul>
+    {
+      sponsorTiers.map(({ tier, label, sponsors }) => (
+        <div
+          class:list={[
+            "sponsor-band__group",
+            `sponsor-band__group--${tier}`,
+          ]}
+        >
+          <h3
+            id={`sponsor-band-${tier}-heading`}
+            class="sponsor-band__group-heading"
+          >
+            {label}
+          </h3>
+          <ul
+            class:list={[
+              "sponsor-band__list",
+              `sponsor-band__list--${tier}`,
+            ]}
+            aria-labelledby={`sponsor-band-${tier}-heading`}
+            role="list"
+          >
+            {sponsors.map((sponsor) => (
+              <li class="sponsor-band__item">
+                {sponsor.url ? (
+                  <a
+                    class="sponsor-band__link"
+                    href={sponsor.url}
+                    rel="noopener sponsored"
+                  >
+                    <Image
+                      class="sponsor-band__logo"
+                      src={sponsor.logoLight}
+                      alt={sponsor.name}
+                      width={sponsor.logoLight.width}
+                      height={sponsor.logoLight.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                ) : (
+                  <Image
+                    class="sponsor-band__logo"
+                    src={sponsor.logoLight}
+                    alt={sponsor.name}
+                    width={sponsor.logoLight.width}
+                    height={sponsor.logoLight.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </div>
 </section>
 
@@ -58,6 +80,15 @@ import { sponsors } from "../data/sponsors";
     font-size: var(--step-1);
     text-align: center;
   }
+  .sponsor-band__group + .sponsor-band__group {
+    margin-top: var(--space-m);
+  }
+  .sponsor-band__group-heading {
+    margin-bottom: var(--space-s);
+    color: var(--color-white);
+    font-size: var(--step--1);
+    text-align: center;
+  }
   .sponsor-band__list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -65,10 +96,13 @@ import { sponsors } from "../data/sponsors";
     padding: 0;
     list-style: none;
   }
+  .sponsor-band__list--secondary {
+    max-width: 32rem;
+    margin-inline: auto;
+  }
   .sponsor-band__item {
     display: flex;
     min-width: 0;
-    min-height: 4rem;
     align-items: center;
     justify-content: center;
   }
@@ -83,17 +117,19 @@ import { sponsors } from "../data/sponsors";
     height: 4rem;
     object-fit: contain;
   }
+  .sponsor-band__group--secondary .sponsor-band__logo {
+    height: 2.75rem;
+  }
 
   @media (min-width: 36rem) {
     .sponsor-band__list {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-m);
     }
   }
 
   @media (min-width: 64rem) {
-    .sponsor-band__list {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+    .sponsor-band__list--primary {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 </style>
