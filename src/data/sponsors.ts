@@ -28,6 +28,8 @@ const sponsorTierDefinitions = [
   { tier: "secondary", label: "Secondary sponsors" },
 ] as const;
 
+// Generated sponsor artwork: veo-lower-banner, veo-cover, youtube-banner.
+
 const sponsorTierOrder: readonly SponsorTier[] = sponsorTierDefinitions.map(
   ({ tier }) => tier,
 );
