@@ -1,0 +1,19 @@
+/**
+ * Page routes that should remain reachable but must not be indexed.
+ *
+ * Keeping this list shared by the layout and sitemap filter prevents a page
+ * from emitting `noindex` while still being advertised in the sitemap.
+ */
+export const NOINDEX_PATHS: readonly string[] = [];
+
+const NON_PAGE_PATHS = ["/fixtures.ics"];
+
+export function isNoindexPath(pathname: string): boolean {
+  return NOINDEX_PATHS.includes(pathname);
+}
+
+export function shouldIncludeInSitemap(page: string): boolean {
+  const { pathname } = new URL(page);
+
+  return !NON_PAGE_PATHS.includes(pathname) && !isNoindexPath(pathname);
+}

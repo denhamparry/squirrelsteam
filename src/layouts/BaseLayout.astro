@@ -1,25 +1,24 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { isNoindexPath } from "../lib/seo";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
-  /** Keep the page out of search engines (still reachable by direct link). */
-  noindex?: boolean;
 }
 
 const {
   title,
   description = "Fixtures, training and news for the Rhiwbina Squirrels Under 12s (#1415) rugby team.",
-  noindex = false,
 } = Astro.props;
 
 const siteName = "Rhiwbina Squirrels U12";
 const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/og-image.png", Astro.site);
+const noindex = isNoindexPath(Astro.url.pathname);
 ---
 
 <!doctype html>
