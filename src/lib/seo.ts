@@ -7,9 +7,13 @@
 export const NOINDEX_PATHS: readonly string[] = [];
 
 function assertValidNoindexPath(pathname: string): void {
-  if (!pathname.startsWith("/") || pathname.startsWith("//")) {
+  if (
+    pathname.trim() !== pathname ||
+    !pathname.startsWith("/") ||
+    pathname.startsWith("//")
+  ) {
     throw new Error(
-      `Invalid NOINDEX_PATHS entry ${JSON.stringify(pathname)}: expected a non-empty route starting with exactly one "/".`,
+      `Invalid NOINDEX_PATHS entry ${JSON.stringify(pathname)}: expected a route with no surrounding whitespace starting with exactly one "/".`,
     );
   }
 }
@@ -18,8 +22,24 @@ NOINDEX_PATHS.forEach(assertValidNoindexPath);
 
 const NON_PAGE_PATHS = ["/fixtures.ics"];
 
-function normalizePagePath(pathname: string): string {
-  return pathname === "/" ? pathname : `${pathname.replace(/\/+$/, "")}/`;
+export function normalizePagePath(pathname: string): string {
+  const absolutePathname = pathname.startsWith("/") ? pathname : `/${pathname}`;
+
+  return absolutePathname === "/"
+    ? absolutePathname
+    : `${absolutePathname.replace(/\/+$/, "")}/`;
+}
+
+export function findUnmatchedNoindexPaths(
+  pagePathnames: Iterable<string>,
+): readonly string[] {
+  const normalizedPagePaths = new Set(
+    Array.from(pagePathnames, normalizePagePath),
+  );
+
+  return NOINDEX_PATHS.filter(
+    (noindexPath) => !normalizedPagePaths.has(normalizePagePath(noindexPath)),
+  );
 }
 
 export function isNoindexPath(pathname: string): boolean {
