@@ -12,22 +12,34 @@ import imperialLight from "../assets/sponsors/imperial-light.png";
 import onTheRiverDark from "../assets/sponsors/on-the-river-dark.png";
 import onTheRiverLight from "../assets/sponsors/on-the-river-light.png";
 
+export type SponsorTier = "primary" | "secondary";
+
 export interface Sponsor {
   name: string;
   logoLight: ImageMetadata;
   logoDark: ImageMetadata;
   description: string | null;
   url: string | null;
+  tier: SponsorTier;
 }
 
-// Display sponsors alphabetically so array insertion order cannot imply rank.
-export const sponsors: readonly Sponsor[] = [
+const sponsorTierDefinitions = [
+  { tier: "primary", label: "Primary sponsors" },
+  { tier: "secondary", label: "Secondary sponsors" },
+] as const;
+
+const sponsorTierOrder: readonly SponsorTier[] = sponsorTierDefinitions.map(
+  ({ tier }) => tier,
+);
+
+const unsortedSponsors: readonly Sponsor[] = [
   {
     name: "Cornerstone Finance Group",
     logoLight: cornerstoneLight,
     logoDark: cornerstoneDark,
     description: null,
     url: "https://cornerstonefinance.co.uk",
+    tier: "primary",
   },
   {
     name: "D&C Plastering",
@@ -35,6 +47,7 @@ export const sponsors: readonly Sponsor[] = [
     logoDark: dcPlasteringDark,
     description: null,
     url: null,
+    tier: "secondary",
   },
   {
     name: "EST Group",
@@ -42,6 +55,7 @@ export const sponsors: readonly Sponsor[] = [
     logoDark: estGroupDark,
     description: null,
     url: "https://est-group.co.uk",
+    tier: "secondary",
   },
   {
     name: "Hollybush Properties Ltd",
@@ -49,6 +63,7 @@ export const sponsors: readonly Sponsor[] = [
     logoDark: hollybushDark,
     description: null,
     url: null,
+    tier: "primary",
   },
   {
     name: "Imperial",
@@ -56,6 +71,7 @@ export const sponsors: readonly Sponsor[] = [
     logoDark: imperialDark,
     description: null,
     url: "https://imperialchartered.co.uk",
+    tier: "primary",
   },
   {
     name: "On the River",
@@ -63,5 +79,21 @@ export const sponsors: readonly Sponsor[] = [
     logoDark: onTheRiverDark,
     description: null,
     url: "https://www.ontheriver.wales",
+    tier: "primary",
   },
-].sort((a, b) => a.name.localeCompare(b.name, "en-GB"));
+];
+
+// Display primary sponsors first, then secondary, alphabetically within a tier.
+export const sponsors: readonly Sponsor[] = [...unsortedSponsors].sort(
+  (a, b) =>
+    sponsorTierOrder.indexOf(a.tier) - sponsorTierOrder.indexOf(b.tier) ||
+    a.name.localeCompare(b.name, "en-GB"),
+);
+
+export const sponsorTiers = sponsorTierDefinitions
+  .map(({ tier, label }) => ({
+    tier,
+    label,
+    sponsors: sponsors.filter((sponsor) => sponsor.tier === tier),
+  }))
+  .filter(({ sponsors }) => sponsors.length > 0);

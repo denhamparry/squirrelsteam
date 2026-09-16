@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
-import { sponsors } from "../data/sponsors";
+import { sponsorTiers } from "../data/sponsors";
 
 const donateUrl = "https://shop.squirrels.team";
 const contactEmail = "contact@squirrels.team";
@@ -124,39 +124,49 @@ const sponsorshipTiers = [
           Thank you to the local businesses backing the Squirrels. Their support
           helps us give the squad more opportunities on and off the pitch.
         </p>
-        <div class="sponsor-grid">
-          {
-            sponsors.map((sponsor) => (
-              <div class="sponsor-grid__item">
-                <Card title={sponsor.name}>
-                  <div class="sponsor-card__logo-wrap">
-                    <Image
-                      class="sponsor-card__logo"
-                      src={sponsor.logoDark}
-                      alt={`${sponsor.name} logo`}
-                      width={sponsor.logoDark.width}
-                      height={sponsor.logoDark.height}
-                      loading="lazy"
-                      decoding="async"
-                    />
+        {
+          sponsorTiers.map(({ tier, label, sponsors }) => (
+            <section
+              class:list={["sponsor-group", `sponsor-group--${tier}`]}
+              aria-labelledby={`fundraising-sponsors-${tier}`}
+            >
+              <h3 id={`fundraising-sponsors-${tier}`}>{label}</h3>
+              <div
+                class:list={["sponsor-grid", `sponsor-grid--${tier}`]}
+              >
+                {sponsors.map((sponsor) => (
+                  <div class="sponsor-grid__item">
+                    <Card title={sponsor.name} headingLevel="h4">
+                      <div class="sponsor-card__logo-wrap">
+                        <Image
+                          class="sponsor-card__logo"
+                          src={sponsor.logoDark}
+                          alt={`${sponsor.name} logo`}
+                          width={sponsor.logoDark.width}
+                          height={sponsor.logoDark.height}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                      {sponsor.description && (
+                        <p class="sponsor-card__description">
+                          {sponsor.description}
+                        </p>
+                      )}
+                      {sponsor.url && (
+                        <p class="sponsor-card__link">
+                          <a href={sponsor.url} rel="noopener sponsored">
+                            Visit {sponsor.name}
+                          </a>
+                        </p>
+                      )}
+                    </Card>
                   </div>
-                  {sponsor.description && (
-                    <p class="sponsor-card__description">
-                      {sponsor.description}
-                    </p>
-                  )}
-                  {sponsor.url && (
-                    <p class="sponsor-card__link">
-                      <a href={sponsor.url} rel="noopener sponsored">
-                        Visit {sponsor.name}
-                      </a>
-                    </p>
-                  )}
-                </Card>
+                ))}
               </div>
-            ))
-          }
-        </div>
+            </section>
+          ))
+        }
       </section>
 
       <h2>Sponsorship tiers</h2>
@@ -199,6 +209,10 @@ const sponsorshipTiers = [
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-m);
   }
+  .sponsor-grid--secondary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
   .sponsor-grid__item {
     display: grid;
     min-width: 0;
@@ -214,6 +228,12 @@ const sponsorshipTiers = [
     max-width: 12rem;
     height: 100%;
     object-fit: contain;
+  }
+  .sponsor-group--secondary .sponsor-card__logo-wrap {
+    height: 4.5rem;
+  }
+  .sponsor-group--secondary .sponsor-card__logo {
+    max-width: 8rem;
   }
   .sponsor-card__description,
   .sponsor-card__link {
@@ -251,7 +271,7 @@ const sponsorshipTiers = [
   }
 
   @media (min-width: 40rem) {
-    .sponsor-grid {
+    .sponsor-grid--primary {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
