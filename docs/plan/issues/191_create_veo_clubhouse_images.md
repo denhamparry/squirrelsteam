@@ -25,8 +25,8 @@ issue; uploading the images to Veo remains a later, non-blocking operator task.
    the approved white Veo squirrel mark in the SVG and preserve its roughly
    70% safe-area footprint in the opaque PNG.
 2. Compose a 1440x360 cover on the same background. Keep all content inside the
-   central 1200x300 safe zone, use the club mark and identity at the top, and
-   place all five sponsors alphabetically in one row of identical slots.
+   central 1200x300 safe zone and place all five sponsors alphabetically in one
+   row of identical slots, clear of Veo's native crest and team-name overlay.
 3. Link each sponsor's existing `-light` asset from a clearly named SVG group.
    Size the artwork optically inside equal slots so no placement implies a
    sponsorship tier.
@@ -88,14 +88,14 @@ and validates the two actual small display sizes called out by the issue.
 
 - Both SVGs parse successfully. The cover contains five ordered, named sponsor
   groups whose links resolve to the expected `-light` inputs; all slot
-  rectangles are 220x112 and stay inside the 1200x300 safe zone.
+  rectangles are 188x124 and stay inside the 1200x300 safe zone.
 - Direct regeneration from the documented ImageMagick composition produced
   zero changed pixels for both committed PNGs.
 - The crest is 1024x1024, 73,073 bytes, opaque sRGB, with non-background bounds
-  of 672x707 at +207+125. The cover is 1440x360, 67,306 bytes, and opaque sRGB.
+  of 672x707 at +207+125. The cover is 1440x360, 40,197 bytes, and opaque sRGB.
 - Manual inspection passed for the full-resolution files, the crest at 64px on
-  light and dark surfaces, and the complete cover at 390px wide. The club mark
-  and five distinct sponsor identities remain recognizable.
+  light and dark surfaces, and the complete cover at 390px wide. The crest's
+  club mark and the cover's five distinct sponsor identities remain recognizable.
 - `npm ci` installed 267 locked packages with zero vulnerabilities.
   `npm run check` passed 23 files with zero diagnostics; `npm run build` built
   all six pages; and `npm audit --omit=dev` found zero vulnerabilities.
@@ -103,9 +103,12 @@ and validates the two actual small display sizes called out by the issue.
   large-file, secret, and Markdown checks.
 - The issue was fetched again after implementation. Its title, body, labels,
   open state, and empty discussion remain unchanged from the planning snapshot.
-- After the PR opened, the maintainer replaced the age-grade identity with
-  `RHIWBINA SQUIRRELS #1415`. The SVG metadata, visible cover, export recipe,
-  and regenerated PNG now use the stable 2014/2015 birth-year cohort name.
+- After the PR opened, the maintainer replaced the age-grade identity with the
+  stable 2014/2015 birth-year cohort name, `Rhiwbina Squirrels 1415`.
+- A subsequent live Veo screenshot showed that Veo overlays that identity and
+  crest itself, duplicating the cover copy and covering the first sponsor
+  cards. The cover now omits duplicate identity content and reserves the left
+  and lower areas for Veo, with all five sponsors in an upper-right row.
 
 ## Branch review
 
@@ -130,7 +133,7 @@ and validates the two actual small display sizes called out by the issue.
 | Faithful centred squirrel at roughly 70% safe area | Implement and validate | Pre-merge / Codex | Linked approved mark and pixel bounds | Pass |
 | Crest legible at 64px on light and dark UI | Validate in this PR | Pre-merge / Codex | Rendered contact sheet | Pass |
 | 1440x360 cover under 2.5 MB | Implement in this PR | Pre-merge / Codex | PNG inspection and file size | Pass |
-| Content inside central 1200x300 safe zone | Implement and validate | Pre-merge / Codex | SVG geometry audit | Pass |
+| Content inside central 1200x300 safe zone and clear of Veo UI | Implement and validate | Pre-merge / Codex / live screenshot | SVG geometry audit and rendered placement | Pass |
 | Five sponsors, alphabetical, one equal row | Implement and validate | Pre-merge / Codex | Named groups, equal slots, 390px preview | Pass |
 | Use each sponsor's `-light` variant | Implement in this PR | Pre-merge / Codex | SVG href audit | Pass |
 | Editable linked SVG sources beside PNGs | Implement in this PR | Pre-merge / Codex | XML and path checks | Pass |

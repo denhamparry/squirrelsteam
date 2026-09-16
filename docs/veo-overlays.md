@@ -24,13 +24,14 @@ recognizable at 64px.
 
 ### Clubhouse artwork sources
 
-The club identity links `veo-upper-right-mark.svg`, an existing white-on-dark
+The crest links `veo-upper-right-mark.svg`, an existing white-on-dark
 derivative of `squirrel-mark.svg`. The cover links these existing dark-surface
 variants in alphabetical, non-ranking order:
 
-The identity uses `RHIWBINA SQUIRRELS #1415`: `#1415` identifies the
+The Veo team identity uses `Rhiwbina Squirrels 1415`: `1415` identifies the
 2014/2015 birth-year cohort and remains stable as the players move from U12 to
-U13, U14, and later age grades.
+U13, U14, and later age grades. Do not repeat that identity in the cover image:
+Veo renders the crest and team name over the lower-left of the cover itself.
 
 1. `../sponsors/cornerstone-finance-group-light.svg`
 2. `../sponsors/dc-plastering-light.png`
@@ -38,11 +39,17 @@ U13, U14, and later age grades.
 4. `../sponsors/imperial-light.png`
 5. `../sponsors/on-the-river-light.png`
 
-Each sponsor has the same 220x112 slot. The linked artwork is fitted optically
+Each sponsor has the same 188x124 slot. The linked artwork is fitted optically
 inside that fixed area because its aspect ratios range from a wide wordmark to
 a near-square badge. Equal slots, one row, and alphabetical order deliberately
 avoid suggesting tiers. Do not add prices, kit placements, private contact
 details, or other fundraising copy to these profile images.
+
+A live Clubhouse render inspected on 2026-09-16 showed that Veo places its own
+crest near the left edge and the team name across the lower-left. The cover
+therefore leaves the left and lower areas empty and positions the sponsor row
+at x=316..1304, y=40..164. This intentional upper-right bias prevents Veo's UI
+from covering Cornerstone and D&C and removes the duplicate team name.
 
 ### Clubhouse export recipe
 
@@ -50,22 +57,22 @@ The PNGs were exported with ImageMagick 7.1.2-31. For the crest, create an
 opaque 1024x1024 `#1a1a1a` canvas and composite
 `veo-upper-right-mark.png` over it at its native 1024x1024 size.
 
-For the cover, create an opaque 1440x360 `#1a1a1a` canvas. Composite the club
-mark into a 144x144 box at +120+30, then draw `RHIWBINA SQUIRRELS #1415` in
-Arial Bold at 44px from +280+113 and `OUR SPONSORS` in Arial Bold at 17px from
-+120+195. Draw identical rounded `#232323` sponsor slots at y=205, width=220,
-height=112, radius=12, with x positions 120, 360, 600, 840, and 1080.
+For the cover, create an opaque 1440x360 `#1a1a1a` canvas. Do not add a club
+mark, team name, or sponsor label: Veo supplies the first two and all three
+would consume the protected overlay area. Draw identical rounded `#232323`
+sponsor slots at y=40, width=188, height=124, radius=12, with x positions 316,
+516, 716, 916, and 1116.
 
 Trim transparent margins from each unchanged `-light` input, resize it to fit
 inside the stated box without changing its aspect ratio, and centre it there:
 
 | Sponsor | Fit box | Box position |
 | --- | --- | --- |
-| Cornerstone Finance Group | 204x78 | +128+222 |
-| D&C Plastering | 204x68 | +368+227 |
-| Hollybush Properties Ltd | 180x96 | +620+213 |
-| Imperial | 190x74 | +855+224 |
-| On the River | 100x104 | +1140+209 |
+| Cornerstone Finance Group | 176x78 | +322+63 |
+| D&C Plastering | 176x68 | +522+68 |
+| Hollybush Properties Ltd | 160x96 | +730+54 |
+| Imperial | 170x74 | +925+65 |
+| On the River | 104x104 | +1158+50 |
 
 Render the Cornerstone SVG on a transparent canvas at 384 DPI before trimming.
 Read the other four raster inputs at their native resolution.
