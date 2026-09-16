@@ -1,5 +1,240 @@
 # YouTube
 
+## Channel identity
+
+The team channel is public even when every video is private. Keep its public
+profile limited to these approved fields:
+
+| Field | Value |
+| --- | --- |
+| Name | `Rhiwbina Squirrels #1415` |
+| Handle | `@RhiwbinaSquirrels1415` |
+| Handle URL | `https://www.youtube.com/@RhiwbinaSquirrels1415` |
+| Channel URL | `https://www.youtube.com/channel/UCcLOeW_zsRG_uY2Rk9bkb-g` |
+| Links | `https://squirrels.team` and `https://www.instagram.com/rhiwbinarfc1415/` |
+| Contact | `contact@squirrels.team` |
+
+Do not put an approved-account list, consent status, player detail, private
+schedule, credential, or stream information on the channel page.
+
+Suggested public description:
+
+> The YouTube channel for Rhiwbina Squirrels #1415, the 2014/15 age group of
+> Rhiwbina R.F.C. in Cardiff. Match and training videos are private and shared
+> only with players' families approved by the team. Fixtures, training and
+> news: <https://squirrels.team>
+
+## Restricted-viewing model
+
+Upload every match, training session, and highlight with **Private** visibility,
+then use **Share privately** for the team's approved Google accounts. YouTube's
+[visibility guidance](https://support.google.com/youtube/answer/157177) says a
+private video is visible only to its owner and chosen recipients, does not
+appear on the channel's Videos tab or in search, and has no comments. A viewer
+must sign in to the exact account that was invited.
+
+Private sharing is configured separately on every video; there is no
+channel-wide approved-account list. It is the closest YouTube access model to
+the team's requirement, but it does not make the public channel profile
+private.
+
+Do not substitute either of these access models:
+
+- **Unlisted:** anyone with the link can watch and reshare it without signing
+  in, so it does not restrict viewing to approved accounts.
+- **Members-only:** this is paid fan access for eligible channels in the
+  [YouTube Partner Programme](https://support.google.com/youtube/answer/13429240),
+  not an allowlist of family accounts. It would add payment and eligibility
+  requirements without meeting the access rule.
+
+### Recipient limit
+
+Older official YouTube
+[migration guidance](https://support.google.com/youtube/answer/9230970) states
+that a private video can be shared with up to 50 email addresses. The current
+visibility article does not publish a number, so **confirm the limit shown in
+YouTube Studio before collecting or using the list**. Studio's current limit
+controls.
+
+Count the approved accounts before the first upload. If the count is above the
+limit displayed by Studio, stop and take options to the maintainer. Do not omit
+a family, switch to Unlisted, or use a paid membership as a workaround.
+
+## Private records outside the repository
+
+Team admins maintain the approved Google-account list and written consent
+records in the club's authorised record system, outside this repository. Never
+put either record in Git, an issue, a pull request, a video title, or a video
+description. A non-Gmail address can be used only when the family confirms it
+is the address of the Google account they will use to sign in.
+
+The external operational record should let an authorised admin determine which
+account is approved, which videos it has been invited to, and whether the
+required consent and welfare approval are current. Do not copy that record
+into this runbook.
+
+### Add an approved account
+
+1. Confirm outside the repository that the account and all required consents
+   are approved, and that adding it will stay within Studio's displayed limit.
+2. In YouTube Studio on a computer, open **Content**, select an applicable
+   video, open **Visibility**, then choose **Share privately**.
+3. Add the exact approved Google-account address, save the video, and repeat
+   for every existing video the account is allowed to watch. YouTube's
+   [channel-permissions guidance](https://support.google.com/youtube/answer/9481328)
+   notes that private-video sharing is not available in the Studio mobile app.
+4. Ask the recipient to test while signed in to that exact account. Record the
+   completed invitations only in the external operational record.
+
+There is no one-time channel invitation that grants access to all current and
+future private videos.
+
+### Remove or replace an approved account
+
+1. Identify every video shared with the account from the external operational
+   record and from Studio; do not assume changing the external list revokes
+   YouTube access.
+2. Open **Visibility** then **Share privately** on every identified video,
+   remove the account, and save each change.
+3. If an approved replacement account is supplied, add it separately to every
+   applicable video and verify it as described above.
+4. Update the external record and have a second authorised admin check that no
+   old invitation remains.
+
+## Safeguarding and consent gate
+
+No video may be uploaded or streamed until all of these conditions are met:
+
+- Written parental or guardian consent covers filming and private sharing for
+  every player who may appear, and the club welfare or safeguarding officer
+  has approved the approach. YouTube's
+  [child-safety best practices](https://support.google.com/youtube/answer/9229229)
+  also require consent from a minor's parent or legal guardian.
+- A player without current consent will not appear. If they cannot reliably be
+  kept out of shot, do not publish or stream the recording.
+- The title, description, thumbnail, spoken introduction, and other metadata
+  contain no player's name, age, date of birth, school, contact detail, or
+  other personal information. Use neutral metadata such as
+  `vs Opponent RFC - 2026-09-20`.
+- The administrator has made an accurate audience decision using YouTube's
+  [made-for-kids FAQ](https://support.google.com/youtube/answer/9684541). Do not
+  use the setting as a substitute for consent or private sharing.
+
+Consent and welfare records are sensitive operational records and must remain
+outside the repository.
+
+## Per-video upload checklist
+
+Complete this checklist for every recording; upload defaults are only a safety
+net and do not replace the check.
+
+- [ ] All players who may appear pass the safeguarding and consent gate.
+- [ ] The title and description are neutral and contain no personal details.
+- [ ] Visibility is **Private** before the upload or processing completes.
+- [ ] The audience setting is accurate for this video.
+- [ ] Comments are off. Private videos do not support comments, but keep the
+      explicit setting off in case visibility is changed accidentally later.
+- [ ] **Share privately** contains the complete current approved list, uses the
+      exact Google-account addresses, and stays within Studio's displayed
+      limit.
+- [ ] After saving, reopen Visibility and verify **Private** plus the recipient
+      list; test playback with an invited account that is not a channel admin.
+- [ ] Update only the external operational record. Do not paste recipients or
+      consent evidence into the repository.
+
+## Veo private live streaming
+
+Veo's
+[YouTube live-streaming guide](https://support.veo.com/hc/en-us/articles/26783279685265-How-to-livestream-to-YouTube-with-your-Veo-Cam)
+requires a Veo Cam 2 or Cam 3, the Veo Live add-on, and a YouTube channel with
+live streaming enabled. Initial YouTube enablement can take up to 24 hours, so
+complete it before the test day. Veo's current
+[sport-capability guide](https://support.veo.com/hc/en-us/articles/30159089390865-Veo-capabilities-by-sport-features-and-differences-explained)
+lists live streaming as officially supported for football but not rugby. Do not
+assume that this rugby team's account or camera will offer a supported live
+workflow; confirm the current capability with Veo before relying on it.
+
+YouTube documents Private as a
+[live-stream visibility](https://support.google.com/youtube/answer/9854503), but
+its help does not clearly guarantee that a Veo-created live event supports the
+same invited-account flow as an uploaded private video. Treat live access as
+unverified until this end-to-end test passes. The test must bind Veo to the
+exact event whose privacy was checked; a separately scheduled Private event
+does not prove that an event created automatically by Veo is also Private.
+
+1. Complete the safeguarding and consent gate for the private test. Use an
+   empty pitch or consenting adults rather than players for the first test.
+2. Enable live streaming in YouTube Studio. In Veo's Streaming Destinations,
+   add YouTube with **Use stream key** and enable **Request stream key when
+   starting live stream**. Do not use the connected-account shortcut for a
+   player stream unless a later test proves exactly which event it creates and
+   confirms that event before players enter frame.
+3. In YouTube Studio, schedule one uniquely titled test event with **Private**
+   visibility and attempt to share it privately with a separate approved test
+   account. Create or select a stream key that is not assigned to any other
+   current or upcoming event, bind it to this event, and copy it using an
+   approved secret-handling method. Never put a stream key in Git, an issue, a
+   message, or the external account list.
+4. Point the camera at an empty pitch or consenting adults. In the Veo Cam App,
+   choose **Go Live**, enter neutral details, select YouTube, and paste the
+   unique key for that exact test event when prompted.
+5. Before any player enters frame, identify the active event in Studio and
+   verify that it is the uniquely titled event, its visibility is Private, and
+   its recipient list is correct. Confirm that the invited account can watch
+   only when signed in to that exact account, while a signed-out browser and a
+   different account cannot watch.
+6. End the test and confirm the archived recording remains Private with the
+   intended recipient list. Rotate or discard the event-specific stream key.
+
+If Studio does not offer invited sharing for the live event, or any access
+check fails, **do not live-stream matches or training**. Record locally with
+Veo, upload the finished recording as Private, apply Share privately, and take
+alternative options to the maintainer. Unlisted is not an acceptable fallback.
+
+For every later live stream, repeat the same unique-event and unique-key
+binding, keep players out of frame until the exact active event passes the
+privacy checks, repeat the per-video checklist, disable live chat, and keep a
+coach or official visibly present. YouTube's
+[child-safety policy](https://support.google.com/youtube/answer/2801999) warns
+that streams featuring minors under 16 without a visibly present adult may be
+removed or have live chat disabled.
+
+## Channel administration
+
+The channel must belong to a club-controlled Google account protected by
+two-step verification. Never share its password. Invite each administrator
+through **YouTube Studio > Settings > Permissions**, following YouTube's
+[channel-permissions guidance](https://support.google.com/youtube/answer/9481328).
+
+Keep at least two authorised people able to manage the channel, so access does
+not depend on one person. Apply least privilege: use Editor for routine uploads
+where possible, and reserve Owner or Manager access for people who must manage
+permissions or the channel. Review permissions when responsibilities change
+and remove access promptly when an administrator leaves the role.
+
+## Operator setup checklist
+
+These actions happen in Google, YouTube Studio, the club's records, or Veo.
+They are deliberately **not required to merge this documentation or close
+issue #200**.
+
+- [ ] Confirm club-controlled ownership, two-step verification, at least two
+      authorised administrators, and no shared password.
+- [ ] Invite administrators with least-privilege Studio permissions.
+- [ ] Decide and configure the channel or per-video audience default after
+      reviewing the made-for-kids guidance.
+- [ ] Set upload defaults to Private, comments off, and category Sports.
+- [ ] Add the approved public description, links, and contact from the Channel
+      identity section.
+- [ ] Upload and visually check the profile picture, watermark, and banner from
+      the Channel images section.
+- [ ] Collect and count approved accounts outside the repository; compare the
+      count with Studio's current recipient limit.
+- [ ] Record written consent and welfare approval outside the repository before
+      the first player recording.
+- [ ] Enable YouTube live streaming, allow for activation time, and pass the
+      private Veo test before any match or training live stream.
+
 ## Channel images
 
 The channel images for
