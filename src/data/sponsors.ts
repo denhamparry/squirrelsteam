@@ -3,6 +3,8 @@ import cornerstoneDark from "../assets/sponsors/cornerstone-finance-group-dark.s
 import cornerstoneLight from "../assets/sponsors/cornerstone-finance-group-light.svg";
 import dcPlasteringDark from "../assets/sponsors/dc-plastering-dark.png";
 import dcPlasteringLight from "../assets/sponsors/dc-plastering-light.png";
+import estGroupDark from "../assets/sponsors/est-group-dark.png";
+import estGroupLight from "../assets/sponsors/est-group-light.png";
 import hollybushDark from "../assets/sponsors/hollybush-properties-dark.png";
 import hollybushLight from "../assets/sponsors/hollybush-properties-light.png";
 import imperialDark from "../assets/sponsors/imperial-dark.png";
@@ -33,6 +35,13 @@ export const sponsors: readonly Sponsor[] = [
     logoDark: dcPlasteringDark,
     description: null,
     url: null,
+  },
+  {
+    name: "EST Group",
+    logoLight: estGroupLight,
+    logoDark: estGroupDark,
+    description: null,
+    url: "https://est-group.co.uk",
   },
   {
     name: "Hollybush Properties Ltd",
