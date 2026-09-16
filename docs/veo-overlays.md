@@ -49,6 +49,13 @@ putting text into the artwork. Text labels are intentionally omitted because
 they are unreadable when the complete cover is reduced to its 390px-wide app
 preview; the website displays retain accessible tier headings.
 
+Tile size alone does not determine visual rank because the marks have different
+aspect ratios and pixel density. Measure each logo inside its fit box against
+the `#232323` slot surface: its visual extent includes every differing pixel,
+while its visible-pixel area counts grayscale differences above 6%. Every
+secondary logo must be shorter and have a lower visible-pixel area than every
+primary logo. Keep that rule when sponsor artwork or membership changes.
+
 Do not add prices, package names, kit placements, private contact details, or
 other fundraising copy to these profile images.
 
@@ -83,7 +90,7 @@ transparent canvas of that box size, and composite it at the box position:
 | Primary | Imperial | 196x90 | +787+55 |
 | Primary | On the River | 116x116 | +1057+42 |
 | Secondary | D&C Plastering | 164x50 | +840+211 |
-| Secondary | EST Group | 150x78 | +1039+197 |
+| Secondary | EST Group | 96x50 | +1066+211 |
 
 Render the Cornerstone SVG on a transparent canvas at 384 DPI before trimming.
 Read the other five raster inputs at their native resolution. Explicitly set a
@@ -129,13 +136,21 @@ tiles. Transparent outer margins and 12px intra-tier gutters allow Veo's
 PNG-alpha behaviour to be observed without exposing a logo directly to
 changing footage.
 
-The primary group comes first in alphabetical order and uses four 456x252
+The primary group comes first in alphabetical order and uses four 411x252
 tiles. A 36px tier break leads to the alphabetical secondary group in two
-smaller 210x180 tiles. Artwork is sized optically within each tile because the
-aspect ratios range from wide wordmarks to a near-square badge. Tier labels are
-intentionally omitted: text that fits this 8:1 strip is not readable at normal
-playback size and would reduce the available logo area. The size and spacing
-change still make the two groups visually distinct.
+smaller 300x180 tiles. The wider secondary tiles let the unusually wide D&C
+wordmark retain at least 40px of native visual height without changing its
+aspect ratio. Primary tile area remains larger, and artwork is sized optically
+because the marks range from wide wordmarks to a near-square badge. Tier labels
+are intentionally omitted: text that fits this 8:1 strip is not readable at
+normal playback size and would reduce the available logo area. The size and
+spacing change still make the two groups visually distinct.
+
+Apply the same objective sizing rule as the cover, using each tile's own surface
+colour: every secondary logo must be shorter and have a lower visible-pixel area
+than every primary logo when differences above 6% grayscale are counted. D&C's
+visible extent also has a 40px minimum height so rank is not achieved by making
+the lettering illegible.
 
 ### Source provenance
 
@@ -164,29 +179,37 @@ the source; it preserves the published charcoal and green colours.
 Start with a transparent 2400x300 canvas and draw the following rounded tiles
 with a 16px radius:
 
-- Primary: 456x252 at y=24 and x=36, 504, 972, and 1440.
-- Secondary: 210x180 at y=60 and x=1932 and 2154.
+- Primary: 411x252 at y=24 and x=36, 459, 882, and 1305.
+- Secondary: 300x180 at y=60 and x=1752 and 2064.
+
+This preserves 36px outer margins, 12px intra-tier gutters, and the larger 36px
+inter-tier break. Primary tiles remain larger by area than secondary tiles.
 
 Use `#fff` for Cornerstone, Hollybush, Imperial, and EST; use `#1a191a`
 for On the River and `#1a1a1a` for D&C Plastering.
 
-Crop and resize each unchanged input according to this table, then composite it
-at the stated position:
+The layered SVG crops the unchanged provenance sources according to this table.
+For direct PNG composition, use the matching normalized `-dark` variant on a
+light tile and `-light` variant on a dark tile; those derivatives already apply
+the listed crops and remove Imperial's live-font dependency. Trim the variant,
+resize it proportionally to fit inside a transparent canvas of the stated output
+size, centre it without stretching, and composite that canvas at the position:
 
 | Tier | Sponsor | Source crop | Output size | Position |
 | --- | --- | --- | --- | --- |
-| Primary | Cornerstone Finance Group | `2878x738+124+228` after transparent SVG render | 420x108 | +54+96 |
-| Primary | Hollybush Properties Ltd | `1331x675+130+80` | 420x213 | +522+44 |
-| Primary | Imperial | `240x83+24+3` after transparent SVG render | 420x145 | +990+77 |
-| Primary | On the River | `839x942+217+126` | 190x214 | +1573+43 |
-| Secondary | D&C Plastering | `1092x176+233+402` | 186x30 | +1944+135 |
-| Secondary | EST Group | Trimmed dark variant | 174x90 | +2172+105 |
+| Primary | Cornerstone Finance Group | `2878x738+124+228` after transparent SVG render | 375x96 | +54+102 |
+| Primary | Hollybush Properties Ltd | `1331x675+130+80` | 375x190 | +477+55 |
+| Primary | Imperial | `240x83+24+3` after transparent SVG render | 375x129 | +900+86 |
+| Primary | On the River | `839x942+217+126` | 190x214 | +1416+43 |
+| Secondary | D&C Plastering | `1092x176+233+402` | 270x44 | +1767+128 |
+| Secondary | EST Group | Trimmed dark variant | 120x62 | +2154+119 |
 
-The layered SVG mirrors these groups, crops, sizes, and positions. Its images
-are linked rather than embedded, so keep it beside the `source/` directory.
-The local ImageMagick SVG delegate omits linked images; use a browser or vector
-editor to inspect the SVG, or repeat the direct composition above for the PNG.
-Finish the PNG as RGBA with metadata stripped.
+The layered SVG mirrors these groups, provenance crops, fit canvases, and
+positions. Its images are linked rather than embedded, so keep it beside the
+`source/` directory. The local ImageMagick SVG delegate omits linked images; use
+a browser or vector editor to inspect the SVG, or repeat the normalized-variant
+composition above for the PNG. Finish the PNG at 8-bit depth as RGBA with
+metadata stripped.
 
 ## Veo findings and operator checks
 
