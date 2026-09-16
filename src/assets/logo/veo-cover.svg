@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="360" viewBox="0 0 1440 360" role="img" aria-labelledby="title desc">
-  <title id="title">Rhiwbina Squirrels U12 Veo Clubhouse cover</title>
+  <title id="title">Rhiwbina Squirrels #1415 Veo Clubhouse cover</title>
   <desc id="desc">Club identity and five equal sponsor slots on a solid dark background.</desc>
   <metadata>Veo Clubhouse cover: 1440x360. Working safe zone: x=120..1320, y=30..330. Sponsor order is alphabetical and non-ranking.</metadata>
   <defs>
@@ -14,7 +14,7 @@
 
   <g id="club-identity">
     <image href="veo-upper-right-mark.svg" x="120" y="30" width="144" height="144" preserveAspectRatio="xMidYMid meet"/>
-    <text class="identity" x="280" y="113">RHIWBINA SQUIRRELS U12</text>
+    <text class="identity" x="280" y="113">RHIWBINA SQUIRRELS #1415</text>
   </g>
   <text class="section-label" x="120" y="195">OUR SPONSORS</text>
 
