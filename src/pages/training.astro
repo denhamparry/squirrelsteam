@@ -108,7 +108,9 @@ const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
           {
             tourFixtures.map((fixture) => (
               <li>
-                <strong>{fixture.data.title}</strong> — {formatWhen(fixture)}
+                <a href="/tour/"><strong>{fixture.data.title}</strong></a> — {
+                  formatWhen(fixture)
+                }
               </li>
             ))
           }

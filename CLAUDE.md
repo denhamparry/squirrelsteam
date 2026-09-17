@@ -38,7 +38,7 @@ npm run check    # Astro type-check
 
 - Training: Caedelyn Park (CF14 6EJ), Tuesdays 7–8pm
 - 26/27 season starts Sunday 6 September 2026
-- Tour: South of France, 1–4 May 2027
+- Tour: Nice, France, 1–4 May 2027 (£300 pp)
 - Sponsorship tiers: Platinum £1,000 · Black £500 · White £250
 - Bank details (tour flyer): **keep private**, do not publish on the site
 
