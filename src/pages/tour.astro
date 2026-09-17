@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Card from "../components/Card.astro";
+import { formatWhen, getTourFixtures } from "../lib/fixtures";
+
+const [tourFixture] = await getTourFixtures();
+
+if (!tourFixture?.data.location) {
+  throw new Error("The published tour fixture must include a location");
+}
+
+const tourDate = formatWhen(tourFixture);
+const destination = tourFixture.data.location;
+const inclusions = [
+  "Flights",
+  "Accommodation",
+  "A rugby game against a local team",
+  "Watching a local top-flight rugby match",
+  "Waterpark",
+];
+const paymentPlan = [
+  { amount: "£100", deadline: "Monday 2 November 2026" },
+  { amount: "£200", deadline: "Monday 1 February 2027" },
+  { amount: "£300", deadline: "Monday 5 April 2027" },
+];
+---
+
+<BaseLayout
+  title="Tour — Nice 2027"
+  description="Rhiwbina Squirrels U12 tour to Nice, France: dates, what's included and the payment plan."
+>
+  <PageHeader
+    eyebrow="Nice 2027"
+    title="Squirrels on Tour"
+    lead="Everything Rhiwbina Squirrels #1415 families need to plan for the tour."
+  />
+  <section class="section">
+    <div class="container container-narrow flow">
+      <Card title="When & where">
+        <dl class="tour-facts">
+          <div>
+            <dt>Dates</dt>
+            <dd>{tourDate}</dd>
+          </div>
+          <div>
+            <dt>Destination</dt>
+            <dd>{destination}</dd>
+          </div>
+        </dl>
+      </Card>
+
+      <Card title="What's included">
+        <p><strong>£300 per person</strong> includes:</p>
+        <ul>
+          {inclusions.map((item) => <li>{item}</li>)}
+        </ul>
+      </Card>
+
+      <Card title="Payment plan">
+        <p>
+          Each amount is the total paid per person by that date. The full price
+          is £300.
+        </p>
+        <ol class="payment-plan">
+          {
+            paymentPlan.map(({ amount, deadline }) => (
+              <li>
+                <strong>{amount}</strong> by {deadline}
+              </li>
+            ))
+          }
+        </ol>
+      </Card>
+
+      <Card title="How to pay">
+        <p>
+          For bank details and your payment reference, ask the team manager or
+          check the team WhatsApp group.
+        </p>
+      </Card>
+
+      <Card title="Fixture & calendar">
+        <p>
+          The tour is included with the team's other fixtures and key dates.
+        </p>
+        <p>
+          <a class="button button--outline" href="/fixtures/"
+            >Add the tour to your calendar</a
+          >
+        </p>
+      </Card>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tour-facts {
+    display: grid;
+    gap: var(--space-s);
+  }
+  .tour-facts div {
+    display: grid;
+    gap: var(--space-3xs);
+  }
+  .tour-facts dt {
+    color: var(--color-muted);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+  .tour-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+  .payment-plan {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+</style>
