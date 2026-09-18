@@ -35,12 +35,25 @@ const clubhouseUrl = "https://player.squirrels.team";
       class="nav-toggle"
       aria-hidden="true"
     />
-    <label for="nav-toggle" class="nav-toggle-label">
+    <label for="nav-toggle" class="nav-toggle-label" data-nav-label>
       <span class="visually-hidden">Toggle menu</span>
       <span class="nav-toggle-bar" aria-hidden="true"></span>
     </label>
+    <!-- Keyboard-operable toggle; the script below swaps it in for the label.
+         Without JS the checkbox + label above still open the menu. -->
+    <button
+      type="button"
+      class="nav-toggle-label nav-toggle-button"
+      aria-controls="site-nav"
+      aria-expanded="false"
+      data-nav-button
+      hidden
+    >
+      <span class="visually-hidden">Toggle menu</span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
 
-    <nav class="site-nav" aria-label="Primary">
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
       <ul>
         {
           navItems.map((item) => (
@@ -61,6 +74,45 @@ const clubhouseUrl = "https://player.squirrels.team";
     </nav>
   </div>
 </header>
+
+<script>
+  // Progressive enhancement for the mobile menu (#231). The checkbox stays the
+  // single source of state, so the `:checked ~ .site-nav` CSS works with or
+  // without this script.
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const checkbox = document.querySelector<HTMLInputElement>("#nav-toggle");
+  const label = document.querySelector<HTMLElement>("[data-nav-label]");
+  const button = document.querySelector<HTMLButtonElement>("[data-nav-button]");
+
+  if (header && checkbox && label && button) {
+    const setOpen = (open: boolean, focusToggle = false) => {
+      checkbox.checked = open;
+      button.setAttribute("aria-expanded", String(open));
+      if (focusToggle) button.focus();
+    };
+
+    label.hidden = true;
+    button.hidden = false;
+    setOpen(checkbox.checked);
+
+    button.addEventListener("click", () => setOpen(!checkbox.checked));
+
+    // Close the overlay when keyboard focus leaves the header, so the next
+    // focused element is never hidden underneath it (WCAG 2.4.11).
+    header.addEventListener("focusout", (event) => {
+      const next = event.relatedTarget;
+      if (checkbox.checked && next instanceof Node && !header.contains(next)) {
+        setOpen(false);
+      }
+    });
+
+    header.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && checkbox.checked) {
+        setOpen(false, true);
+      }
+    });
+  }
+</script>
 
 <style>
   .site-header {
@@ -149,9 +201,16 @@ const clubhouseUrl = "https://player.squirrels.team";
   .nav-toggle-label {
     display: none;
   }
+  .nav-toggle-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+  }
 
   @media (max-width: 60rem) {
-    .nav-toggle-label {
+    .nav-toggle-label:not([hidden]) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
