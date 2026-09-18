@@ -503,7 +503,17 @@ information.
 
 The script checks for the same renderer as the banner, ImageMagick 7.1.2-31
 with the librsvg 2.62.3 delegate. It also checks the font's SHA-256, and stops
-with an error if either check fails. It renders each SVG without its linked
+with an error if either check fails. Before writing anything, it also stops
+when:
+
+- a `PLAYLISTS` slug is duplicated or isn't lowercase words joined by single
+  hyphens (for example `games-u13`), or a name is blank;
+- the measured visible bounds of `veo-upper-right-mark.png` no longer equal
+  the recorded 672x707 at +207+125 of 1024. If the mark is re-exported, update
+  the `MARK_*` constants and recheck the safe zones above.
+
+Names are XML-escaped, so characters such as `&` are safe in a playlist name.
+It renders each SVG without its linked
 `<image>` through `rsvg:`, then composites `veo-upper-right-mark.png` at the
 recorded geometry. This is the same workaround the banner uses for linked
 images. The output PNGs are 8-bit RGB with no alpha.

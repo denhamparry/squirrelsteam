@@ -19,6 +19,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 import uharfbuzz as hb
 from fontTools.pens.boundsPen import BoundsPen
@@ -26,7 +27,8 @@ from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
 
 # One row per playlist: (playlist name, file slug). Add a row for a new
-# playlist, then rerun. The widest name sets the shared type size.
+# playlist, then rerun. The widest name sets the shared type size. Slugs must be
+# unique lowercase words joined by single hyphens (checked before any write).
 PLAYLISTS = [
     ("Games U11", "games-u11"),
     ("Games U12", "games-u12"),
@@ -37,6 +39,7 @@ PLAYLISTS = [
     ("Tour U11", "tour-u11"),
 ]
 PREFIX = "#1415"
+SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 FONT_SHA256 = "0e094a7d3c7c4c25cf1310c4b30014f1dae9332220b1c2c88f4fa996f0b05053"
 MAGICK_VERSION = "ImageMagick 7.1.2-31 "
@@ -48,6 +51,7 @@ WIDTH, HEIGHT = 1280, 720
 BACKGROUND = "#1a1a1a"
 MARGIN = 64
 # Visible (alpha) bounds of veo-upper-right-mark.png on its 1024 canvas.
+# check_mark_bounds() verifies them against the PNG before generating.
 MARK_CANVAS, MARK_LEFT, MARK_TOP, MARK_W, MARK_H = 1024, 207, 125, 672, 707
 MARK_BOX = 580  # rendered size of the square mark canvas
 MARK_VISIBLE_LEFT = 88
@@ -56,6 +60,11 @@ PREFIX_SCALE = 0.56  # "#1415" size relative to the playlist name
 LINE_GAP = 0.3  # gap between the two cap heights, relative to the name size
 
 LOGO_DIR = Path(__file__).resolve().parent.parent / "src" / "assets" / "logo"
+
+
+def xml_text(value):
+    """Escape text for XML content and double-quoted attributes."""
+    return escape(value, {'"': "&quot;"})
 
 
 def num(value):
@@ -134,7 +143,8 @@ def svg(name, geo, name_face, prefix_face, font_note):
     x = geo["text_x"]
     prefix_d = prefix_face.path(PREFIX, geo["prefix_size"], x, geo["prefix_baseline"])
     name_d = name_face.path(name, geo["name_size"], x, geo["name_baseline"])
-    label = f"{PREFIX} {name}"
+    label = xml_text(f"{PREFIX} {name}")
+    prefix, name = xml_text(PREFIX), xml_text(name)
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" role="img" aria-labelledby="title desc">
   <title id="title">Rhiwbina Squirrels {label} YouTube playlist thumbnail</title>
@@ -145,11 +155,47 @@ def svg(name, geo, name_face, prefix_face, font_note):
     <image href="veo-upper-right-mark.svg" x="{mark_x}" y="{mark_y}" width="{MARK_BOX}" height="{MARK_BOX}" preserveAspectRatio="xMidYMid meet"/>
   </g>
   <g id="label" fill="#ffffff" aria-label="{label}">
-    <path id="label-prefix" aria-label="{PREFIX}" d="{prefix_d}"/>
+    <path id="label-prefix" aria-label="{prefix}" d="{prefix_d}"/>
     <path id="label-playlist" aria-label="{name}" d="{name_d}"/>
   </g>
 </svg>
 """
+
+
+def validate_playlists():
+    """Reject rows that would write odd filenames or overwrite each other."""
+    seen = {}
+    for index, (name, slug) in enumerate(PLAYLISTS, start=1):
+        if not name.strip():
+            sys.exit(f"error: PLAYLISTS row {index} has an empty name")
+        if not SLUG.match(slug):
+            sys.exit(
+                f"error: PLAYLISTS row {index} slug {slug!r} must be lowercase "
+                "letters and digits joined by single hyphens"
+            )
+        if slug in seen:
+            sys.exit(
+                f"error: PLAYLISTS rows {seen[slug]} and {index} share slug {slug!r}"
+            )
+        seen[slug] = index
+
+
+def check_mark_bounds():
+    """Fail if the mark PNG no longer matches the geometry the layout assumes."""
+    expected = f"{MARK_CANVAS}x{MARK_CANVAS} {MARK_W}x{MARK_H}+{MARK_LEFT}+{MARK_TOP}"
+    measured = subprocess.run(
+        [
+            "magick", str(LOGO_DIR / "veo-upper-right-mark.png"),
+            "-alpha", "extract", "-threshold", "0", "-format", "%wx%h %@", "info:",
+        ],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    if measured != expected:
+        sys.exit(
+            f"error: veo-upper-right-mark.png measures {measured!r}, expected "
+            f"{expected!r}. Update MARK_* and recheck the safe zones in "
+            "docs/youtube.md."
+        )
 
 
 def check_renderer():
@@ -191,10 +237,12 @@ def main():
     parser.add_argument("--font", required=True, type=Path, help="Archivo[wdth,wght].ttf")
     args = parser.parse_args()
 
+    validate_playlists()
     font_bytes = args.font.read_bytes()
     if hashlib.sha256(font_bytes).hexdigest() != FONT_SHA256:
         sys.exit(f"error: {args.font} is not Archivo[wdth,wght].ttf {FONT_SHA256}")
     check_renderer()
+    check_mark_bounds()
 
     blob = hb.Blob(font_bytes)
     name_face, prefix_face = Face(blob, 800), Face(blob, 700)
