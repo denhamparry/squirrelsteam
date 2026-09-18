@@ -226,8 +226,8 @@ issue #200**.
 - [ ] Set upload defaults to Private, comments off, and category Sports.
 - [ ] Add the approved public description, links, and contact from the Channel
       identity section.
-- [ ] Upload and visually check the profile picture, watermark, and banner from
-      the Channel images section.
+- [ ] Upload and visually check the profile picture, watermark, banner, and
+      playlist thumbnails from the Channel images section.
 - [ ] Collect and count approved accounts outside the repository; compare the
       count with Studio's current recipient limit.
 - [ ] Record written consent and welfare approval outside the repository before
@@ -427,3 +427,124 @@ watermark PNG under **Video watermark**, and the banner PNG under **Banner
 image**. Check the profile in YouTube's light and dark themes, the watermark in
 video playback, and the banner on desktop, a phone, and a TV when available.
 These operator actions do not block the repository changes or issue closure.
+
+### Playlist thumbnails
+
+Each channel playlist gets its own thumbnail. It shows the white squirrel mark
+beside `#1415` and the playlist name.
+
+#### Playlist upload contract
+
+YouTube's
+[Add a playlist thumbnail](https://support.google.com/youtube/answer/15400119)
+help lets an admin open a playlist, select **Edit**, then **Choose from
+library** to upload an image. That page gives no size or format rules, so the
+thumbnails follow YouTube's
+[custom thumbnail guidance](https://support.google.com/youtube/answer/72431):
+
+- **Shape:** 16:9, at least 640px wide. The files are exactly 1280x720, so the
+  upload flow has nothing to crop. Only podcast playlists use 1:1.
+- **File:** JPG or PNG, up to 2 MB from a phone and 50 MB from a computer. Each
+  PNG is under 100 KB, so any admin can upload from a phone.
+- **Display:** Cards appear about 160–360px wide. YouTube puts a video-count
+  badge in the bottom-right corner, so that corner stays empty.
+
+**Test upload: not yet verified.** Nobody has uploaded these files to YouTube
+yet. The first channel admin to upload should:
+
+1. Upload one PNG to a **private** test playlist.
+2. Check that YouTube accepts it without cropping.
+3. Replace this paragraph with the date and the result.
+
+#### Playlist files
+
+| Playlist | Text | Upload artifact |
+| --- | --- | --- |
+| Games U11 | `#1415 Games U11` | `src/assets/logo/youtube-playlist-games-u11.png` |
+| Games U12 | `#1415 Games U12` | `src/assets/logo/youtube-playlist-games-u12.png` |
+| Cup U12 | `#1415 Cup U12` | `src/assets/logo/youtube-playlist-cup-u12.png` |
+| Training U12 | `#1415 Training U12` | `src/assets/logo/youtube-playlist-training-u12.png` |
+| Tour U10 | `#1415 Tour U10` | `src/assets/logo/youtube-playlist-tour-u10.png` |
+| Tour U11 | `#1415 Tour U11` | `src/assets/logo/youtube-playlist-tour-u11.png` |
+
+Each PNG has an editable `.svg` source beside it. The playlists in this table
+are defined once, in `PLAYLISTS` in `scripts/youtube-playlist-thumbnails.py`.
+That script writes every SVG and PNG. Do not edit the generated files by hand.
+
+#### Playlist sources and composition
+
+Every thumbnail is an opaque 1280x720 `#1a1a1a` canvas. It contains only the
+squirrel and white text: no sponsor artwork, player imagery, or personal
+information.
+
+- **Squirrel:** Each SVG links `veo-upper-right-mark.svg` rather than redrawing
+  it. The mark canvas is 580x580 at (-29, 89). This places the visible squirrel
+  (672x707 at +207+125 of the 1024 source) at x=88, vertically centred on
+  y=360.
+- **Text:** The text is Archivo outlined as `<path>` elements. There are no
+  `<text>` elements, so the SVGs do not need any installed font. The font is
+  the same pinned `Archivo[wdth,wght].ttf` as the banner (SHA-256
+  `0e094a7d3c7c4c25cf1310c4b30014f1dae9332220b1c2c88f4fa996f0b05053`) at width
+  100. The script shapes it with HarfBuzz, so kerning is applied.
+  - `#1415`: weight 700, 62px, baseline y=327.
+  - The playlist name: weight 800, 110px, baseline y=436.
+  - Both lines start at x=525.
+- **Type size:** The script picks the largest whole-pixel size that fits the
+  widest name, currently `Training U12`, inside the right margin. All six
+  thumbnails then use that size and the same baselines.
+- **Safe zones:** Nothing visible sits within 64px of an edge or in the
+  bottom-right 320x144 video-count badge zone (x>=960, y>=576). The current
+  visible content bounds are x=87..1214 and y=159..561.
+
+#### Deterministic playlist export
+
+The script checks for the same renderer as the banner, ImageMagick 7.1.2-31
+with the librsvg 2.62.3 delegate. It also checks the font's SHA-256, and stops
+with an error if either check fails. It renders each SVG without its linked
+`<image>` through `rsvg:`, then composites `veo-upper-right-mark.png` at the
+recorded geometry. This is the same workaround the banner uses for linked
+images. The output PNGs are 8-bit RGB with no alpha.
+
+Run this from the repository root. It needs [uv](https://docs.astral.sh/uv/),
+which installs the pinned `fonttools==4.60.1` and `uharfbuzz==0.51.1` from the
+script's metadata:
+
+```text
+font_dir="$(mktemp -d)"
+curl -sSfL -o "$font_dir/Archivo.ttf" \
+  'https://raw.githubusercontent.com/google/fonts/6c70c829f09ea345d3590406693220ea35c6553f/ofl/archivo/Archivo%5Bwdth,wght%5D.ttf'
+uv run scripts/youtube-playlist-thumbnails.py --font "$font_dir/Archivo.ttf"
+git status --short src/assets/logo
+```
+
+The URL pins the last `google/fonts` commit that changed the font. Rerunning
+the recipe gives byte-identical SVGs and PNGs, so `git status` must show no
+changes unless the playlist table or layout changed.
+
+To add a playlist, such as `Games U13`:
+
+1. Add a row to `PLAYLISTS`.
+2. Run the recipe.
+3. Add the new row to the table above.
+
+If the new name is wider than `Training U12`, the script reduces the type size
+for every thumbnail. In that case, re-upload all of them.
+
+#### Playlist small-size checks
+
+Before upload, scale all six PNGs to 320px and to 168px wide. Lay each set out
+on a white `#ffffff` page and on a YouTube-dark `#0f0f0f` page. For example:
+
+```text
+cd src/assets/logo
+magick youtube-playlist-*.png -resize 168x -bordercolor '#0f0f0f' -border 12 \
+  +append /tmp/playlists-168-dark.png
+```
+
+The playlist name must be readable in all four previews. At 168px, the six
+thumbnails must be easy to tell apart side by side.
+
+After merge, a channel admin opens each playlist and uses **Edit → Choose from
+library** to upload its PNG. They then check the channel's Playlists tab on a
+computer and on a phone, in both the light and dark themes. These operator
+actions do not block the repository change or issue closure.
