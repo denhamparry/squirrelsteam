@@ -14,6 +14,10 @@
   --color-line-dark: #333333;
   --color-accent: #c8102e; /* rugby red — used sparingly for emphasis */
 
+  /* Keyboard focus ring. Red is only 2.96:1 on --color-black, below the 3:1
+     non-text contrast minimum, so dark surfaces set this to white. */
+  --focus-ring: var(--color-accent);
+
   /* Surfaces */
   --bg: var(--color-paper);
   --bg-inverse: var(--color-black);
@@ -126,7 +130,7 @@ ol {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -164,6 +168,7 @@ ol {
 }
 
 .skip-link {
+  --focus-ring: var(--color-white);
   position: absolute;
   left: var(--space-s);
   top: -3rem;
