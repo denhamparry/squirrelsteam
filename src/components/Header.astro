@@ -16,7 +16,7 @@ const navItems = [
   { href: "/fundraising/", label: "Fundraising" },
 ];
 
-const donateUrl = "https://shop.squirrels.team";
+const clubhouseUrl = "https://player.squirrels.team";
 ---
 
 <header class="site-header">
@@ -54,8 +54,8 @@ const donateUrl = "https://shop.squirrels.team";
             </li>
           ))
         }
-        <li class="site-nav__donate">
-          <a class="button button--donate" href={donateUrl}>Donate</a>
+        <li class="site-nav__clubhouse">
+          <a class="button" href={clubhouseUrl}>Clubhouse</a>
         </li>
       </ul>
     </nav>
@@ -129,8 +129,18 @@ const donateUrl = "https://shop.squirrels.team";
   .site-nav a[aria-current="page"] {
     border-bottom-color: var(--color-white);
   }
-  .site-nav__donate a {
-    border-bottom: none;
+  /* White pill on the black header; inverts to an outline on hover/focus.
+     Scoped here so it outranks the `.site-nav a` colour and border rules. */
+  .site-nav__clubhouse a {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: 2px solid var(--color-white);
+  }
+  .site-nav__clubhouse a:hover,
+  .site-nav__clubhouse a:focus-visible {
+    background: transparent;
+    color: var(--color-white);
+    border-color: var(--color-white);
   }
 
   /* Mobile menu toggle (hidden on desktop) */
@@ -189,10 +199,13 @@ const donateUrl = "https://shop.squirrels.team";
     .nav-toggle:checked ~ .site-nav {
       display: block;
     }
-    .site-nav__donate {
+    .site-nav__clubhouse {
       margin-top: var(--space-2xs);
     }
-    .site-nav__donate a {
+    /* `display: flex` restores the button layout that `.site-nav a` sets to
+       block above, so the label is centred. */
+    .site-nav__clubhouse a {
+      display: flex;
       width: 100%;
       justify-content: center;
     }
