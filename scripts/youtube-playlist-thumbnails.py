@@ -32,6 +32,7 @@ PLAYLISTS = [
     ("Games U12", "games-u12"),
     ("Cup U12", "cup-u12"),
     ("Training U12", "training-u12"),
+    ("Training U11", "training-u11"),
     ("Tour U10", "tour-u10"),
     ("Tour U11", "tour-u11"),
 ]

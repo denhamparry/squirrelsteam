@@ -464,6 +464,7 @@ yet. The first channel admin to upload should:
 | Games U12 | `#1415 Games U12` | `src/assets/logo/youtube-playlist-games-u12.png` |
 | Cup U12 | `#1415 Cup U12` | `src/assets/logo/youtube-playlist-cup-u12.png` |
 | Training U12 | `#1415 Training U12` | `src/assets/logo/youtube-playlist-training-u12.png` |
+| Training U11 | `#1415 Training U11` | `src/assets/logo/youtube-playlist-training-u11.png` |
 | Tour U10 | `#1415 Tour U10` | `src/assets/logo/youtube-playlist-tour-u10.png` |
 | Tour U11 | `#1415 Tour U11` | `src/assets/logo/youtube-playlist-tour-u11.png` |
 
@@ -490,11 +491,13 @@ information.
   - The playlist name: weight 800, 110px, baseline y=436.
   - Both lines start at x=525.
 - **Type size:** The script picks the largest whole-pixel size that fits the
-  widest name, currently `Training U12`, inside the right margin. All six
-  thumbnails then use that size and the same baselines.
+  widest name, currently `Training U11`, inside the right margin. Every
+  thumbnail then uses that size and the same baselines. At weight 800,
+  `Training U11` is 6265.74 units wide per 1000. The size stays at 110px until
+  a name is wider than 6281.8 units.
 - **Safe zones:** Nothing visible sits within 64px of an edge or in the
   bottom-right 320x144 video-count badge zone (x>=960, y>=576). The current
-  visible content bounds are x=87..1214 and y=159..561.
+  visible content bounds are x=87..1215 and y=159..561.
 
 #### Deterministic playlist export
 
@@ -527,13 +530,16 @@ To add a playlist, such as `Games U13`:
 2. Run the recipe.
 3. Add the new row to the table above.
 
-If the new name is wider than `Training U12`, the script reduces the type size
-for every thumbnail. In that case, re-upload all of them.
+If the new name is wider than the current widest name, the script may reduce
+the type size for every thumbnail. Check the `name_size` the script prints. If
+it changed, `git status` shows every playlist file as modified, and all of them
+must be re-uploaded.
 
 #### Playlist small-size checks
 
-Before upload, scale all six PNGs to 320px and to 168px wide. Lay each set out
-on a white `#ffffff` page and on a YouTube-dark `#0f0f0f` page. For example:
+Before upload, scale every playlist PNG to 320px and to 168px wide. Lay each
+set out on a white `#ffffff` page and on a YouTube-dark `#0f0f0f` page. For
+example:
 
 ```text
 cd src/assets/logo
@@ -541,7 +547,7 @@ magick youtube-playlist-*.png -resize 168x -bordercolor '#0f0f0f' -border 12 \
   +append /tmp/playlists-168-dark.png
 ```
 
-The playlist name must be readable in all four previews. At 168px, the six
+The playlist name must be readable in all four previews. At 168px, the
 thumbnails must be easy to tell apart side by side.
 
 After merge, a channel admin opens each playlist and uses **Edit → Choose from
