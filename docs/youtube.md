@@ -239,9 +239,17 @@ issue #200**.
 
 The channel images for
 [@RhiwbinaSquirrels1415](https://www.youtube.com/@RhiwbinaSquirrels1415)
-reuse the approved white squirrel artwork on the club's `#1a1a1a` background.
-Neither image contains visible text, sponsor artwork, player imagery, or
-personal information.
+all reuse the approved white squirrel artwork. The profile picture, banner, and
+playlist thumbnails put it on the club's opaque `#1a1a1a` background; the
+watermark is transparent around the mark.
+
+- **Profile picture and watermark:** the squirrel only, with no text.
+- **Banner:** the "Rhiwbina Squirrels #1415" wordmark, the primary and
+  secondary tier labels, and the current sponsors' logos.
+- **Playlist thumbnails:** `#1415` and the playlist name beside the squirrel,
+  with no sponsor artwork.
+
+None of the images contains player imagery or personal information.
 
 ### Upload contracts
 
