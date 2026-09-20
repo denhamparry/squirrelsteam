@@ -71,6 +71,8 @@ LABELS = tuple(dict.fromkeys(asset.url for asset in ASSETS))
 def font_bytes(path):
     """Read a verified Archivo Bold font from the requested or tracked path."""
     source = path or DEFAULT_FONT
+    if not source.is_file():
+        sys.exit(f"error: required Archivo Bold font is missing: {source}")
     data = source.read_bytes()
     digest = hashlib.sha256(data).hexdigest()
     if digest != FONT_SHA256:
