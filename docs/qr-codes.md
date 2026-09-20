@@ -34,10 +34,20 @@ uv run scripts/qr-codes.py
 git status --short src/assets/logo
 ```
 
-It downloads Archivo Bold only when `--font` is omitted. The Google Fonts URL
-and SHA-256 (`bed60488c2f5c0b24e01d931760b6f3e9a82619dcd081ed9bff643d9f4fd9e3d`)
-are pinned in the script; any supplied `--font` file is checked against the
-same digest. Archivo is licensed under the [SIL Open Font License 1.1](https://github.com/google/fonts/blob/main/ofl/archivo/OFL.txt).
+By default it reads the tracked
+`scripts/assets/archivo/Archivo-Bold.ttf`, whose SHA-256 is
+`bed60488c2f5c0b24e01d931760b6f3e9a82619dcd081ed9bff643d9f4fd9e3d`.
+The file is the exact Google Fonts static Bold artifact used to create the
+original QR assets. Its adjacent `OFL.txt` is the SIL Open Font License 1.1
+from the commit-pinned
+[`google/fonts` Archivo directory](https://github.com/google/fonts/tree/6c70c829f09ea345d3590406693220ea35c6553f/ofl/archivo).
+An explicit `--font` file is checked against the same digest.
+
+If the tracked font fails its digest check, restore it from version control and
+rerun the generator. Do not bypass or update the checksum merely to make the
+command pass. An intentional font update must change the tracked TTF and
+checksum together, regenerate all four PNGs, and re-run the decode, visual, and
+phone-camera checks before the new images are used.
 
 Before writing a file, the generator requires OpenCV to decode every QR code
 at 1x, 0.5x, and 0.25x. Black-on-white codes must decode directly. The inverted
