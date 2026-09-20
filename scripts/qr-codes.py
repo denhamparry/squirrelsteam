@@ -8,14 +8,13 @@
 # ///
 """Generate the club QR-code assets in src/assets/logo/.
 
-Run from the repository root with `uv run scripts/qr-codes.py`. Pass --font to
-use a pre-downloaded Archivo Bold TTF; every font source is SHA-256 checked.
+Run from the repository root with `uv run scripts/qr-codes.py`. The tracked
+Archivo Bold font is used by default; every font source is SHA-256 checked.
 """
 
 import argparse
 import hashlib
 import sys
-import urllib.request
 from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
@@ -31,14 +30,11 @@ WHITE = (255, 255, 255)
 CODE_TARGET_PX = 1200
 BORDER_MODULES = 4
 SCALES = (1.0, 0.5, 0.25)
-FONT_URL = (
-    "https://fonts.gstatic.com/s/archivo/v25/"
-    "k3k6o8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTT0zRp8A.ttf"
-)
 FONT_SHA256 = "bed60488c2f5c0b24e01d931760b6f3e9a82619dcd081ed9bff643d9f4fd9e3d"
 ROOT = Path(__file__).resolve().parent.parent
 CREST = ROOT / "src/assets/logo/veo-crest.png"
 DEFAULT_OUTPUT_DIR = ROOT / "src/assets/logo"
+DEFAULT_FONT = Path(__file__).resolve().parent / "assets/archivo/Archivo-Bold.ttf"
 
 
 @dataclass(frozen=True)
@@ -73,14 +69,9 @@ LABELS = tuple(dict.fromkeys(asset.url for asset in ASSETS))
 
 
 def font_bytes(path):
-    """Read a verified Archivo Bold font, downloading the pinned source if needed."""
-    if path:
-        data = path.read_bytes()
-        source = str(path)
-    else:
-        with urllib.request.urlopen(FONT_URL, timeout=30) as response:
-            data = response.read()
-        source = FONT_URL
+    """Read a verified Archivo Bold font from the requested or tracked path."""
+    source = path or DEFAULT_FONT
+    data = source.read_bytes()
     digest = hashlib.sha256(data).hexdigest()
     if digest != FONT_SHA256:
         sys.exit(f"error: Archivo Bold from {source} has SHA-256 {digest}, expected {FONT_SHA256}")
@@ -182,7 +173,11 @@ def verify(asset, image):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--font", type=Path, help="verified Archivo Bold TTF; omit to download pinned font")
+    parser.add_argument(
+        "--font",
+        type=Path,
+        help="verified Archivo Bold TTF; omit to use the tracked font",
+    )
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     args = parser.parse_args()
 
