@@ -238,6 +238,8 @@ def main():
     args = parser.parse_args()
 
     validate_playlists()
+    if not args.font.is_file():
+        sys.exit(f"error: required Archivo font is missing: {args.font}")
     font_bytes = args.font.read_bytes()
     if hashlib.sha256(font_bytes).hexdigest() != FONT_SHA256:
         sys.exit(f"error: {args.font} is not Archivo[wdth,wght].ttf {FONT_SHA256}")
