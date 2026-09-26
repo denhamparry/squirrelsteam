@@ -137,3 +137,15 @@ as existing content pages. No blocking or non-blocking review finding remains.
   failure, not a behavior assertion failure.
 - All nine repository pre-commit hooks passed against the exact two-path staged
   correction and plan set without modifying files.
+
+## PR feedback correction
+
+PR #248 review at 2026-09-26T07:50:23Z identified that the safeguarding
+mailbox used in the first handoff came from an older WRU announcement rather
+than the current March 2026 safeguarding policy. The current primary policy
+lists `safeguarding@wru.wales`; the implementation now uses that address and
+retains the club contact and emergency route. Focused validation confirms the
+old `wrusafeguarding` address is absent from `src` and the generated conduct
+page uses `mailto:safeguarding@wru.wales`. Fresh Astro check/build, production
+audit, and diff checks pass. All nine repository pre-commit hooks also pass
+against the exact two-path feedback correction set without modifying files.
