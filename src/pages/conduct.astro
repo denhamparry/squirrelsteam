@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Card from "../components/Card.astro";
+
+const contactEmail = "contact@squirrels.team";
+const antiDopingUrl =
+  "https://community.wru.wales/governance/policy-and-integrity/anti-doping/";
+const safeguardingUrl =
+  "https://community.wru.wales/governance/policy-and-integrity/safeguarding/";
+const hundredPercentMeUrl = "https://www.ukad.org.uk/100-me";
+
+const commitments = [
+  "Take part for the fun of the sport — not just to please parents or a coach.",
+  "Play to the laws and spirit of the game, and the rules of any competition, on and off the field.",
+  "Accept all the referee's decisions.",
+  "Keep a good attitude — you and your team will benefit.",
+  "Recognise all good play, by your team or your opponents. Be a good sport.",
+  "Treat everyone as you would wish to be treated — be humble, look after your teammates and be inclusive.",
+  "Listen, be keen to learn and work together to become the best team you can be.",
+  "Co-operate with coaches, the team manager, staff and referees — without them there's no game.",
+  "Be on time and come to training regularly, because you want to.",
+  "When you wear our badge you represent the club and its standards — even when not on club business.",
+];
+---
+
+<BaseLayout
+  title="Code of conduct"
+  description="The Rhiwbina RFC 26/27 codes of conduct for players, parents, volunteers and supporters — including safeguarding, anti-doping and concussion."
+>
+  <PageHeader
+    eyebrow="Rhiwbina R.F.C. · 26/27 season"
+    title="Code of conduct"
+    lead="We play an amateur game, for fun and enjoyment. Everyone who plays, coaches, volunteers or cheers from the touchline signs up to the club's code of conduct."
+  />
+  <section class="section">
+    <div class="container container-narrow flow">
+      <p>
+        Rhiwbina R.F.C. plays under the code of conduct and development paths
+        set by the Welsh Rugby Union. The aim is to develop every player to the
+        best of their ability and ambition — and to grow well-rounded players
+        and people, part of a team that wins friends and respect throughout the
+        game. The code is part of the terms and conditions for all club members
+        and associates.
+      </p>
+      <p>
+        There are three versions — for <a href="#players">players</a>,{" "}
+        <a href="#parents">parents</a> and{" "}
+        <a href="#volunteers">volunteers &amp; supporters</a> — built on the
+        same shared commitments.
+      </p>
+
+      <Card title="By adopting the code, you agree to" headingLevel="h2">
+        <ul class="commitments">
+          {commitments.map((item) => <li>{item}</li>)}
+        </ul>
+      </Card>
+
+      <Card title="Anti-doping" headingLevel="h2">
+        <p>
+          The club is committed to clean sport and has{" "}
+          <strong>zero tolerance</strong> of performance-enhancing and
+          recreational drug use.
+        </p>
+        <ul>
+          <li>
+            Follow the{" "}
+            <a
+              href={antiDopingUrl}
+              target="_blank"
+              rel="noopener">WRU anti-doping rules <span class="visually-hidden">(opens in a new tab)</span></a
+            >, and those of World Rugby and WADA.
+          </li>
+          <li>
+            Download UKAD's{" "}
+            <a
+              href={hundredPercentMeUrl}
+              target="_blank"
+              rel="noopener">100% Me app <span class="visually-hidden">(opens in a new tab)</span></a
+            >.
+          </li>
+        </ul>
+      </Card>
+
+      <Card title="Safeguarding" headingLevel="h2">
+        <p>
+          Everyone agrees to follow the{" "}
+          <a
+            href={safeguardingUrl}
+            target="_blank"
+            rel="noopener">WRU Safeguarding Policy <span class="visually-hidden">(opens in a new tab)</span></a
+          >.
+        </p>
+        <p>
+          If you have a concern about a child's welfare, speak to a coach or the
+          team manager, or email{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. If a child is in
+          immediate danger, call <strong>999</strong>.
+        </p>
+      </Card>
+
+      <Card title="Social media & communications" headingLevel="h2">
+        <p>
+          Players, members and associates must not publicly criticise — on
+          social media or anywhere else — any player, club, match official,
+          opponent, coach, team manager, club official or spectator in a way
+          that is defamatory, threatening, abusive, indecent or insulting, or
+          that could bring the game or the club into disrepute.
+        </p>
+      </Card>
+
+      <h2 id="players">Players</h2>
+      <p>
+        Our goal is to take players all the way into senior rugby — and, once
+        their playing days are done, to see them put something back so others
+        can enjoy the game too. Players sign up to the shared commitments above,
+        plus the anti-doping, safeguarding and social media sections.
+      </p>
+
+      <h2 id="parents">Parents</h2>
+      <p>
+        <strong>Parent = No. 1 fan!</strong> You're your child's biggest
+        supporter — and probably also their nutritionist, doctor, banker, taxi
+        driver and psychologist. All of those roles play a part in their
+        development, and the code is there to back them up. As well as
+        everything above, parents agree to:
+      </p>
+
+      <Card title="Declare medical history" headingLevel="h3">
+        <p>
+          Under the WRU Safeguarding Policy, tell the coaches about any medical
+          history relevant to sport.
+        </p>
+      </Card>
+
+      <Card title="Concussion education" headingLevel="h3">
+        <p>
+          <strong>Every parent agrees to attend a one-off concussion education
+          session.</strong>
+        </p>
+        <p>
+          Concussion is a brain injury. It can be serious, but it happens in
+          everyday life too — you can get concussed falling off the sofa! Knowing
+          the signs and symptoms, and how to manage recovery, is what matters
+          most for getting better and avoiding it happening again.
+        </p>
+        <p>
+          The session covers recognising, managing and preventing head injuries,
+          and the graduated <strong>Return to Play</strong> protocol — which
+          helps you manage <em>all</em> the sports and activities your child
+          does, not just rugby.
+        </p>
+      </Card>
+
+      <h2 id="volunteers">Volunteers &amp; supporters</h2>
+      <p>
+        Coaches, helpers and everyone on the touchline sign up to the same shared
+        commitments, anti-doping, safeguarding and social media sections — so
+        the whole club sets the example for our players.
+      </p>
+
+      <p class="muted">
+        Questions about the code? Email{" "}
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .commitments {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .muted {
+    color: var(--color-muted);
+  }
+  h2[id] {
+    scroll-margin-top: var(--space-xl);
+  }
+</style>
