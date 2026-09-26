@@ -4,11 +4,12 @@ import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
 
 const contactEmail = "contact@squirrels.team";
+const wruSafeguardingEmail = "wrusafeguarding@wru.wales";
 const antiDopingUrl =
-  "https://community.wru.wales/governance/policy-and-integrity/anti-doping/";
+  "https://www.wru.wales/community-rugby/integrity/anti-doping/";
 const safeguardingUrl =
-  "https://community.wru.wales/governance/policy-and-integrity/safeguarding/";
-const hundredPercentMeUrl = "https://www.ukad.org.uk/100-me";
+  "https://www.wru.wales/community-rugby/integrity/safeguarding/";
+const hundredPercentMeUrl = "https://www.ukad.org.uk/UKAD-education/100-me";
 
 const commitments = [
   "Take part for the fun of the sport — not just to please parents or a coach.",
@@ -93,7 +94,10 @@ const commitments = [
         </p>
         <p>
           If you have a concern about a child's welfare, speak to a coach or the
-          team manager, or email{" "}
+          team manager, who can put you in touch with the club safeguarding
+          officer, or email the{" "}
+          <a href={`mailto:${wruSafeguardingEmail}`}>WRU Safeguarding Team</a>.
+          You can also contact us at{" "}
           <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. If a child is in
           immediate danger, call <strong>999</strong>.
         </p>
