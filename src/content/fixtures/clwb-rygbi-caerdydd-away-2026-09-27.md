@@ -8,7 +8,7 @@ opponent: Clwb Rygbi Caerdydd
 location: Caeau Pontcanna Fields, CF11 9HY
 result:
   us: 36
-  them: 12
+  them: 14
   tries: { us: 6, them: 2 }
-  conversions: { us: 3, them: 1 }
+  conversions: { us: 3, them: 2 }
 ---
