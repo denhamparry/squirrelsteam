@@ -53,7 +53,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 ### Prerequisites
 
-- Node.js 22 or newer (including npm)
+- Node.js and npm, using the version in [`.nvmrc`](.nvmrc)
 - Git
 - [pre-commit](https://pre-commit.com/) installed
 
