@@ -15,7 +15,7 @@ open calendar you can subscribe to.
 
 ## Local development
 
-Requires **Node.js 22+**.
+Use the Node.js version in [`.nvmrc`](.nvmrc).
 
 ```bash
 npm install        # install dependencies

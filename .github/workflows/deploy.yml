@@ -22,14 +22,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Read Node.js version
+        id: node-version
+        run: echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
       - name: Build Astro site
         # withastro/action installs deps, runs `astro build`, and uploads the
         # dist/ artifact ready for actions/deploy-pages.
-        # node-version: 22 — the action defaults to Node 20, but Astro 6
-        # requires >=22.12.0 (see issue #19).
+        # withastro/action accepts a node-version input but no version-file
+        # input, so pass the version read from .nvmrc above.
         uses: withastro/action@3eafd002e65cc31b4f0eae0bb05450d521562247 # v6.1.3
         with:
-          node-version: 22
+          node-version: ${{ steps.node-version.outputs.version }}
+      - name: Show Node.js version
+        run: node --version
 
   deploy:
     name: Deploy
