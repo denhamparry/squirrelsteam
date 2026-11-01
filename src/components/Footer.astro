@@ -4,6 +4,8 @@ import SponsorBand from "./SponsorBand.astro";
 const year = new Date().getFullYear();
 const donateUrl = "https://shop.squirrels.team";
 const djUrl = "https://dj.squirrels.team";
+// Public channel page; videos are private and shared with approved accounts.
+const youtubeUrl = "https://www.youtube.com/channel/UCcLOeW_zsRG_uY2Rk9bkb-g";
 ---
 
 <footer class="site-footer">
@@ -29,6 +31,7 @@ const djUrl = "https://dj.squirrels.team";
       <a href="/fundraising/">Fundraising</a>
       <a href={donateUrl}>Donate</a>
       <a href={djUrl}>🎵 DJ</a>
+      <a href={youtubeUrl}>▶️ YouTube</a>
     </nav>
   </div>
   <div class="container site-footer__legal">
