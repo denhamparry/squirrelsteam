@@ -5,4 +5,7 @@ start: 2026-10-18
 allDay: true
 home: false
 opponent: Llandaff
+result:
+  us: 47
+  them: 26
 ---
