@@ -15,7 +15,8 @@ out of date.
 ## Changes
 
 - `src/content/fixtures/in-season-training.md`: new recurring training fixture,
-  Tuesdays 20:00–21:00 GMT, `UNTIL=20270323T200000Z`.
+  Tuesdays 20:00–21:00, `UNTIL=20270427T190000Z` (last session 27 Apr 2027,
+  the Tuesday before the Nice tour, as the owner confirmed).
 - `src/pages/training.astro`: list only current or upcoming training (via
   `getUpcomingFixtures`), remove both pre-season cards, change the eyebrow to
   "Season 26/27".
@@ -23,12 +24,11 @@ out of date.
   training only.
 - `CLAUDE.md`: update the training key fact.
 
-## Known limitation
+## Dependency
 
-`src/lib/ics.ts` writes a UTC `DTSTART` with no `TZID`, so a weekly RRULE that
-crosses a DST change moves by an hour in subscribers' calendars. The recurrence
-therefore stops at the last Tuesday before BST starts (23 Mar 2027). A follow-up
-should add `TZID=Europe/London` support, then extend the recurrence.
+`src/lib/ics.ts` used to write a UTC `DTSTART` with no `TZID`, so this series
+would show an hour late after 28 Mar 2027. PR #276 (#275) adds TZID output. It
+must merge before 28 Mar 2027.
 
 ## Validation
 
