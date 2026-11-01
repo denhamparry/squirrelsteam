@@ -36,7 +36,8 @@ npm run check    # Astro type-check
 
 ## Key facts (source: `examples/`)
 
-- Training: Caedelyn Park (CF14 6EJ), Tuesdays 7–8pm
+- Training: The Barn (CF11 8DZ), Tuesdays 8–9pm (from 27 Oct 2026; pre-season was
+  Caedelyn Park, CF14 6EJ, 7–8pm). Home games are still at Caedelyn Park
 - 26/27 season starts Sunday 6 September 2026
 - Tour: Nice, France, 1–4 May 2027 (£300 pp)
 - Sponsorship tiers: Platinum £1,000 · Black £500 · White £250
