@@ -6,16 +6,16 @@ branch: denhamparry.co.uk/feat/gh-issue-117
 deploy: no
 ---
 
-# Plan: Confirm the opponent for the 25 October 2026 Eastern Campus home game
+# Plan: Confirm the opponent for the 25 October 2026 Eastern Campus home game and record the result
 
 ## Problem and outcome
 
 The 25 October 2026 home match at Eastern Community Campus was listed with a TBC
-opponent. The owner confirmed the opponent was **Bridgend**. Replace TBC in the
-title and add `opponent: Bridgend`. Keep the existing timed home and location
+opponent. The owner confirmed the opponent was **Bridgend Athletic**. Replace TBC in the
+title and add `opponent: Bridgend Athletic`. Keep the existing timed home and location
 fields.
 
-No score has been confirmed yet, so this change records no `result`.
+The owner later confirmed the score as Bridgend Athletic 5–25 Rhiwbina. It is recorded as `result: { us: 25, them: 5 }`, with no try or conversion breakdown.
 
 ## Files modified
 
@@ -25,4 +25,4 @@ No score has been confirmed yet, so this change records no `result`.
 ## Validation
 
 - `npm run check` and `npm run build` pass.
-- The Fixtures page and `fixtures.ics` show the Bridgend title.
+- The Fixtures page and `fixtures.ics` show the Bridgend Athletic title and the 25–5 result.
