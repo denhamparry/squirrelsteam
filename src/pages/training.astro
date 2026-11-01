@@ -4,16 +4,16 @@ import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
 import {
   formatWhen,
-  getPreSeasonFixtures,
   getTourFixtures,
-  getTrainingFixtures,
+  getUpcomingFixtures,
   recurrenceText,
 } from "../lib/fixtures";
 
-const PRE_SEASON_GAMES_PLANNED = 2;
-const preSeasonFixtures = await getPreSeasonFixtures();
 const tourFixtures = await getTourFixtures();
-const trainingFixtures = await getTrainingFixtures();
+// Only current or upcoming training, so finished sessions and old venues drop off.
+const trainingFixtures = (await getUpcomingFixtures()).filter(
+  (fixture) => fixture.data.type === "training",
+);
 const trainingLocations = [
   ...new Set(
     trainingFixtures.flatMap((fixture) =>
@@ -27,13 +27,6 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
     ? recurrenceText(fixture.data.rrule)
     : null,
 }));
-const unscheduledPreSeasonGames = Math.max(
-  0,
-  PRE_SEASON_GAMES_PLANNED - preSeasonFixtures.length,
-);
-const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
-  unscheduledPreSeasonGames === 1 ? "game" : "games"
-} arranged`;
 ---
 
 <BaseLayout
@@ -41,7 +34,7 @@ const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
   description="Rhiwbina Squirrels U12 training times, venue and key season dates."
 >
   <PageHeader
-    eyebrow="Pre-season 26/27"
+    eyebrow="Season 26/27"
     title="Training & key dates"
     lead="Where and when we train, and the dates to put in your diary."
   />
@@ -63,43 +56,6 @@ const unscheduledPreSeasonLabel = `${unscheduledPreSeasonGames}× pre-season ${
             ))
           }
         </ul>
-      </Card>
-
-      <Card title="Pre-season focus">
-        <ul>
-          <li>Strength &amp; conditioning</li>
-          <li>Skills &amp; structure</li>
-          <li>Understanding the new rules</li>
-        </ul>
-      </Card>
-
-      <Card title="What else is coming up">
-        <ul>
-          <li>ION fitness session <span class="tbc">TBC</span></li>
-          <li>Green Mile team-bonding session <span class="tbc">TBC</span></li>
-          <li>Surprise guest coaches <span class="tbc">TBC</span></li>
-          {
-            preSeasonFixtures.map((fixture) => (
-              <li>
-                <strong>{fixture.data.title}</strong> — {formatWhen(fixture)} (
-                <a href="/fixtures/">fixture details &amp; calendar</a>)
-              </li>
-            ))
-          }
-          {
-            unscheduledPreSeasonGames > 0 && (
-              <li>
-                {unscheduledPreSeasonLabel} <span class="tbc">TBC</span>
-              </li>
-            )
-          }
-          <li>New kit presentation</li>
-          <li>VEO analysis session</li>
-        </ul>
-        <p class="muted">
-          Items marked <span class="tbc">TBC</span> are provisional — dates will
-          be confirmed and added to the calendar nearer the time.
-        </p>
       </Card>
 
       <Card title="Key dates: season & tour">
