@@ -36,22 +36,10 @@ export async function getFixtures(): Promise<Fixture[]> {
   );
 }
 
-/** Published training fixtures, sorted by start ascending. */
-export async function getTrainingFixtures(): Promise<Fixture[]> {
-  const fixtures = await getFixtures();
-  return fixtures.filter((fixture) => fixture.data.type === "training");
-}
-
 /** Published tour fixtures, sorted by start ascending. */
 export async function getTourFixtures(): Promise<Fixture[]> {
   const fixtures = await getFixtures();
   return fixtures.filter((fixture) => fixture.data.type === "tour");
-}
-
-/** Published pre-season games, sorted by start ascending. */
-export async function getPreSeasonFixtures(): Promise<Fixture[]> {
-  const fixtures = await getFixtures();
-  return fixtures.filter((fixture) => fixture.data.preSeason);
 }
 
 /** Parse the UNTIL date out of an RRULE (e.g. "...;UNTIL=20260825T180000Z"). */
