@@ -1,8 +1,12 @@
 ---
-title: "#1415 Gameday: TBC (Home, Eastern Community Campus)"
+title: "#1415 Gameday: Bridgend Athletic (Home, Eastern Community Campus)"
 type: match
 start: 2026-10-25T10:00:00+00:00
 end: 2026-10-25T12:00:00+00:00
 home: true
+opponent: Bridgend Athletic
 location: Eastern Community Campus (4G), Trowbridge Rd, Rumney, Cardiff CF3 1XZ
+result:
+  us: 5
+  them: 25
 ---
