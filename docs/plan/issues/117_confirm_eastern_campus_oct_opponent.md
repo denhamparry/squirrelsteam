@@ -15,7 +15,7 @@ opponent. The owner confirmed the opponent was **Bridgend Athletic**. Replace TB
 title and add `opponent: Bridgend Athletic`. Keep the existing timed home and location
 fields.
 
-The owner later confirmed the score as Bridgend Athletic 5–25 Rhiwbina. It is recorded as `result: { us: 25, them: 5 }`, with no try or conversion breakdown.
+The owner later confirmed a loss, Rhiwbina 5–25 Bridgend Athletic. It is recorded as `result: { us: 5, them: 25 }`, with no try or conversion breakdown.
 
 ## Files modified
 
@@ -25,4 +25,4 @@ The owner later confirmed the score as Bridgend Athletic 5–25 Rhiwbina. It is 
 ## Validation
 
 - `npm run check` and `npm run build` pass.
-- The Fixtures page and `fixtures.ics` show the Bridgend Athletic title and the 25–5 result.
+- The Fixtures page and `fixtures.ics` show the Bridgend Athletic title and the 5–25 result.
