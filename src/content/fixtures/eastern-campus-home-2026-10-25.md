@@ -7,6 +7,6 @@ home: true
 opponent: Bridgend Athletic
 location: Eastern Community Campus (4G), Trowbridge Rd, Rumney, Cardiff CF3 1XZ
 result:
-  us: 25
-  them: 5
+  us: 5
+  them: 25
 ---
