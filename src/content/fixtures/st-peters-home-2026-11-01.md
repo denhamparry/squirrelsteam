@@ -6,4 +6,7 @@ allDay: true
 home: true
 opponent: St Peters
 location: Caedelyn Park, CF14 6EJ
+result:
+  us: 27
+  them: 7
 ---
