@@ -2,13 +2,49 @@ import type { CollectionEntry } from "astro:content";
 import { formatResult } from "./fixtures";
 
 // Dependency-free RFC 5545 (iCalendar) generator for the fixtures feed.
-// Output uses CRLF line endings, 75-octet line folding, UTC timestamps, and
-// exclusive all-day DTEND values — the things real calendar clients are picky
-// about.
+// Output uses CRLF line endings, 75-octet line folding, Europe/London local
+// times for timed events (with a VTIMEZONE so recurring events keep their wall
+// clock time across DST), and exclusive all-day DTEND values — the things real
+// calendar clients are picky about.
 
 type Fixture = CollectionEntry<"fixtures">;
 
 const UID_DOMAIN = "squirrels.team";
+const TZID = "Europe/London";
+
+// RFC 5545 VTIMEZONE for Europe/London (current EU rules since 1996): BST
+// starts at 01:00 GMT on the last Sunday of March and ends at 01:00 GMT
+// (02:00 BST) on the last Sunday of October.
+const VTIMEZONE_LINES = [
+  "BEGIN:VTIMEZONE",
+  `TZID:${TZID}`,
+  "BEGIN:DAYLIGHT",
+  "TZOFFSETFROM:+0000",
+  "TZOFFSETTO:+0100",
+  "TZNAME:BST",
+  "DTSTART:19810329T010000",
+  "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
+  "END:DAYLIGHT",
+  "BEGIN:STANDARD",
+  "TZOFFSETFROM:+0100",
+  "TZOFFSETTO:+0000",
+  "TZNAME:GMT",
+  "DTSTART:19961027T020000",
+  "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
+  "END:STANDARD",
+  "END:VTIMEZONE",
+];
+
+const londonParts = new Intl.DateTimeFormat("en-GB", {
+  timeZone: TZID,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+});
 
 function pad(n: number, len = 2): string {
   return String(n).padStart(len, "0");
@@ -25,6 +61,17 @@ function toUtcStamp(d: Date): string {
     pad(d.getUTCMinutes()) +
     pad(d.getUTCSeconds()) +
     "Z"
+  );
+}
+
+/** Europe/London local date-time: YYYYMMDDTHHMMSS (paired with TZID). */
+function toLondonStamp(d: Date): string {
+  const parts = Object.fromEntries(
+    londonParts.formatToParts(d).map(({ type, value }) => [type, value]),
+  );
+  return (
+    `${parts.year}${parts.month}${parts.day}` +
+    `T${parts.hour}${parts.minute}${parts.second}`
   );
 }
 
@@ -99,9 +146,12 @@ function eventLines(entry: Fixture, dtstamp: string): string[] {
     lines.push(`DTSTART;VALUE=DATE:${toUtcDate(data.start)}`);
     lines.push(`DTEND;VALUE=DATE:${toUtcDate(endExclusive)}`);
   } else {
-    lines.push(`DTSTART:${toUtcStamp(data.start)}`);
+    // Local time + TZID, not UTC: an RRULE repeats DTSTART's wall-clock time
+    // in its zone, so a UTC DTSTART would drift by an hour across DST. RRULE
+    // UNTIL stays in UTC, as RFC 5545 requires alongside a TZID DTSTART.
+    lines.push(`DTSTART;TZID=${TZID}:${toLondonStamp(data.start)}`);
     if (data.end) {
-      lines.push(`DTEND:${toUtcStamp(data.end)}`);
+      lines.push(`DTEND;TZID=${TZID}:${toLondonStamp(data.end)}`);
     }
   }
 
@@ -151,7 +201,8 @@ export function buildCalendar(
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "X-WR-CALNAME:Rhiwbina Squirrels U12 Fixtures",
-    "X-WR-TIMEZONE:Europe/London",
+    `X-WR-TIMEZONE:${TZID}`,
+    ...VTIMEZONE_LINES,
   ];
   for (const entry of entries) {
     lines.push(...eventLines(entry, dtstamp));
