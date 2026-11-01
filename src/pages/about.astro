@@ -2,12 +2,14 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
-import { getTrainingFixtures } from "../lib/fixtures";
+import { getUpcomingFixtures } from "../lib/fixtures";
 
 const contactEmail = "contact@squirrels.team";
 const clubUrl = "https://rhiwbina.rfc.wales/";
 const instagramUrl = "https://www.instagram.com/rhiwbinarfc1415/";
-const trainingFixtures = await getTrainingFixtures();
+const trainingFixtures = (await getUpcomingFixtures()).filter(
+  (fixture) => fixture.data.type === "training",
+);
 const trainingVenue = trainingFixtures
   .map((fixture) => fixture.data.location?.split(",", 1)[0].trim())
   .find((location) => location);
