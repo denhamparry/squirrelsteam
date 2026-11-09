@@ -5,6 +5,7 @@ start: 2026-10-11
 allDay: true
 home: false
 opponent: Abercwmboi
+location: Abercwmboi Rugby Club, Cardiff Rd, Aberaman, Aberdare CF44 6AX
 cup: true
 result:
   us: 7
