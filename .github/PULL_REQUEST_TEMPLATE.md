@@ -24,6 +24,7 @@ Please delete options that are not relevant.
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
 - [ ] `npm run check` passes locally with my changes
+- [ ] `npm test` passes locally with my changes
 - [ ] `npm run build` passes locally with my changes
 - [ ] `npm audit --omit=dev` reports no production vulnerabilities
 - [ ] `pre-commit run --all-files` passes locally with my changes

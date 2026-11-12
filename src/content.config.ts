@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { fixtureErrors } from "./lib/fixture-checks";
 
 const score = z.number().int().nonnegative();
 const scoreBreakdown = z.object({ us: score, them: score });
@@ -42,6 +43,12 @@ const fixtures = defineCollection({
     .refine(({ type, result }) => !result || type === "match", {
       message: "Results can only be recorded for match fixtures",
       path: ["result"],
+    })
+    // Data sanity checks (#300); see src/lib/fixture-checks.ts.
+    .superRefine((data, ctx) => {
+      for (const message of fixtureErrors(data, new Date())) {
+        ctx.addIssue({ code: "custom", message });
+      }
     }),
 });
 
