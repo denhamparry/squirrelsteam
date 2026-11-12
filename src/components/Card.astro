@@ -18,13 +18,13 @@ const Heading = headingLevel;
 ---
 
 <Tag class:list={["card", { "card--link": href }]} href={href}>
-  {
-    title && (
-      <Heading class:list={["card__title", { "card__title--compact": compactTitle }]}>
-        {title}
-      </Heading>
-    )
-  }
+  {title && (
+    <Heading
+      class:list={["card__title", { "card__title--compact": compactTitle }]}
+    >
+      {title}
+    </Heading>
+  )}
   <div class="card__body flow">
     <slot />
   </div>

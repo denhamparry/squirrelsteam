@@ -88,9 +88,7 @@ export function resultOutcome(data: ResultData): ResultOutcome | null {
 
   const { us, them } = data.result;
   if (us === them) return { code: "D", label: "Draw" };
-  return us > them
-    ? { code: "W", label: "Win" }
-    : { code: "L", label: "Loss" };
+  return us > them ? { code: "W", label: "Win" } : { code: "L", label: "Loss" };
 }
 
 /** Competitive record for scored matches; pre-season fixtures are excluded. */

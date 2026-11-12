@@ -29,37 +29,39 @@ const trainingVenue = trainingFixtures
       <h2>Who we are</h2>
       <p>
         The Rhiwbina Squirrels are the Under 12s (#1415) age group of{" "}
-        <a href={clubUrl}>Rhiwbina R.F.C.</a> We're a grass-roots, community team
-        — all about fun, friendship and great rugby experiences for every child,
-        whatever their starting point.
+        <a href={clubUrl}>Rhiwbina R.F.C.</a> We're a grass-roots, community
+        team — all about fun, friendship and great rugby experiences for every
+        child, whatever their starting point.
       </p>
       <p>
-        Our volunteer coaching team keeps things friendly, inclusive and
-        focused on enjoying the game. Players develop their skills and confidence
-        season by season, and parents are always part of the journey.
+        Our volunteer coaching team keeps things friendly, inclusive and focused
+        on enjoying the game. Players develop their skills and confidence season
+        by season, and parents are always part of the journey.
       </p>
 
       <Card title="Join us — new players welcome">
         <p>
-          New players are <strong>always welcome</strong>, whether they've played
-          before or are picking up a rugby ball for the first time. Just come
-          along to training — say hello, join in, and see if it's for you.
+          New players are <strong>always welcome</strong>, whether they've
+          played before or are picking up a rugby ball for the first time. Just
+          come along to training — say hello, join in, and see if it's for you.
         </p>
         <p>
-          {
-            trainingVenue && (
-              <>We train at <strong>{trainingVenue}</strong>. </>
-            )
-          }
-          Check the{" "}
-          <a href="/training/">training page</a> for days, times and key dates.
+          {trainingVenue && (
+            <>
+              We train at <strong>{trainingVenue}</strong>.{" "}
+            </>
+          )}
+          Check the <a href="/training/">training page</a> for days, times and
+          key dates.
         </p>
         <p>
           Everyone at the club — players, parents and supporters — signs up to
           our <a href="/conduct/">code of conduct</a>.
         </p>
         <p>
-          <a class="button" href="/training/">See training info</a>
+          <a class="button" href="/training/">
+            See training info
+          </a>
         </p>
       </Card>
 
@@ -77,18 +79,18 @@ const trainingVenue = trainingFixtures
         <p>Keep up with the squad and the wider club:</p>
         <ul>
           <li>
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener">Instagram <span class="visually-hidden">(opens in a new tab)</span></a
-            > — team photos, updates and match-day moments
+            <a href={instagramUrl} target="_blank" rel="noopener">
+              Instagram{" "}
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>{" "}
+            — team photos, updates and match-day moments
           </li>
           <li>
-            <a
-              href={clubUrl}
-              target="_blank"
-              rel="noopener">Rhiwbina R.F.C. <span class="visually-hidden">(opens in a new tab)</span></a
-            > — our parent club
+            <a href={clubUrl} target="_blank" rel="noopener">
+              Rhiwbina R.F.C.{" "}
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>{" "}
+            — our parent club
           </li>
         </ul>
       </Card>

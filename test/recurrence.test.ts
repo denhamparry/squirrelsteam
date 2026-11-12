@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { isOccurrence, nextOccurrence, parseUntil } from "../src/lib/recurrence";
+import {
+  isOccurrence,
+  nextOccurrence,
+  parseUntil,
+} from "../src/lib/recurrence";
 
 // The in-season series: Tuesdays 8-9pm London, 27 Oct 2026 to 27 Apr 2027.
 const start = new Date("2026-10-27T20:00:00+00:00");
@@ -64,18 +68,52 @@ test("parseUntil reads date-time and date-only UNTIL values", () => {
 });
 
 test("skips exdates when finding the next session", () => {
-  const christmas = [new Date("2026-12-22T20:00:00Z"), new Date("2026-12-29T20:00:00Z")];
-  const o = nextOccurrence(start, end, rule, new Date("2026-12-16T12:00:00Z"), christmas);
+  const christmas = [
+    new Date("2026-12-22T20:00:00Z"),
+    new Date("2026-12-29T20:00:00Z"),
+  ];
+  const o = nextOccurrence(
+    start,
+    end,
+    rule,
+    new Date("2026-12-16T12:00:00Z"),
+    christmas,
+  );
   assert.equal(o?.start.toISOString(), "2027-01-05T20:00:00.000Z");
 });
 
 test("isOccurrence accepts only exact session starts", () => {
-  assert.equal(isOccurrence(start, rule, new Date("2026-12-22T20:00:00Z")), true);
+  assert.equal(
+    isOccurrence(start, rule, new Date("2026-12-22T20:00:00Z")),
+    true,
+  );
   // BST session keeps the 8pm London wall-clock time.
-  assert.equal(isOccurrence(start, rule, new Date("2027-04-06T19:00:00Z")), true);
-  assert.equal(isOccurrence(start, rule, new Date("2027-04-06T20:00:00Z")), false);
-  assert.equal(isOccurrence(start, rule, new Date("2026-12-23T20:00:00Z")), false, "Wednesday");
-  assert.equal(isOccurrence(start, rule, new Date("2026-12-22T19:00:00Z")), false, "wrong time");
-  assert.equal(isOccurrence(start, rule, new Date("2026-10-20T20:00:00Z")), false, "before start");
-  assert.equal(isOccurrence(start, rule, new Date("2027-05-04T19:00:00Z")), false, "after UNTIL");
+  assert.equal(
+    isOccurrence(start, rule, new Date("2027-04-06T19:00:00Z")),
+    true,
+  );
+  assert.equal(
+    isOccurrence(start, rule, new Date("2027-04-06T20:00:00Z")),
+    false,
+  );
+  assert.equal(
+    isOccurrence(start, rule, new Date("2026-12-23T20:00:00Z")),
+    false,
+    "Wednesday",
+  );
+  assert.equal(
+    isOccurrence(start, rule, new Date("2026-12-22T19:00:00Z")),
+    false,
+    "wrong time",
+  );
+  assert.equal(
+    isOccurrence(start, rule, new Date("2026-10-20T20:00:00Z")),
+    false,
+    "before start",
+  );
+  assert.equal(
+    isOccurrence(start, rule, new Date("2027-05-04T19:00:00Z")),
+    false,
+    "after UNTIL",
+  );
 });

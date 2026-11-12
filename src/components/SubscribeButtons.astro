@@ -14,31 +14,39 @@ const outlookUrl = `https://outlook.live.com/calendar/0/addfromweb?url=${encodeU
 <div class="subscribe">
   <ul class="subscribe__list" role="list">
     <li>
-      <a class="button" href={webcalUrl}>Apple Calendar</a>
+      <a class="button" href={webcalUrl}>
+        Apple Calendar
+      </a>
     </li>
     <li>
       <a
         class="button button--outline"
         href={googleUrl}
         target="_blank"
-        rel="noopener">Google Calendar</a
+        rel="noopener"
       >
+        Google Calendar
+      </a>
     </li>
     <li>
       <a
         class="button button--outline"
         href={outlookUrl}
         target="_blank"
-        rel="noopener">Outlook</a
+        rel="noopener"
       >
+        Outlook
+      </a>
     </li>
     <li>
       <button
         class="button button--outline"
         type="button"
         data-copy-feed
-        data-feed={feedUrl}>Copy feed link</button
+        data-feed={feedUrl}
       >
+        Copy feed link
+      </button>
     </li>
   </ul>
   <p class="subscribe__url">

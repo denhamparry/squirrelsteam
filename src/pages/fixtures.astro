@@ -49,16 +49,16 @@ const record = calculateSeasonRecord(results);
           <summary>How do I subscribe on my phone?</summary>
           <div class="flow">
             <p>
-              <strong>iPhone / iPad:</strong> tap <em>Apple Calendar</em> above and
-              confirm — it opens the Calendar app and adds the feed.
+              <strong>iPhone / iPad:</strong> tap <em>Apple Calendar</em> above
+              and confirm — it opens the Calendar app and adds the feed.
             </p>
             <p>
               <strong>Android:</strong> tap <em>Google Calendar</em>, sign in if
               asked, then confirm <em>Add calendar</em>.
             </p>
             <p>
-              Prefer to paste it yourself? Use <em>Copy feed link</em> and add it
-              as a subscribed/"from URL" calendar.
+              Prefer to paste it yourself? Use <em>Copy feed link</em> and add
+              it as a subscribed/"from URL" calendar.
             </p>
           </div>
         </details>
@@ -106,17 +106,15 @@ const record = calculateSeasonRecord(results);
           data-tab-panel="upcoming"
         >
           <h2>Upcoming</h2>
-          {
-            upcoming.length === 0 ? (
-              <p class="muted">No upcoming fixtures yet — check back soon.</p>
-            ) : (
-              <ul class="fixtures" role="list">
-                {upcoming.map((f) => (
-                  <FixtureItem fixture={f} />
-                ))}
-              </ul>
-            )
-          }
+          {upcoming.length === 0 ? (
+            <p class="muted">No upcoming fixtures yet — check back soon.</p>
+          ) : (
+            <ul class="fixtures" role="list">
+              {upcoming.map((f) => (
+                <FixtureItem fixture={f} />
+              ))}
+            </ul>
+          )}
         </section>
 
         <section
@@ -127,54 +125,52 @@ const record = calculateSeasonRecord(results);
           data-tab-panel="results"
         >
           <h2>Results</h2>
-          {
-            results.length === 0 ? (
-              <p class="muted">No results recorded yet — check back soon.</p>
-            ) : (
-              <>
-                <dl class="season-record" aria-label="Season record">
-                  <div>
-                    <dt>Played</dt>
-                    <dd>{record.played}</dd>
-                  </div>
-                  <div>
-                    <dt>Won</dt>
-                    <dd>{record.won}</dd>
-                  </div>
-                  <div>
-                    <dt>Drawn</dt>
-                    <dd>{record.drawn}</dd>
-                  </div>
-                  <div>
-                    <dt>Lost</dt>
-                    <dd>{record.lost}</dd>
-                  </div>
-                  <div>
-                    <dt>Points for–against</dt>
-                    <dd>{record.pointsFor}–{record.pointsAgainst}</dd>
-                  </div>
-                </dl>
-                <ul class="fixtures" role="list">
-                  {results.map((f) => (
-                    <FixtureItem fixture={f} showResultDetails />
-                  ))}
-                </ul>
-              </>
-            )
-          }
+          {results.length === 0 ? (
+            <p class="muted">No results recorded yet — check back soon.</p>
+          ) : (
+            <>
+              <dl class="season-record" aria-label="Season record">
+                <div>
+                  <dt>Played</dt>
+                  <dd>{record.played}</dd>
+                </div>
+                <div>
+                  <dt>Won</dt>
+                  <dd>{record.won}</dd>
+                </div>
+                <div>
+                  <dt>Drawn</dt>
+                  <dd>{record.drawn}</dd>
+                </div>
+                <div>
+                  <dt>Lost</dt>
+                  <dd>{record.lost}</dd>
+                </div>
+                <div>
+                  <dt>Points for–against</dt>
+                  <dd>
+                    {record.pointsFor}–{record.pointsAgainst}
+                  </dd>
+                </div>
+              </dl>
+              <ul class="fixtures" role="list">
+                {results.map((f) => (
+                  <FixtureItem fixture={f} showResultDetails />
+                ))}
+              </ul>
+            </>
+          )}
 
-          {
-            past.length > 0 && (
-              <details class="past">
-                <summary>Past events ({past.length})</summary>
-                <ul class="fixtures" role="list">
-                  {past.map((f) => (
-                    <FixtureItem fixture={f} showNotes={false} dimmed />
-                  ))}
-                </ul>
-              </details>
-            )
-          }
+          {past.length > 0 && (
+            <details class="past">
+              <summary>Past events ({past.length})</summary>
+              <ul class="fixtures" role="list">
+                {past.map((f) => (
+                  <FixtureItem fixture={f} showNotes={false} dimmed />
+                ))}
+              </ul>
+            </details>
+          )}
         </section>
       </div>
     </div>
@@ -296,7 +292,9 @@ const record = calculateSeasonRecord(results);
 </style>
 
 <script>
-  const fixtureTabs = document.querySelector<HTMLElement>("[data-fixtures-tabs]");
+  const fixtureTabs = document.querySelector<HTMLElement>(
+    "[data-fixtures-tabs]",
+  );
 
   if (fixtureTabs) {
     const tabList = fixtureTabs.querySelector<HTMLElement>("[data-tab-list]");
@@ -308,7 +306,8 @@ const record = calculateSeasonRecord(results);
     );
 
     const selectTab = (tabName: string, moveFocus = false) => {
-      const selected = tabs.find((tab) => tab.dataset.tab === tabName) ?? tabs[0];
+      const selected =
+        tabs.find((tab) => tab.dataset.tab === tabName) ?? tabs[0];
       if (!selected) return;
 
       for (const tab of tabs) {
@@ -364,7 +363,8 @@ const record = calculateSeasonRecord(results);
         tab.addEventListener("keydown", (event) => {
           let nextIndex: number | null = null;
           if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
-          if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === "ArrowLeft")
+            nextIndex = (index - 1 + tabs.length) % tabs.length;
           if (event.key === "Home") nextIndex = 0;
           if (event.key === "End") nextIndex = tabs.length - 1;
           if (nextIndex === null) return;

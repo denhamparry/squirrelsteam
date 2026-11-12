@@ -64,9 +64,13 @@ const anyPassed = paymentPlan.some((step) => step.passed);
       </Card>
 
       <Card title="What's included" headingLevel="h2">
-        <p><strong>£300 per person</strong> includes:</p>
+        <p>
+          <strong>£300 per person</strong> includes:
+        </p>
         <ul>
-          {inclusions.map((item) => <li>{item}</li>)}
+          {inclusions.map((item) => (
+            <li>{item}</li>
+          ))}
         </ul>
       </Card>
 
@@ -76,23 +80,21 @@ const anyPassed = paymentPlan.some((step) => step.passed);
           is £300.
         </p>
         <ol class="payment-plan">
-          {
-            paymentPlan.map(({ amount, label, passed }) => (
-              <li class:list={{ "payment-plan__passed": passed }}>
-                <strong>{amount}</strong> by {label}
-                {passed && <span class="payment-plan__status"> — date passed</span>}
-              </li>
-            ))
-          }
+          {paymentPlan.map(({ amount, label, passed }) => (
+            <li class:list={{ "payment-plan__passed": passed }}>
+              <strong>{amount}</strong> by {label}
+              {passed && (
+                <span class="payment-plan__status"> — date passed</span>
+              )}
+            </li>
+          ))}
         </ol>
-        {
-          anyPassed && (
-            <p class="muted">
-              Missed an instalment? Speak to the team manager and we'll sort out
-              the rest of your plan.
-            </p>
-          )
-        }
+        {anyPassed && (
+          <p class="muted">
+            Missed an instalment? Speak to the team manager and we'll sort out
+            the rest of your plan.
+          </p>
+        )}
       </Card>
 
       <Card title="How to pay" headingLevel="h2">
@@ -107,9 +109,9 @@ const anyPassed = paymentPlan.some((step) => step.passed);
           The tour is included with the team's other fixtures and key dates.
         </p>
         <p>
-          <a class="button button--outline" href="/fixtures/"
-            >Add the tour to your calendar</a
-          >
+          <a class="button button--outline" href="/fixtures/">
+            Add the tour to your calendar
+          </a>
         </p>
       </Card>
     </div>

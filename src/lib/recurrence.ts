@@ -55,13 +55,27 @@ function toWallClock(d: Date): WallClock {
 /** Offset of Europe/London from UTC at an instant, in milliseconds. */
 function londonOffset(instant: number): number {
   const w = toWallClock(new Date(instant));
-  const asUtc = Date.UTC(w.year, w.month - 1, w.day, w.hour, w.minute, w.second);
+  const asUtc = Date.UTC(
+    w.year,
+    w.month - 1,
+    w.day,
+    w.hour,
+    w.minute,
+    w.second,
+  );
   return asUtc - Math.floor(instant / 1000) * 1000;
 }
 
 /** The instant a Europe/London wall-clock time occurs (day may overflow). */
 function fromWallClock(w: WallClock): Date {
-  const asUtc = Date.UTC(w.year, w.month - 1, w.day, w.hour, w.minute, w.second);
+  const asUtc = Date.UTC(
+    w.year,
+    w.month - 1,
+    w.day,
+    w.hour,
+    w.minute,
+    w.second,
+  );
   // Two passes settle the offset either side of a clock change.
   let instant = asUtc - londonOffset(asUtc);
   instant = asUtc - londonOffset(instant);
@@ -125,10 +139,14 @@ export function nextOccurrence(
   // that is still running is found, but never before the first session.
   const today = toWallClock(now);
   const todayDay = Date.UTC(today.year, today.month - 1, today.day);
-  const fromOffset = Math.max(0, Math.round((todayDay - firstDay) / DAY_MS) - 1);
+  const fromOffset = Math.max(
+    0,
+    Math.round((todayDay - firstDay) / DAY_MS) - 1,
+  );
 
   for (let offset = fromOffset; offset < fromOffset + SEARCH_DAYS; offset++) {
-    const weekday = WEEKDAY_CODES[new Date(firstDay + offset * DAY_MS).getUTCDay()];
+    const weekday =
+      WEEKDAY_CODES[new Date(firstDay + offset * DAY_MS).getUTCDay()];
     if (!days.has(weekday)) continue;
 
     const occStart = fromWallClock({ ...first, day: first.day + offset });

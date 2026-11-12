@@ -1,11 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { isUpcoming, upcomingSortKey } from "./schedule";
 
-export {
-  calculateSeasonRecord,
-  formatResult,
-  resultOutcome,
-} from "./results";
+export { calculateSeasonRecord, formatResult, resultOutcome } from "./results";
 export {
   formatDay,
   formatLongDate,
@@ -15,11 +11,7 @@ export {
   upcomingOccurrence,
 } from "./schedule";
 export type { Occurrence } from "./schedule";
-export type {
-  ResultOutcome,
-  ResultOutcomeCode,
-  SeasonRecord,
-} from "./results";
+export type { ResultOutcome, ResultOutcomeCode, SeasonRecord } from "./results";
 
 export type Fixture = CollectionEntry<"fixtures">;
 export type FixtureType = Fixture["data"]["type"];
