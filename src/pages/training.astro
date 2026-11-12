@@ -34,9 +34,7 @@ const trainingLocations = [
 ];
 const trainingSchedules = trainingFixtures.map((fixture) => ({
   fixture,
-  recurrence: fixture.data.rrule
-    ? recurrenceText(fixture.data.rrule)
-    : null,
+  recurrence: fixture.data.rrule ? recurrenceText(fixture.data.rrule) : null,
   next: upcomingOccurrence(fixture),
   // Upcoming skipped sessions (exdates), e.g. the Christmas break (#297).
   skipped: (fixture.data.exdates ?? [])
@@ -59,49 +57,42 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
     <div class="container container-narrow flow">
       <Card title="Training" headingLevel="h2">
         <ul>
-          {
-            trainingLocations.map((location) => (
-              <li>Venue: <strong>{location}</strong></li>
-            ))
-          }
-          {
-            trainingSchedules.map(({ fixture, recurrence, next, skipped }) => (
-              <li>
-                <strong>{fixture.data.title}</strong> —{" "}
-                {recurrence ?? formatWhen(fixture)}
-                {next && <>. Next session: {formatWhen(fixture, next)}</>}
-                {skipped.length > 0 && (
-                  <>. No training on {skipped.join("; ")}</>
-                )}
-              </li>
-            ))
-          }
+          {trainingLocations.map((location) => (
+            <li>
+              Venue: <strong>{location}</strong>
+            </li>
+          ))}
+          {trainingSchedules.map(({ fixture, recurrence, next, skipped }) => (
+            <li>
+              <strong>{fixture.data.title}</strong> —{" "}
+              {recurrence ?? formatWhen(fixture)}
+              {next && <>. Next session: {formatWhen(fixture, next)}</>}
+              {skipped.length > 0 && <>. No training on {skipped.join("; ")}</>}
+            </li>
+          ))}
         </ul>
       </Card>
 
       <Card title="Key dates: season & tour" headingLevel="h2">
         <ul>
-          {
-            keyDates.map(({ label, date }) => (
-              <li>
-                <strong>{label}</strong> — {formatLongDate(date)}
-              </li>
-            ))
-          }
-          {
-            tourFixtures.map((fixture) => (
-              <li>
-                <a href="/tour/"><strong>{fixture.data.title}</strong></a> — {
-                  formatWhen(fixture)
-                }
-              </li>
-            ))
-          }
+          {keyDates.map(({ label, date }) => (
+            <li>
+              <strong>{label}</strong> — {formatLongDate(date)}
+            </li>
+          ))}
+          {tourFixtures.map((fixture) => (
+            <li>
+              <a href="/tour/">
+                <strong>{fixture.data.title}</strong>
+              </a>{" "}
+              — {formatWhen(fixture)}
+            </li>
+          ))}
         </ul>
         <p>
-          <a class="button button--outline" href="/fixtures/"
-            >Add these to your calendar</a
-          >
+          <a class="button button--outline" href="/fixtures/">
+            Add these to your calendar
+          </a>
         </p>
       </Card>
     </div>

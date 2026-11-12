@@ -51,9 +51,15 @@ const commitments = [
         same shared commitments.
       </p>
 
-      <Card title="By adopting the code, you agree to" headingLevel="h2" titleSize="section">
+      <Card
+        title="By adopting the code, you agree to"
+        headingLevel="h2"
+        titleSize="section"
+      >
         <ul class="commitments">
-          {commitments.map((item) => <li>{item}</li>)}
+          {commitments.map((item) => (
+            <li>{item}</li>
+          ))}
         </ul>
       </Card>
 
@@ -66,19 +72,19 @@ const commitments = [
         <ul>
           <li>
             Follow the{" "}
-            <a
-              href={antiDopingUrl}
-              target="_blank"
-              rel="noopener">WRU anti-doping rules <span class="visually-hidden">(opens in a new tab)</span></a
-            >, and those of World Rugby and WADA.
+            <a href={antiDopingUrl} target="_blank" rel="noopener">
+              WRU anti-doping rules{" "}
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+            , and those of World Rugby and WADA.
           </li>
           <li>
             Download UKAD's{" "}
-            <a
-              href={hundredPercentMeUrl}
-              target="_blank"
-              rel="noopener">100% Me app <span class="visually-hidden">(opens in a new tab)</span></a
-            >.
+            <a href={hundredPercentMeUrl} target="_blank" rel="noopener">
+              100% Me app{" "}
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+            .
           </li>
         </ul>
       </Card>
@@ -86,11 +92,11 @@ const commitments = [
       <Card title="Safeguarding" headingLevel="h2" titleSize="section">
         <p>
           Everyone agrees to follow the{" "}
-          <a
-            href={safeguardingUrl}
-            target="_blank"
-            rel="noopener">WRU Safeguarding Policy <span class="visually-hidden">(opens in a new tab)</span></a
-          >.
+          <a href={safeguardingUrl} target="_blank" rel="noopener">
+            WRU Safeguarding Policy{" "}
+            <span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+          .
         </p>
         <p>
           If you have a concern about a child's welfare, speak to a coach or the
@@ -98,12 +104,16 @@ const commitments = [
           officer, or email the{" "}
           <a href={`mailto:${wruSafeguardingEmail}`}>WRU Safeguarding Team</a>.
           You can also contact us at{" "}
-          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. If a child is in
-          immediate danger, call <strong>999</strong>.
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. If a child is
+          in immediate danger, call <strong>999</strong>.
         </p>
       </Card>
 
-      <Card title="Social media & communications" headingLevel="h2" titleSize="section">
+      <Card
+        title="Social media & communications"
+        headingLevel="h2"
+        titleSize="section"
+      >
         <p>
           Players, members and associates must not publicly criticise — on
           social media or anywhere else — any player, club, match official,
@@ -139,14 +149,16 @@ const commitments = [
 
       <Card title="Concussion education" headingLevel="h3">
         <p>
-          <strong>Every parent agrees to attend a one-off concussion education
-          session.</strong>
+          <strong>
+            Every parent agrees to attend a one-off concussion education
+            session.
+          </strong>
         </p>
         <p>
           Concussion is a brain injury. It can be serious, but it happens in
-          everyday life too — you can get concussed falling off the sofa! Knowing
-          the signs and symptoms, and how to manage recovery, is what matters
-          most for getting better and avoiding it happening again.
+          everyday life too — you can get concussed falling off the sofa!
+          Knowing the signs and symptoms, and how to manage recovery, is what
+          matters most for getting better and avoiding it happening again.
         </p>
         <p>
           The session covers recognising, managing and preventing head injuries,
@@ -158,9 +170,9 @@ const commitments = [
 
       <h2 id="volunteers">Volunteers &amp; supporters</h2>
       <p>
-        Coaches, helpers and everyone on the touchline sign up to the same shared
-        commitments, anti-doping, safeguarding and social media sections — so
-        the whole club sets the example for our players.
+        Coaches, helpers and everyone on the touchline sign up to the same
+        shared commitments, anti-doping, safeguarding and social media sections
+        — so the whole club sets the example for our players.
       </p>
 
       <p class="muted">

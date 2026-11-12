@@ -5,7 +5,10 @@ import { fixture } from "./helpers";
 
 const STAMP = "20261112T000000Z";
 const calendar = (...entries: Parameters<typeof fixture>[]) =>
-  buildCalendar(entries.map((args) => fixture(...args)), STAMP);
+  buildCalendar(
+    entries.map((args) => fixture(...args)),
+    STAMP,
+  );
 const lines = (ics: string) => ics.split("\r\n");
 /** Content lines with RFC 5545 folding undone. */
 const unfolded = (ics: string) => lines(ics.replace(/\r\n /g, ""));
@@ -40,7 +43,14 @@ test("escapes commas, semicolons, backslashes and newlines in text", () => {
 
 test("timed events use Europe/London local time in GMT and BST", () => {
   const ics = calendar(
-    ["gmt", { title: "GMT", start: new Date("2026-11-29T10:00:00+00:00"), end: new Date("2026-11-29T12:00:00+00:00") }],
+    [
+      "gmt",
+      {
+        title: "GMT",
+        start: new Date("2026-11-29T10:00:00+00:00"),
+        end: new Date("2026-11-29T12:00:00+00:00"),
+      },
+    ],
     ["bst", { title: "BST", start: new Date("2027-04-25T10:00:00+01:00") }],
   );
   const out = lines(ics);
@@ -53,7 +63,13 @@ test("timed events use Europe/London local time in GMT and BST", () => {
 test("all-day events end the day after their last day", () => {
   const ics = calendar([
     "tour",
-    { title: "Tour", type: "tour", allDay: true, start: new Date("2027-05-01"), end: new Date("2027-05-04") },
+    {
+      title: "Tour",
+      type: "tour",
+      allDay: true,
+      start: new Date("2027-05-01"),
+      end: new Date("2027-05-04"),
+    },
   ]);
   const out = lines(ics);
   assert.ok(out.includes("DTSTART;VALUE=DATE:20270501"));
@@ -63,22 +79,54 @@ test("all-day events end the day after their last day", () => {
 test("cup fixtures swap the Gameday prefix for Cup", () => {
   const ics = calendar([
     "cup",
-    { title: "#1415 Gameday: Ynysowen (Home)", cup: true, start: new Date("2026-09-13") },
+    {
+      title: "#1415 Gameday: Ynysowen (Home)",
+      cup: true,
+      start: new Date("2026-09-13"),
+    },
   ]);
   assert.ok(lines(ics).includes("SUMMARY:#1415 Cup: Ynysowen (Home)"));
 });
 
 test("descriptions prefer notes, else describe the match, then add the result", () => {
   const ics = calendar(
-    ["note", { title: "N", start: new Date("2026-11-15"), opponent: "Rumney RFC", home: true }, "Meet 10:30am."],
-    ["gen", { title: "G", start: new Date("2027-02-14"), opponent: "Whitchurch", home: false }],
-    ["res", { title: "R", start: new Date("2026-11-01"), opponent: "St Peters", home: true, result: { us: 27, them: 7 } }],
+    [
+      "note",
+      {
+        title: "N",
+        start: new Date("2026-11-15"),
+        opponent: "Rumney RFC",
+        home: true,
+      },
+      "Meet 10:30am.",
+    ],
+    [
+      "gen",
+      {
+        title: "G",
+        start: new Date("2027-02-14"),
+        opponent: "Whitchurch",
+        home: false,
+      },
+    ],
+    [
+      "res",
+      {
+        title: "R",
+        start: new Date("2026-11-01"),
+        opponent: "St Peters",
+        home: true,
+        result: { us: 27, them: 7 },
+      },
+    ],
   );
   const out = unfolded(ics);
   assert.ok(out.includes("DESCRIPTION:Meet 10:30am."));
   assert.ok(out.includes("DESCRIPTION:Away match vs Whitchurch"));
   assert.ok(
-    out.includes("DESCRIPTION:Home match vs St Peters\\nResult: Rhiwbina Squirrels 27 – 7 St Peters"),
+    out.includes(
+      "DESCRIPTION:Home match vs St Peters\\nResult: Rhiwbina Squirrels 27 – 7 St Peters",
+    ),
   );
 });
 
@@ -86,7 +134,12 @@ test("recurring events carry their RRULE", () => {
   const rrule = "FREQ=WEEKLY;BYDAY=TU;UNTIL=20270427T190000Z";
   const ics = calendar([
     "train",
-    { title: "Training", type: "training", start: new Date("2026-10-27T20:00:00Z"), rrule },
+    {
+      title: "Training",
+      type: "training",
+      start: new Date("2026-10-27T20:00:00Z"),
+      rrule,
+    },
   ]);
   assert.ok(lines(ics).includes(`RRULE:${rrule}`));
 });
@@ -112,10 +165,15 @@ test("skipped sessions are written as an EXDATE in London time", () => {
       type: "training",
       start: new Date("2026-10-27T20:00:00Z"),
       rrule: "FREQ=WEEKLY;BYDAY=TU;UNTIL=20270427T190000Z",
-      exdates: [new Date("2026-12-22T20:00:00Z"), new Date("2026-12-29T20:00:00Z")],
+      exdates: [
+        new Date("2026-12-22T20:00:00Z"),
+        new Date("2026-12-29T20:00:00Z"),
+      ],
     },
   ]);
   assert.ok(
-    unfolded(ics).includes("EXDATE;TZID=Europe/London:20261222T200000,20261229T200000"),
+    unfolded(ics).includes(
+      "EXDATE;TZID=Europe/London:20261222T200000,20261229T200000",
+    ),
   );
 });

@@ -47,13 +47,11 @@ const hasNotes = (f.body ?? "").trim().length > 0;
 <li class:list={["fixture", { "fixture--past": dimmed }]}>
   <div class="fixture__meta">
     <span class="chip">{typeLabel(f.data.type)}</span>
-    {
-      outcome && (
-        <span class="chip chip--result" aria-label={`Result: ${outcome.label}`}>
-          {outcome.code} · {outcome.label}
-        </span>
-      )
-    }
+    {outcome && (
+      <span class="chip chip--result" aria-label={`Result: ${outcome.label}`}>
+        {outcome.code} · {outcome.label}
+      </span>
+    )}
     {f.data.cup && <span class="chip chip--cup">Cup</span>}
     {homeAway && <span class="chip chip--ghost">{homeAway}</span>}
   </div>
@@ -67,13 +65,11 @@ const hasNotes = (f.body ?? "").trim().length > 0;
   {result && <p class="fixture__result">{result}</p>}
   {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
   {f.data.location && <p class="fixture__where muted">{f.data.location}</p>}
-  {
-    showNotes && hasNotes && (
-      <div class="fixture__note">
-        <Content />
-      </div>
-    )
-  }
+  {showNotes && hasNotes && (
+    <div class="fixture__note">
+      <Content />
+    </div>
+  )}
 </li>
 
 <style>

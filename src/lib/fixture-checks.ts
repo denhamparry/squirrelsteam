@@ -24,7 +24,9 @@ const TRY_POINTS = 5;
 const CONVERSION_POINTS = 2;
 
 const contains = (haystack: string, needle: string) =>
-  haystack.toLocaleLowerCase("en-GB").includes(needle.toLocaleLowerCase("en-GB"));
+  haystack
+    .toLocaleLowerCase("en-GB")
+    .includes(needle.toLocaleLowerCase("en-GB"));
 
 /** Problems that mean the fixture data is wrong; each fails the build. */
 export function fixtureErrors(data: CheckedFixture, now: Date): string[] {
@@ -50,7 +52,9 @@ export function fixtureErrors(data: CheckedFixture, now: Date): string[] {
 
   if (data.exdates?.length) {
     if (!data.rrule) {
-      errors.push("has exdates but no rrule; exdates only apply to recurring fixtures");
+      errors.push(
+        "has exdates but no rrule; exdates only apply to recurring fixtures",
+      );
     } else {
       for (const exdate of data.exdates) {
         if (!isOccurrence(data.start, data.rrule, exdate)) {

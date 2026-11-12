@@ -55,20 +55,20 @@ const clubhouseUrl = "https://player.squirrels.team";
 
     <nav class="site-nav" id="site-nav" aria-label="Primary">
       <ul>
-        {
-          navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
         <li class="site-nav__clubhouse">
-          <a class="button" href={clubhouseUrl}>Clubhouse</a>
+          <a class="button" href={clubhouseUrl}>
+            Clubhouse
+          </a>
         </li>
       </ul>
     </nav>

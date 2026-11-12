@@ -1,0 +1,8 @@
+# Prettier formats code only (.astro, .ts, .mjs, .css). Markdown is checked by
+# markdownlint instead: .prettierrc's proseWrap would rewrap every doc and
+# fixture note.
+*.md
+dist/
+.astro/
+node_modules/
+package-lock.json

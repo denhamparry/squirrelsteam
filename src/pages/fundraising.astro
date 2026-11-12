@@ -71,24 +71,27 @@ const sponsorshipTiers = [
       <Card title="Donate" headingLevel="h2">
         <p>
           The quickest way to support the team is through our fundraising shop —
-          every contribution goes towards kit, facilities, fixtures and the tour.
+          every contribution goes towards kit, facilities, fixtures and the
+          tour.
         </p>
         <p>
-          <a class="button button--donate" href={donateUrl}>Donate / Fundraise</a>
+          <a class="button button--donate" href={donateUrl}>
+            Donate / Fundraise
+          </a>
         </p>
       </Card>
 
       <h2>Why we fundraise</h2>
       <p>
-        We want to give every child fantastic rugby experiences — indoor training
-        facilities through the winter, fixtures at Cardiff Arms Park, astro
-        matches, and the end-of-season tour. Those experiences cost money.
+        We want to give every child fantastic rugby experiences — indoor
+        training facilities through the winter, fixtures at Cardiff Arms Park,
+        astro matches, and the end-of-season tour. Those experiences cost money.
       </p>
       <p>
         Our fundraising and sponsorship plans are designed so we're not always
-        relying on parents for financial support, and so we avoid asking the same
-        sponsors over and over. The more we raise together, the more we can offer
-        the squad.
+        relying on parents for financial support, and so we avoid asking the
+        same sponsors over and over. The more we raise together, the more we can
+        offer the squad.
       </p>
 
       <Card title="How we fundraise" headingLevel="h2">
@@ -104,11 +107,11 @@ const sponsorshipTiers = [
           </li>
           <li>
             <strong>Tour weekly raffle</strong> — £5 per week, with{" "}
-            <strong
-              >100% of the proceeds coming off your <a href="/tour/"
-                >tour cost</a
-              ></strong
-            >. Each week we raffle a pair of Cardiff Rugby home-fixture tickets,
+            <strong>
+              100% of the proceeds coming off your{" "}
+              <a href="/tour/">tour cost</a>
+            </strong>
+            . Each week we raffle a pair of Cardiff Rugby home-fixture tickets,
             kindly donated.
           </li>
           <li>
@@ -128,49 +131,45 @@ const sponsorshipTiers = [
           Thank you to the local businesses backing the Squirrels. Their support
           helps us give the squad more opportunities on and off the pitch.
         </p>
-        {
-          sponsorTiers.map(({ tier, label, sponsors }) => (
-            <section
-              class:list={["sponsor-group", `sponsor-group--${tier}`]}
-              aria-labelledby={`fundraising-sponsors-${tier}`}
-            >
-              <h3 id={`fundraising-sponsors-${tier}`}>{label}</h3>
-              <div
-                class:list={["sponsor-grid", `sponsor-grid--${tier}`]}
-              >
-                {sponsors.map((sponsor) => (
-                  <div class="sponsor-grid__item">
-                    <Card title={sponsor.name} headingLevel="h4">
-                      <div class="sponsor-card__logo-wrap">
-                        <Image
-                          class="sponsor-card__logo"
-                          src={sponsor.logoDark}
-                          alt={`${sponsor.name} logo`}
-                          width={sponsor.logoDark.width}
-                          height={sponsor.logoDark.height}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                      {sponsor.description && (
-                        <p class="sponsor-card__description">
-                          {sponsor.description}
-                        </p>
-                      )}
-                      {sponsor.url && (
-                        <p class="sponsor-card__link">
-                          <a href={sponsor.url} rel="noopener sponsored">
-                            Visit {sponsor.name}
-                          </a>
-                        </p>
-                      )}
-                    </Card>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))
-        }
+        {sponsorTiers.map(({ tier, label, sponsors }) => (
+          <section
+            class:list={["sponsor-group", `sponsor-group--${tier}`]}
+            aria-labelledby={`fundraising-sponsors-${tier}`}
+          >
+            <h3 id={`fundraising-sponsors-${tier}`}>{label}</h3>
+            <div class:list={["sponsor-grid", `sponsor-grid--${tier}`]}>
+              {sponsors.map((sponsor) => (
+                <div class="sponsor-grid__item">
+                  <Card title={sponsor.name} headingLevel="h4">
+                    <div class="sponsor-card__logo-wrap">
+                      <Image
+                        class="sponsor-card__logo"
+                        src={sponsor.logoDark}
+                        alt={`${sponsor.name} logo`}
+                        width={sponsor.logoDark.width}
+                        height={sponsor.logoDark.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    {sponsor.description && (
+                      <p class="sponsor-card__description">
+                        {sponsor.description}
+                      </p>
+                    )}
+                    {sponsor.url && (
+                      <p class="sponsor-card__link">
+                        <a href={sponsor.url} rel="noopener sponsored">
+                          Visit {sponsor.name}
+                        </a>
+                      </p>
+                    )}
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
       </section>
 
       <h2>Sponsorship tiers</h2>
@@ -180,18 +179,16 @@ const sponsorshipTiers = [
         available:
       </p>
       <div class="tiers">
-        {
-          sponsorshipTiers.map((tier) => (
-            <Card title={tier.name}>
-              <p class="tier__price">{tier.price}</p>
-              <ul>
-                {tier.benefits.map((benefit) => (
-                  <li>{benefit}</li>
-                ))}
-              </ul>
-            </Card>
-          ))
-        }
+        {sponsorshipTiers.map((tier) => (
+          <Card title={tier.name}>
+            <p class="tier__price">{tier.price}</p>
+            <ul>
+              {tier.benefits.map((benefit) => (
+                <li>{benefit}</li>
+              ))}
+            </ul>
+          </Card>
+        ))}
       </div>
 
       <Card title="Sponsorship enquiries" headingLevel="h2">
