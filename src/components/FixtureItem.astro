@@ -9,6 +9,7 @@ import {
   formatResult,
   recurrenceText,
   resultOutcome,
+  upcomingOccurrence,
   type Fixture,
 } from "../lib/fixtures";
 
@@ -28,6 +29,8 @@ const {
 
 const { Content } = await render(f);
 const repeat = f.data.rrule ? recurrenceText(f.data.rrule) : null;
+// For a weekly series, show the next session rather than the first (#293).
+const next = upcomingOccurrence(f);
 const result = formatResult(f.data);
 const outcome = showResultDetails ? resultOutcome(f.data) : null;
 const homeAway =
@@ -57,7 +60,9 @@ const hasNotes = (f.body ?? "").trim().length > 0;
     {f.data.title}
     {f.data.opponent && !titleIncludesOpponent && <> vs {f.data.opponent}</>}
   </h3>
-  <p class="fixture__when">{formatWhen(f)}</p>
+  <p class="fixture__when">
+    {next ? <>Next: {formatWhen(f, next)}</> : formatWhen(f)}
+  </p>
   {result && <p class="fixture__result">{result}</p>}
   {repeat && <p class="fixture__repeat">↻ {repeat}</p>}
   {f.data.location && <p class="fixture__where muted">{f.data.location}</p>}

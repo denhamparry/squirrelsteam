@@ -7,6 +7,7 @@ import {
   getTourFixtures,
   getUpcomingFixtures,
   recurrenceText,
+  upcomingOccurrence,
 } from "../lib/fixtures";
 
 const tourFixtures = await getTourFixtures();
@@ -26,6 +27,7 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
   recurrence: fixture.data.rrule
     ? recurrenceText(fixture.data.rrule)
     : null,
+  next: upcomingOccurrence(fixture),
 }));
 ---
 
@@ -48,10 +50,11 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
             ))
           }
           {
-            trainingSchedules.map(({ fixture, recurrence }) => (
+            trainingSchedules.map(({ fixture, recurrence, next }) => (
               <li>
-                <strong>{fixture.data.title}</strong> — {formatWhen(fixture)}
-                {recurrence && <>; {recurrence}</>}
+                <strong>{fixture.data.title}</strong> —{" "}
+                {recurrence ?? formatWhen(fixture)}
+                {next && <>. Next session: {formatWhen(fixture, next)}</>}
               </li>
             ))
           }
