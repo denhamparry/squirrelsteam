@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-import { formatResult } from "./fixtures";
+import { formatResult } from "./results";
 
 // Dependency-free RFC 5545 (iCalendar) generator for the fixtures feed.
 // Output uses CRLF line endings, 75-octet line folding, Europe/London local

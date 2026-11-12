@@ -36,6 +36,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
    - Update documentation as needed
 3. **Run project validation**:
    - `npm run check`
+   - `npm test`
    - `npm run build`
    - `npm audit --omit=dev`
 4. **Run pre-commit hooks**: `pre-commit run --all-files`
@@ -71,10 +72,27 @@ pre-commit install
 
 ```bash
 npm run check
+npm test
 npm run build
 npm audit --omit=dev
 pre-commit run --all-files
 ```
+
+### Tests
+
+Unit tests live in `test/*.test.ts` and run with Node's built-in test runner
+via [`tsx`](https://tsx.is/) (`npm test`). They cover the code that doesn't
+need Astro: the calendar feed (`src/lib/ics.ts`), results
+(`src/lib/results.ts`), dates and recurrence (`src/lib/schedule.ts`,
+`src/lib/recurrence.ts`) and fixture data checks
+(`src/lib/fixture-checks.ts`). Keep new date or calendar logic in modules
+like these, without `astro:content` imports, so it can be tested.
+
+Fixture data is also checked at build time. `npm run build` fails if a
+fixture has a result but a future date, or its title and `opponent` disagree.
+It prints `[fixtures]` warnings for matches with no location and for scores
+that don't add up from tries and conversions (fine when penalties were
+scored).
 
 ### Running Locally
 
@@ -85,6 +103,7 @@ npm run dev
 ## Validation Requirements
 
 - `npm run check` must validate the Astro project without errors
+- `npm test` must pass
 - `npm run build` must produce the static site successfully
 - `npm audit --omit=dev` must report no production vulnerabilities
 - `pre-commit run --all-files` must pass before committing
