@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import { markdownToPlainText } from "./plain-text";
 import { formatResult } from "./results";
+import { GAMEDAY_PREFIX } from "./titles";
 
 // Dependency-free RFC 5545 (iCalendar) generator for the fixtures feed.
 // Output uses CRLF line endings, 75-octet line folding, Europe/London local
@@ -127,9 +128,8 @@ function foldLine(line: string): string {
 function eventSummary(data: Fixture["data"]): string {
   if (!data.cup) return data.title;
 
-  const gamedayPrefix = "#1415 Gameday:";
-  return data.title.startsWith(gamedayPrefix)
-    ? `#1415 Cup:${data.title.slice(gamedayPrefix.length)}`
+  return data.title.startsWith(GAMEDAY_PREFIX)
+    ? `#1415 Cup:${data.title.slice(GAMEDAY_PREFIX.length)}`
     : `Cup: ${data.title}`;
 }
 
