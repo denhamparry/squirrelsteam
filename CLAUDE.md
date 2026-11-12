@@ -21,6 +21,8 @@ npm run dev      # dev server (http://localhost:4321)
 npm run build    # build to dist/
 npm run preview  # preview production build
 npm run check    # Astro type-check
+npm test         # unit tests (node:test via tsx)
+npm run format   # format .astro/.ts/.mjs/.css with Prettier
 ```
 
 ## Conventions

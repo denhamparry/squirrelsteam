@@ -68,6 +68,17 @@ npm install
 pre-commit install
 ```
 
+`npm install` comes first because the Prettier hook uses the project's own
+Prettier. Once installed, the hooks run on every `git commit`: they trim
+whitespace, check YAML and Markdown, scan for secrets and format `.astro`,
+`.ts`, `.mjs` and `.css` files. If a hook changes a file, the commit stops;
+review the change, `git add` it and commit again. CI runs the same hooks on
+every pull request.
+
+To format code without committing, run `npm run format` (or
+`npm run format:check` to check only). Markdown is checked by markdownlint
+rather than Prettier, so docs and fixture notes keep their line breaks.
+
 ### Validation
 
 ```bash
