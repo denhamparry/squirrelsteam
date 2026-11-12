@@ -65,6 +65,7 @@ home: true # optional (true = home, false = away)
 location: Caedelyn Park, CF14 6EJ # optional
 # allDay: true # set for whole-day events (use date-only, omit times)
 # rrule: FREQ=WEEKLY;BYDAY=TU;UNTIL=20260825T180000Z # optional recurrence
+# exdates: [2026-12-22T20:00:00+00:00] # optional sessions to skip (rrule only)
 # draft: true # hide from the site and the feed
 ---
 
@@ -93,6 +94,11 @@ Notes:
   lists the Squirrels first and `home: false` lists the opponent first. Recorded
   tries and conversions appear in brackets beside each team's score, with
   unrecorded breakdown categories omitted.
+- **Skipped sessions:** list them in `exdates`, each the session's exact start
+  (same weekday and London time as the first session, with the offset for that
+  date: `+00:00` in winter, `+01:00` in summer). The build fails on a date that
+  isn't a session, because calendar apps silently ignore those. Skipped dates
+  are left out of subscribers' calendars and listed on the Training page.
 - Set `draft: true` to keep an entry out of the site and the feed while you work
   on it.
 

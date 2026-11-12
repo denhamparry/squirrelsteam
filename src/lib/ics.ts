@@ -185,6 +185,11 @@ function eventLines(entry: Fixture, dtstamp: string): string[] {
 
   if (data.rrule) {
     lines.push(`RRULE:${data.rrule}`);
+    // Skipped sessions, in the same TZID local form as DTSTART (RFC 5545).
+    if (data.exdates?.length) {
+      const stamps = data.exdates.map(toLondonStamp).join(",");
+      lines.push(`EXDATE;TZID=${TZID}:${stamps}`);
+    }
   }
 
   lines.push("END:VEVENT");

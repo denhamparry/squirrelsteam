@@ -7,6 +7,7 @@ export {
   resultOutcome,
 } from "./results";
 export {
+  formatDay,
   formatLongDate,
   formatWhen,
   isPastDay,

@@ -43,3 +43,22 @@ test("a score that doesn't add up from tries and conversions is a warning", () =
 test("a match without a location is a warning", () => {
   assert.deepEqual(fixtureWarnings({ ...base, location: undefined }), ["match has no location yet"]);
 });
+
+test("exdates must be sessions of the series", () => {
+  const training = {
+    title: "Training",
+    type: "training",
+    location: "The Barn",
+    start: new Date("2026-10-27T20:00:00Z"),
+    rrule: "FREQ=WEEKLY;BYDAY=TU;UNTIL=20270427T190000Z",
+  };
+  assert.deepEqual(fixtureErrors({ ...training, exdates: [new Date("2026-12-22T20:00:00Z")] }, now), []);
+  assert.match(
+    fixtureErrors({ ...training, exdates: [new Date("2026-12-22")] }, now).join(),
+    /isn't one of the series' sessions/,
+  );
+  assert.match(
+    fixtureErrors({ ...training, rrule: undefined, exdates: [new Date("2026-12-22T20:00:00Z")] }, now).join(),
+    /no rrule/,
+  );
+});
