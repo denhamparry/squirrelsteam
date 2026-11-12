@@ -133,6 +133,18 @@ const latestResult = (await getResults())[0];
     gap: var(--space-s);
     margin-top: var(--space-m);
   }
+  /* The default black button disappears on the black hero (#294), so the
+     primary action inverts to white, matching the header's Clubhouse pill. */
+  .hero .button:not(.button--outline) {
+    background: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+  }
+  .hero .button:not(.button--outline):hover,
+  .hero .button:not(.button--outline):focus-visible {
+    background: transparent;
+    color: var(--color-white);
+  }
   .hero .button--outline {
     color: var(--color-white);
     border-color: var(--color-white);
