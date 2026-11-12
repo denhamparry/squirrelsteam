@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  formatLongDate,
   formatWhen,
+  isPastDay,
   isUpcoming,
   recurrenceText,
   upcomingSortKey,
@@ -68,4 +70,16 @@ test("recurrenceText describes weekly rules", () => {
   );
   assert.equal(recurrenceText("FREQ=WEEKLY;BYDAY=TU,TH"), "Weekly on Tuesdays and Thursdays");
   assert.equal(recurrenceText("BYDAY=TU"), null);
+});
+
+test("isPastDay keeps a day current until it is over", () => {
+  const day = at("2026-11-02");
+  assert.equal(isPastDay(day, at("2026-11-01T23:00:00Z")), false);
+  assert.equal(isPastDay(day, at("2026-11-02T23:59:59Z")), false);
+  assert.equal(isPastDay(day, at("2026-11-03T00:00:00Z")), true);
+});
+
+test("formatLongDate writes the weekday, day, month and year", () => {
+  assert.equal(formatLongDate(at("2026-11-02")), "Monday 2 November 2026");
+  assert.equal(formatLongDate(at("2027-04-05")), "Monday 5 April 2027");
 });

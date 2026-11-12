@@ -5,12 +5,21 @@ import Card from "../components/Card.astro";
 import {
   formatWhen,
   getTourFixtures,
+  formatLongDate,
   getUpcomingFixtures,
+  isPastDay,
   recurrenceText,
   upcomingOccurrence,
 } from "../lib/fixtures";
 
-const tourFixtures = await getTourFixtures();
+const now = new Date();
+const tourFixtures = (await getTourFixtures()).filter(
+  (fixture) => !isPastDay(fixture.data.end ?? fixture.data.start, now),
+);
+// One-off key dates drop off once they've passed (#296); add new ones here.
+const keyDates = [
+  { label: "26/27 season starts", date: new Date("2026-09-06") },
+].filter(({ date }) => !isPastDay(date, now));
 // Only current or upcoming training, so finished sessions and old venues drop off.
 const trainingFixtures = (await getUpcomingFixtures()).filter(
   (fixture) => fixture.data.type === "training",
@@ -63,7 +72,13 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
 
       <Card title="Key dates: season & tour" headingLevel="h2">
         <ul>
-          <li><strong>26/27 season starts</strong> — Sunday 6 September 2026</li>
+          {
+            keyDates.map(({ label, date }) => (
+              <li>
+                <strong>{label}</strong> — {formatLongDate(date)}
+              </li>
+            ))
+          }
           {
             tourFixtures.map((fixture) => (
               <li>
