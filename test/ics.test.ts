@@ -103,3 +103,19 @@ test("Markdown notes become plain text in the description", () => {
     ),
   );
 });
+
+test("skipped sessions are written as an EXDATE in London time", () => {
+  const ics = calendar([
+    "train",
+    {
+      title: "Training",
+      type: "training",
+      start: new Date("2026-10-27T20:00:00Z"),
+      rrule: "FREQ=WEEKLY;BYDAY=TU;UNTIL=20270427T190000Z",
+      exdates: [new Date("2026-12-22T20:00:00Z"), new Date("2026-12-29T20:00:00Z")],
+    },
+  ]);
+  assert.ok(
+    unfolded(ics).includes("EXDATE;TZID=Europe/London:20261222T200000,20261229T200000"),
+  );
+});

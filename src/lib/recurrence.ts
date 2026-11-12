@@ -93,7 +93,7 @@ export function parseUntil(rrule: string): Date | null {
 
 /**
  * The first occurrence of a recurring event that has not finished by `now`
- * (an in-progress session counts). Returns null when the series is over or the
+ * (an in-progress session counts), skipping any `exdates`. Returns null when the series is over or the
  * rule uses features this helper doesn't model (INTERVAL > 1, COUNT, or a
  * FREQ other than WEEKLY/DAILY), so callers can fall back to the series start.
  */
@@ -102,7 +102,9 @@ export function nextOccurrence(
   end: Date | undefined,
   rrule: string,
   now: Date,
+  exdates: readonly Date[] = [],
 ): Occurrence | null {
+  const skipped = new Set(exdates.map((d) => d.getTime()));
   const rule = parseRule(rrule);
   if (rule.FREQ !== "WEEKLY" && rule.FREQ !== "DAILY") return null;
   if (rule.COUNT || (rule.INTERVAL && rule.INTERVAL !== "1")) return null;
@@ -132,6 +134,7 @@ export function nextOccurrence(
     const occStart = fromWallClock({ ...first, day: first.day + offset });
     if (occStart.getTime() < start.getTime()) continue;
     if (until && occStart.getTime() > until.getTime()) return null;
+    if (skipped.has(occStart.getTime())) continue;
 
     const occEnd = end ? new Date(occStart.getTime() + duration) : undefined;
     if ((occEnd ?? occStart).getTime() >= now.getTime()) {
@@ -139,4 +142,44 @@ export function nextOccurrence(
     }
   }
   return null;
+}
+
+/**
+ * Whether `date` is exactly one of the series' sessions: on a BYDAY weekday,
+ * at the first session's Europe/London wall-clock time, between the start and
+ * UNTIL. An EXDATE that isn't is silently ignored by calendar clients, so the
+ * content schema rejects it (#297).
+ */
+export function isOccurrence(start: Date, rrule: string, date: Date): boolean {
+  const rule = parseRule(rrule);
+  if (rule.FREQ !== "WEEKLY" && rule.FREQ !== "DAILY") return false;
+  const until = parseUntil(rrule);
+  if (date.getTime() < start.getTime()) return false;
+  if (until && date.getTime() > until.getTime()) return false;
+
+  const first = toWallClock(start);
+  const candidate = toWallClock(date);
+  if (
+    candidate.hour !== first.hour ||
+    candidate.minute !== first.minute ||
+    candidate.second !== first.second
+  ) {
+    return false;
+  }
+  const weekday =
+    WEEKDAY_CODES[
+      new Date(
+        Date.UTC(candidate.year, candidate.month - 1, candidate.day),
+      ).getUTCDay()
+    ];
+  const firstWeekday =
+    WEEKDAY_CODES[
+      new Date(Date.UTC(first.year, first.month - 1, first.day)).getUTCDay()
+    ];
+  const days = rule.BYDAY
+    ? rule.BYDAY.split(",")
+    : rule.FREQ === "WEEKLY"
+      ? [firstWeekday]
+      : [...WEEKDAY_CODES];
+  return days.includes(weekday);
 }

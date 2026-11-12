@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Card from "../components/Card.astro";
 import {
+  formatDay,
   formatWhen,
   getTourFixtures,
   formatLongDate,
@@ -37,6 +38,11 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
     ? recurrenceText(fixture.data.rrule)
     : null,
   next: upcomingOccurrence(fixture),
+  // Upcoming skipped sessions (exdates), e.g. the Christmas break (#297).
+  skipped: (fixture.data.exdates ?? [])
+    .filter((date) => date.getTime() >= now.getTime())
+    .sort((a, b) => a.getTime() - b.getTime())
+    .map(formatDay),
 }));
 ---
 
@@ -59,11 +65,14 @@ const trainingSchedules = trainingFixtures.map((fixture) => ({
             ))
           }
           {
-            trainingSchedules.map(({ fixture, recurrence, next }) => (
+            trainingSchedules.map(({ fixture, recurrence, next, skipped }) => (
               <li>
                 <strong>{fixture.data.title}</strong> —{" "}
                 {recurrence ?? formatWhen(fixture)}
                 {next && <>. Next session: {formatWhen(fixture, next)}</>}
+                {skipped.length > 0 && (
+                  <>. No training on {skipped.join("; ")}</>
+                )}
               </li>
             ))
           }

@@ -2,6 +2,7 @@
 // the content schema in src/content.config.ts; warnings are printed while the
 // calendar feed is built (src/pages/fixtures.ics.ts). Kept free of astro:content
 // so the rules can be unit tested.
+import { isOccurrence } from "./recurrence";
 
 interface ScorePair {
   us: number;
@@ -12,6 +13,8 @@ export interface CheckedFixture {
   title: string;
   type: string;
   start: Date;
+  rrule?: string;
+  exdates?: Date[];
   opponent?: string;
   location?: string;
   result?: ScorePair & { tries?: ScorePair; conversions?: ScorePair };
@@ -43,6 +46,20 @@ export function fixtureErrors(data: CheckedFixture, now: Date): string[] {
     errors.push(
       `title still says TBC but opponent is "${data.opponent}"; replace TBC with the team name`,
     );
+  }
+
+  if (data.exdates?.length) {
+    if (!data.rrule) {
+      errors.push("has exdates but no rrule; exdates only apply to recurring fixtures");
+    } else {
+      for (const exdate of data.exdates) {
+        if (!isOccurrence(data.start, data.rrule, exdate)) {
+          errors.push(
+            `exdate ${exdate.toISOString()} isn't one of the series' sessions; use the session's exact date and start time, e.g. ${data.start.toISOString()}`,
+          );
+        }
+      }
+    }
   }
 
   return errors;

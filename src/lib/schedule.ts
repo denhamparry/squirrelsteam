@@ -14,6 +14,7 @@ export interface Scheduled {
     end?: Date;
     allDay?: boolean;
     rrule?: string;
+    exdates?: Date[];
     result?: unknown;
   };
 }
@@ -42,7 +43,13 @@ export function upcomingOccurrence(
   now: Date = new Date(),
 ): Occurrence | null {
   if (!f.data.rrule) return null;
-  return nextOccurrence(f.data.start, f.data.end, f.data.rrule, now);
+  return nextOccurrence(
+    f.data.start,
+    f.data.end,
+    f.data.rrule,
+    now,
+    f.data.exdates,
+  );
 }
 
 /** True until a fixture has finished (see effectiveEnd). */
@@ -189,4 +196,9 @@ const longDateFmt = new Intl.DateTimeFormat("en-GB", {
 /** A date-only day in full, e.g. "Monday 2 November 2026". */
 export function formatLongDate(day: Date): string {
   return longDateFmt.format(day).replace(",", "");
+}
+
+/** A timed event's London date, e.g. "Tue, 22 Dec 2026". */
+export function formatDay(instant: Date): string {
+  return dateFmt.format(instant);
 }

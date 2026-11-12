@@ -36,6 +36,9 @@ const fixtures = defineCollection({
         .optional(),
       // Optional RFC 5545 recurrence rule, e.g. "FREQ=WEEKLY;BYDAY=TU;UNTIL=...".
       rrule: z.string().optional(),
+      // Sessions of a recurring series to skip (e.g. the Christmas break). Each
+      // must be the exact start of a session: same weekday and London time.
+      exdates: z.array(z.coerce.date()).optional(),
       // Recurring training is hidden from the Fixtures page unless opted in.
       showOnFixturesPage: z.boolean().optional(),
       draft: z.boolean().default(false),
