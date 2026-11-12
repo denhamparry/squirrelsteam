@@ -90,3 +90,16 @@ test("recurring events carry their RRULE", () => {
   ]);
   assert.ok(lines(ics).includes(`RRULE:${rrule}`));
 });
+
+test("Markdown notes become plain text in the description", () => {
+  const ics = calendar([
+    "md",
+    { title: "M", start: new Date("2026-11-29") },
+    "Meet **10:30am** at the [pitch](https://maps.app.goo.gl/abc).\n\n- Bring boots",
+  ]);
+  assert.ok(
+    unfolded(ics).includes(
+      "DESCRIPTION:Meet 10:30am at the pitch (https://maps.app.goo.gl/abc).\\n\\n• Bring boots",
+    ),
+  );
+});

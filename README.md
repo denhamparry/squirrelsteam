@@ -73,8 +73,14 @@ Optional notes about the fixture.
 
 Notes:
 
-- **Times** use an explicit offset (`+01:00` in BST, `Z`/`+00:00` in GMT); the
-  feed stores everything in UTC, so `19:00+01:00` becomes `18:00Z`.
+- **Times** use an explicit offset (`+01:00` in BST, `Z`/`+00:00` in GMT). The
+  feed writes them as Europe/London local times (`TZID=Europe/London`), so
+  weekly events keep their wall-clock time across the clock change.
+- **Notes** (the text under the frontmatter) are Markdown. The Fixtures page
+  renders them as formatted text; the calendar feed converts them to plain
+  text, writing links as `text (url)`. Stick to links, **bold**/_italic_,
+  bullet lists and short paragraphs. Notes are public: keep coaches'
+  reminders in a YAML comment (`# …`) instead.
 - **All-day events:** set `allDay: true` and use date-only `start`/`end`. The
   `end` is the **last day (inclusive)** — the feed emits the calendar-correct
   exclusive end automatically (a 1–4 May tour ends `2027-05-04`).
