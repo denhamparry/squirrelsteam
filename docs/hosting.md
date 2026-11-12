@@ -7,7 +7,8 @@ and redeploys the site automatically.
 ## Deploy pipeline
 
 - Workflow: [`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml)
-- Trigger: push to `main` (and manual **Run workflow** via `workflow_dispatch`)
+- Trigger: push to `main`, a daily schedule (04:17 UTC, plus 13:17 UTC on
+  Sundays), and manual **Run workflow** via `workflow_dispatch`
 - Build: `withastro/action` installs dependencies, runs `astro build`, and
   uploads `dist/` as a Pages artifact.
 - Publish: `actions/deploy-pages` publishes the artifact to GitHub Pages.
@@ -16,6 +17,24 @@ The custom domain is claimed by the committed
 [`public/CNAME`](../public/CNAME) file (contents: `squirrels.team`). Astro
 copies `public/` verbatim into `dist/`, so the `CNAME` ships with every deploy
 and the domain survives redeploys.
+
+## Date-based content and the daily rebuild
+
+The site is static, so anything that depends on today's date is worked out
+when the site is built: Home's **Next up** and **Latest result**, the Fixtures
+page's **Upcoming** and **Results** tabs, and the current training schedule.
+The scheduled runs above rebuild the site every day so these move on without a
+push. A timed Sunday game that has ended moves to Results at the 13:17 UTC
+run. An all-day fixture stays under Upcoming for the whole of its day and moves
+at the next morning's run, unless its result is recorded first: a fixture with
+a result moves to Results at the next build.
+
+To update immediately (for example, straight after entering a result), push the
+change to `main` or open **Actions → Deploy to GitHub Pages → Run workflow**.
+
+GitHub pauses scheduled workflows after 60 days with no repository activity. If
+the date-based sections stop moving on, check the **Actions** tab and re-enable
+the workflow.
 
 ## One-time setup (maintainer)
 

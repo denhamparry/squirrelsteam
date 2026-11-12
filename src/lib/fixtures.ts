@@ -56,10 +56,19 @@ function parseUntil(rrule: string): Date | null {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
-/** The instant a fixture stops being "current": its RRULE UNTIL, else end/start. */
+/**
+ * The instant a fixture stops being "current": its RRULE UNTIL, else end/start.
+ * All-day dates are stored as UTC midnight of their (inclusive) last day, so
+ * they stay current until that day is over rather than dropping off "Next up"
+ * on the morning of the game. A recorded result means the match is over, so it
+ * moves to Results on the next build that day.
+ */
 function effectiveEnd(f: Fixture): Date {
+  if (f.data.result) return f.data.start;
   const until = f.data.rrule ? parseUntil(f.data.rrule) : null;
-  return until ?? f.data.end ?? f.data.start;
+  if (until) return until;
+  const end = f.data.end ?? f.data.start;
+  return f.data.allDay ? new Date(end.getTime() + 86_400_000) : end;
 }
 
 /** Fixtures that have not yet finished, soonest first. */

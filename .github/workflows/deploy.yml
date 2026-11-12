@@ -4,6 +4,14 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Upcoming/past fixtures, "Next up" and results are split by date at build
+  # time, so rebuild daily even when nothing is pushed (#292). An extra Sunday
+  # afternoon run moves finished games across once most matches have ended.
+  # GitHub runs schedules from the default branch only and pauses them after
+  # 60 days with no repository activity.
+  schedule:
+    - cron: "17 4 * * *"
+    - cron: "17 13 * * 0"
 
 permissions:
   contents: read
