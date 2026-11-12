@@ -169,3 +169,24 @@ export function formatWhen(f: Scheduled, occurrence?: Occurrence): string {
   }
   return `${day}, ${startTime}`;
 }
+
+/**
+ * Whether a date-only day (stored as UTC midnight, like all-day fixtures) is
+ * over by `now`. The day itself still counts as current.
+ */
+export function isPastDay(day: Date, now: Date): boolean {
+  return now.getTime() >= day.getTime() + 86_400_000;
+}
+
+const longDateFmt = new Intl.DateTimeFormat("en-GB", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+/** A date-only day in full, e.g. "Monday 2 November 2026". */
+export function formatLongDate(day: Date): string {
+  return longDateFmt.format(day).replace(",", "");
+}

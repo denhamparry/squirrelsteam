@@ -7,7 +7,9 @@ export {
   resultOutcome,
 } from "./results";
 export {
+  formatLongDate,
   formatWhen,
+  isPastDay,
   recurrenceText,
   upcomingOccurrence,
 } from "./schedule";
