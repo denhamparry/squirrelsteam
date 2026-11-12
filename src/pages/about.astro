@@ -5,6 +5,9 @@ import Card from "../components/Card.astro";
 import { getUpcomingFixtures } from "../lib/fixtures";
 
 const contactEmail = "contact@squirrels.team";
+// New families email first so coaches have contact details before a child
+// trains (#304).
+const joinMailto = `mailto:${contactEmail}?subject=${encodeURIComponent("Taster session enquiry")}`;
 const clubUrl = "https://rhiwbina.rfc.wales/";
 const instagramUrl = "https://www.instagram.com/rhiwbinarfc1415/";
 const trainingFixtures = (await getUpcomingFixtures()).filter(
@@ -42,8 +45,10 @@ const trainingVenue = trainingFixtures
       <Card title="Join us — new players welcome">
         <p>
           New players are <strong>always welcome</strong>, whether they've
-          played before or are picking up a rugby ball for the first time. Just
-          come along to training — say hello, join in, and see if it's for you.
+          played before or are picking up a rugby ball for the first time. To
+          get started, email us at <a href={joinMailto}>{contactEmail}</a> and
+          we'll arrange a taster session, so the coaches have your contact
+          details before your child joins in.
         </p>
         <p>
           {trainingVenue && (
@@ -58,8 +63,11 @@ const trainingVenue = trainingFixtures
           Everyone at the club — players, parents and supporters — signs up to
           our <a href="/conduct/">code of conduct</a>.
         </p>
-        <p>
-          <a class="button" href="/training/">
+        <p class="join-actions">
+          <a class="button" href={joinMailto}>
+            Arrange a taster session
+          </a>
+          <a class="button button--outline" href="/training/">
             See training info
           </a>
         </p>
@@ -97,3 +105,11 @@ const trainingVenue = trainingFixtures
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .join-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+</style>
