@@ -5,6 +5,5 @@ start: 2027-02-14
 allDay: true
 home: false
 opponent: Whitchurch
+# TODO: confirm Whitchurch have a U12 team for this fixture (see #150).
 ---
-
-Query them having a team.
