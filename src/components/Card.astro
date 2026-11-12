@@ -2,15 +2,29 @@
 interface Props {
   title?: string;
   href?: string;
+  /** Pick the level that fits the page outline (no skipped levels, #302). */
   headingLevel?: "h2" | "h3" | "h4";
+  /**
+   * An h2 card title is sized like an h3 by default, so choosing the right
+   * heading level doesn't change how the card looks. "section" keeps the full
+   * h2 size for cards that act as page sections (e.g. the Code of Conduct).
+   */
+  titleSize?: "card" | "section";
 }
-const { title, href, headingLevel = "h3" } = Astro.props;
+const { title, href, headingLevel = "h3", titleSize = "card" } = Astro.props;
+const compactTitle = headingLevel === "h2" && titleSize === "card";
 const Tag = href ? "a" : "div";
 const Heading = headingLevel;
 ---
 
 <Tag class:list={["card", { "card--link": href }]} href={href}>
-  {title && <Heading class="card__title">{title}</Heading>}
+  {
+    title && (
+      <Heading class:list={["card__title", { "card__title--compact": compactTitle }]}>
+        {title}
+      </Heading>
+    )
+  }
   <div class="card__body flow">
     <slot />
   </div>
@@ -38,5 +52,8 @@ const Heading = headingLevel;
   }
   .card__title {
     margin-bottom: var(--space-2xs);
+  }
+  .card__title--compact {
+    font-size: var(--step-1);
   }
 </style>
