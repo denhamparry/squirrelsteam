@@ -316,6 +316,11 @@ cat data.csv | claude -p "analyze this"
 - [ ] Use branches for experimental changes
 - [ ] Don't auto-commit without review
 
+## Fixtures content
+
+- **Title/venue rule:** Match titles follow `#1415 Gameday: <Opponent> (<Home|Away>[, <Venue>])` for standard fixtures. Include the venue in the title only for matches played at a non-standard venue (not the usual home ground, e.g. Eastern Community Campus, CISC, Cardiff Arms Park); always record the full address/details in `location` when known. Avoid repeating the same fact in the title, body/notes, and frontmatter flags.
+- **File names are permanent IDs:** fixture markdown file names become the calendar `UID`. Do not rename fixture files, even if a venue or other details change, or subscribers will see duplicate events in `dist/fixtures.ics`. Update the file contents and `location` instead.
+
 ## 📝 Notes Section
 
 ### Project-Specific Notes
