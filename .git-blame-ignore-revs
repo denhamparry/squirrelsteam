@@ -1,0 +1,9 @@
+# Commits that only reformat code, skipped by `git blame` so it shows the
+# change that last touched a line's content. GitHub's blame view reads this file
+# automatically; locally, run once:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Add a commit here only after it has merged to main, using its SHA on main.
+
+# style: format code with Prettier (#305, merged in #308)
+fa2281265564a2d3c53e6351fa986904039a6be5

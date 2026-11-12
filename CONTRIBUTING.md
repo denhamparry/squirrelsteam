@@ -79,6 +79,12 @@ To format code without committing, run `npm run format` (or
 `npm run format:check` to check only). Markdown is checked by markdownlint
 rather than Prettier, so docs and fixture notes keep their line breaks.
 
+Formatting-only commits are listed in `.git-blame-ignore-revs`, so `git blame`
+skips them (GitHub does this automatically). Locally, run
+`git config blame.ignoreRevsFile .git-blame-ignore-revs` once. If you land
+another formatting-only commit, add its SHA on `main` to that file after it
+merges.
+
 ### Validation
 
 ```bash
