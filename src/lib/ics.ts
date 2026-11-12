@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import { markdownToPlainText } from "./plain-text";
 import { formatResult } from "./results";
 
 // Dependency-free RFC 5545 (iCalendar) generator for the fixtures feed.
@@ -163,7 +164,8 @@ function eventLines(entry: Fixture, dtstamp: string): string[] {
 
   // Prefer the fixture's own notes; otherwise synthesise a match description.
   // A structured result is appended independently so calendars retain notes.
-  const note = entry.body?.trim();
+  // Notes are Markdown, but calendars show plain text (#298).
+  const note = entry.body ? markdownToPlainText(entry.body) : "";
   const description: string[] = [];
   if (note) {
     description.push(note);
