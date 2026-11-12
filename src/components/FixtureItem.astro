@@ -12,6 +12,7 @@ import {
   upcomingOccurrence,
   type Fixture,
 } from "../lib/fixtures";
+import { cardTitle } from "../lib/titles";
 
 interface Props {
   fixture: Fixture;
@@ -57,7 +58,7 @@ const hasNotes = (f.body ?? "").trim().length > 0;
     {homeAway && <span class="chip chip--ghost">{homeAway}</span>}
   </div>
   <h3 class="fixture__title">
-    {f.data.title}
+    {cardTitle(f.data.title)}
     {f.data.opponent && !titleIncludesOpponent && <> vs {f.data.opponent}</>}
   </h3>
   <p class="fixture__when">
