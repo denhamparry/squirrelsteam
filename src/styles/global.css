@@ -25,11 +25,13 @@
   --text-inverse: var(--color-white);
 
   /* Typography */
+  /* Self-hosted variable fonts (BaseLayout.astro); system fallbacks follow. */
   --font-sans:
-    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+    "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
   --font-display:
-    "Archivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    "Archivo Variable", "Archivo", "Inter Variable", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
 
   /* Type scale (fluid) */
   --step--1: clamp(0.83rem, 0.78rem + 0.25vw, 0.94rem);
