@@ -6,6 +6,11 @@ end: 2026-11-22T12:00:00+00:00
 home: false
 opponent: Old Penarthians
 location: Old Penarthians Rugby Football Club, St Mark's Road, Penarth CF64 3PF
+result:
+  us: 40
+  them: 0
+  tries: { us: 6, them: 0 }
+  conversions: { us: 5, them: 0 }
 ---
 
 Meet 10:30am, kick-off 11:00am.
