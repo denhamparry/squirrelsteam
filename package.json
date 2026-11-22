@@ -16,7 +16,7 @@
     "format:check": "prettier --plugin=prettier-plugin-astro --check \"src/**/*.{astro,ts,mjs,css}\" \"test/**/*.ts\" astro.config.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/sitemap": "^3.7.6",
     "@fontsource-variable/archivo": "^5.3.0",
     "@fontsource-variable/inter": "^5.3.0",
     "astro": "^7.4.11"
